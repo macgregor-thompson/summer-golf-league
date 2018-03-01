@@ -1,0 +1,583 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "name": "Breakfast Hill",
+      "slopes": [],
+      "courseRatings": [],
+      "tees": ["Maroon", "Combo", "Black", "Silver", "Gold"],
+      "yardages": {
+        "total": {
+          "Maroon": 6493,
+          "Combo": 6226,
+          "Black": 5981,
+          "Silver": 5463,
+          "Gold": 4994
+        },
+        "frontNine": {
+          "Maroon": 3241,
+          "Combo": 3136,
+          "Black": 2988,
+          "Silver": 2750,
+          "Gold": 2550
+        },
+        "backNine": {
+          "Maroon": 3252,
+          "Combo": 3090,
+          "Black": 2993,
+          "Silver": 2713,
+          "Gold": 2444
+        }
+      },
+      "holes": {
+        "frontNine": [
+          {
+            "number": 1,
+            "par": 4,
+            "handicap": {
+              "men": 12,
+              "women": 12
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 380
+              },
+              {
+                "tee": "Combo",
+                "yardage": 350
+              },
+              {
+                "tee": "Black",
+                "yardage": 350
+              },
+              {
+                "tee": "Silver",
+                "yardage": 331
+              },
+              {
+                "tee": "Gold",
+                "yardage": 320
+              }
+            ]
+          },
+          {
+            "number": 2,
+            "par": 5,
+            "handicap": {
+              "men": 10,
+              "women": 10
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 490
+              },
+              {
+                "tee": "Combo",
+                "yardage": 490
+              },
+              {
+                "tee": "Black",
+                "yardage": 465
+              },
+              {
+                "tee": "Silver",
+                "yardage": 412
+              },
+              {
+                "tee": "Gold",
+                "yardage": 384
+              }
+            ]
+          },
+          {
+            "number": 3,
+            "par": 4,
+            "handicap": {
+              "men": 4,
+              "women": 4
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 399
+              },
+              {
+                "tee": "Combo",
+                "yardage": 365
+              },
+              {
+                "tee": "Black",
+                "yardage": 365
+              },
+              {
+                "tee": "Silver",
+                "yardage": 342
+              },
+              {
+                "tee": "Gold",
+                "yardage": 328
+              }
+            ]
+          },
+          {
+            "number": 4,
+            "par": 3,
+            "handicap": {
+              "men": 18,
+              "women": 18
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 179
+              },
+              {
+                "tee": "Combo",
+                "yardage": 179
+              },
+              {
+                "tee": "Black",
+                "yardage": 149
+              },
+              {
+                "tee": "Silver",
+                "yardage": 128
+              },
+              {
+                "tee": "Gold",
+                "yardage": 106
+              }
+            ]
+          },
+          {
+            "number": 5,
+            "par": 5,
+            "handicap": {
+              "men": 8,
+              "women": 8
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 525
+              },
+              {
+                "tee": "Combo",
+                "yardage": 525
+              },
+              {
+                "tee": "Black",
+                "yardage": 489
+              },
+              {
+                "tee": "Silver",
+                "yardage": 456
+              },
+              {
+                "tee": "Gold",
+                "yardage": 436
+              }
+            ]
+          },
+          {
+            "number": 6,
+            "par": 3,
+            "handicap": {
+              "men": 16,
+              "women": 16
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 141
+              },
+              {
+                "tee": "Combo",
+                "yardage": 124
+              },
+              {
+                "tee": "Black",
+                "yardage": 124
+              },
+              {
+                "tee": "Silver",
+                "yardage": 112
+              },
+              {
+                "tee": "Gold",
+                "yardage": 102
+              }
+            ]
+          },
+          {
+            "number": 7,
+            "par": 4,
+            "handicap": {
+              "men": 2,
+              "women": 2
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 408
+              },
+              {
+                "tee": "Combo",
+                "yardage": 408
+              },
+              {
+                "tee": "Black",
+                "yardage": 364
+              },
+              {
+                "tee": "Silver",
+                "yardage": 334
+              },
+              {
+                "tee": "Gold",
+                "yardage": 322
+              }
+            ]
+          },
+          {
+            "number": 8,
+            "par": 4,
+            "handicap": {
+              "men": 6,
+              "women": 6
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 356
+              },
+              {
+                "tee": "Combo",
+                "yardage": 332
+              },
+              {
+                "tee": "Black",
+                "yardage": 332
+              },
+              {
+                "tee": "Silver",
+                "yardage": 310
+              },
+              {
+                "tee": "Gold",
+                "yardage": 287
+              }
+            ]
+          },
+          {
+            "number": 9,
+            "par": 4,
+            "handicap": {
+              "men": 14,
+              "women": 14
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 363
+              },
+              {
+                "tee": "Combo",
+                "yardage": 363
+              },
+              {
+                "tee": "Black",
+                "yardage": 350
+              },
+              {
+                "tee": "Silver",
+                "yardage": 325
+              },
+              {
+                "tee": "Gold",
+                "yardage": 265
+              }
+            ]
+          },
+        ],
+        "backNine": [
+          {
+            "number": 10,
+            "par": 4,
+            "handicap": {
+              "men": 7,
+              "women": 7
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 362
+              },
+              {
+                "tee": "Combo",
+                "yardage": 309
+              },
+              {
+                "tee": "Black",
+                "yardage": 309
+              },
+              {
+                "tee": "Silver",
+                "yardage": 298
+              },
+              {
+                "tee": "Gold",
+                "yardage": 281
+              }
+            ]
+          },
+          {
+            "number": 11,
+            "par": {
+              "men": 4,
+              "women": 5
+            },
+            "handicap": {
+              "men": 1,
+              "women": 1
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 473
+              },
+              {
+                "tee": "Combo",
+                "yardage": 473
+              },
+              {
+                "tee": "Black",
+                "yardage": 460
+              },
+              {
+                "tee": "Silver",
+                "yardage": 401
+              },
+              {
+                "tee": "Gold",
+                "yardage": 384
+              }
+            ]
+          },
+          {
+            "number": 12,
+            "par": 5,
+            "handicap": {
+              "men": 5,
+              "women": 5
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 572
+              },
+              {
+                "tee": "Combo",
+                "yardage": 526
+              },
+              {
+                "tee": "Black",
+                "yardage": 526
+              },
+              {
+                "tee": "Silver",
+                "yardage": 471
+              },
+              {
+                "tee": "Gold",
+                "yardage": 413
+              }
+            ]
+          },
+          {
+            "number": 13,
+            "par": 4,
+            "handicap": {
+              "men": 15,
+              "women": 15
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 311
+              },
+              {
+                "tee": "Combo",
+                "yardage": 311
+              },
+              {
+                "tee": "Black",
+                "yardage": 296
+              },
+              {
+                "tee": "Silver",
+                "yardage": 271
+              },
+              {
+                "tee": "Gold",
+                "yardage": 256
+              }
+            ]
+          },
+          {
+            "number": 14,
+            "par": 3,
+            "handicap": {
+              "men": 9,
+              "women": 9
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 177
+              },
+              {
+                "tee": "Combo",
+                "yardage": 165
+              },
+              {
+                "tee": "Black",
+                "yardage": 165
+              },
+              {
+                "tee": "Silver",
+                "yardage": 128
+              },
+              {
+                "tee": "Gold",
+                "yardage": 105
+              }
+            ]
+          },
+          {
+            "number": 15,
+            "par": 4,
+            "handicap": {
+              "men": 13,
+              "women": 13
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 359
+              },
+              {
+                "tee": "Combo",
+                "yardage": 359
+              },
+              {
+                "tee": "Black",
+                "yardage": 322
+              },
+              {
+                "tee": "Silver",
+                "yardage": 303
+              },
+              {
+                "tee": "Gold",
+                "yardage": 263
+              }
+            ]
+          },
+          {
+            "number": 16,
+            "par": 4,
+            "handicap": {
+              "men": 11,
+              "women": 11
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 395
+              },
+              {
+                "tee": "Combo",
+                "yardage": 395
+              },
+              {
+                "tee": "Black",
+                "yardage": 378
+              },
+              {
+                "tee": "Silver",
+                "yardage": 356
+              },
+              {
+                "tee": "Gold",
+                "yardage": 325
+              }
+            ]
+          },
+          {
+            "number": 17,
+            "par": 3,
+            "handicap": {
+              "men": 17,
+              "women": 17
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 158
+              },
+              {
+                "tee": "Combo",
+                "yardage": 158
+              },
+              {
+                "tee": "Black",
+                "yardage": 143
+              },
+              {
+                "tee": "Silver",
+                "yardage": 117
+              },
+              {
+                "tee": "Gold",
+                "yardage": 101
+              }
+            ]
+          },
+          {
+            "number": 18,
+            "par": 4,
+            "handicap": {
+              "men": 3,
+              "women": 3
+            },
+            "yardages": [
+              {
+                "tee": "Maroon",
+                "yardage": 445
+              },
+              {
+                "tee": "Combo",
+                "yardage": 394
+              },
+              {
+                "tee": "Black",
+                "yardage": 394
+              },
+              {
+                "tee": "Silver",
+                "yardage": 368
+              },
+              {
+                "tee": "Gold",
+                "yardage": 316
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

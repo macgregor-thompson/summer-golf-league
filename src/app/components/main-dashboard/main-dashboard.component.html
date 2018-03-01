@@ -1,0 +1,59 @@
+<div class="view-container">
+  <small>Main Dashboard Component</small>
+
+  <hr>
+
+  <h3>League Members:</h3>
+  <ul>
+    <li *ngFor="let member of members" style="list-style-type: none">
+      <h4>{{ member.firstName }} {{ member.lastName }}</h4>
+      <div *ngIf="member.scores.length">
+        <p>Scores:</p>
+        <ul style="list-style-type: none">
+          <li *ngFor="let score of member.scores">
+            <span [ngSwitch]="score.holesPlayed">
+              <span *ngSwitchCase="HolesPlayed.All">All 18:</span>
+              <span *ngSwitchCase="HolesPlayed.Front">Front 9:</span>
+              <span *ngSwitchCase="HolesPlayed.Back">Back 9:</span>
+            </span>
+            <a mat-button color="primary" routerLink="score/{{score.id}}">
+              {{ score.total }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+
+  <hr>
+
+  <h3>League Substitutes:</h3>
+  <ul>
+    <li *ngFor="let sub of substitutes" style="list-style-type: none">
+      <h4>{{ sub.firstName }} {{ sub.lastName }}</h4>
+      <div *ngIf="sub.scores.length">
+        <p>Scores:</p>
+        <ul style="list-style-type: none">
+          <li *ngFor="let score of sub.scores">
+            <span [ngSwitch]="score.holesPlayed">
+              <span *ngSwitchCase="HolesPlayed.All">All 18:</span>
+              <span *ngSwitchCase="HolesPlayed.Front">Front 9:</span>
+              <span *ngSwitchCase="HolesPlayed.Back">Back 9:</span>
+            </span>
+            <a>
+              {{ score.total }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+
+  <hr>
+
+  <h3>Courses:</h3>
+  <div *ngFor="let course of courses">
+    <h4>{{ course.name }}</h4>
+  </div>
+</div>
+
