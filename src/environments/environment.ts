@@ -4,5 +4,13 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyDR5SEEhFjBZIxqMXoU-a8xoZujeY3Q5Qc',
+    authDomain: 'summer-golf-league.firebaseapp.com',
+    databaseURL: 'https://summer-golf-league.firebaseio.com',
+    projectId: 'summer-golf-league',
+    storageBucket: '',
+    messagingSenderId: '1026158852457'
+  }
 };
