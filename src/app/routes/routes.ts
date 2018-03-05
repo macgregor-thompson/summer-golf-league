@@ -7,19 +7,19 @@ export const ROUTES: Nav[] = [
     exact: true
   },
   {
+    path: '/rankings',
+    name: 'Rankings',
+    exact: true
+  },
+  {
     path: '/scores',
     name: 'Scores',
     exact: true
   },
   {
-    path: '/rankings',
-    name: 'Rankings',
+    path: '/rules',
+    name: 'Rules',
     exact: true
   }
-  /* ,{
-     link: '/oops',
-     name: '404',
-     exact: false
-   }*/
 
 ];

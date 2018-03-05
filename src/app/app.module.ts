@@ -24,6 +24,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ScoresComponent } from './components/scores/scores.component';
 import { RankingsComponent } from './components/rankings/rankings.component';
 import { PlayerDashboardComponent } from './components/player-dashboard/player-dashboard.component';
+import { RulesComponent } from './components/rules/rules.component';
 
 
 const routes: Routes = [
@@ -45,7 +46,8 @@ const routes: Routes = [
     ScoreViewComponent,
     ScoresComponent,
     RankingsComponent,
-    PlayerDashboardComponent
+    PlayerDashboardComponent,
+    RulesComponent
   ],
   imports: [
     BrowserModule,
