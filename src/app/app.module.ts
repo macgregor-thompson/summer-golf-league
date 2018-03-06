@@ -31,6 +31,7 @@ const routes: Routes = [
   { path: '', component: MainDashboardComponent, pathMatch: 'full' },
   { path: 'scores', component: ScoresComponent, pathMatch: 'full' },
   { path: 'rankings', component: RankingsComponent, pathMatch: 'full' },
+  { path: 'rules', component: RulesComponent, pathMatch: 'full' },
   { path: 'score/:id', component: ScoreViewComponent, pathMatch: 'full' },
   { path: 'player/:id', component: PlayerDashboardComponent, pathMatch: 'full' },
   { path: '**', component: NotFoundComponent }
