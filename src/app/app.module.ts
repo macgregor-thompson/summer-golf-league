@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 
 
 // Angular Material
@@ -10,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatList, MatTableModule, MatButtonModule, MatExpansionModule, MatIconModule,
   MatDatepickerModule, MatToolbar, MatToolbarModule, MatTabsModule, MatNativeDateModule, MatInputModule, MatCardModule,
-  MatSelectModule, MatChipsModule, MatMenuModule
+  MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule
 } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -81,6 +83,8 @@ const routes: Routes = [
     BrowserModule,
     // import HttpClientModule after BrowserModule
     RouterModule.forRoot(routes),
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatTableModule,
@@ -98,6 +102,7 @@ const routes: Routes = [
     MatSelectModule,
     MatChipsModule,
     MatMenuModule,
+    MatAutocompleteModule,
     LoadingModule.forRoot({
 // ANIMATION_TYPES:
 // chasingDots, circle, circleSwish, cubeGrid

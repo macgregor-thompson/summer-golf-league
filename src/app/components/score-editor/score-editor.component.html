@@ -1,5 +1,18 @@
-<p>
-  score-editor works!
-</p>
+<!--<mat-card>
+  <mat-card-content>
+    <form class="score-form" #scoreForm="ngForm">
+      <mat-form-field>
+        <mat-select placeholder="Favorite animal" [formControl]="playerControl" required>
+          <mat-option>Select player...</mat-option>
+          <mat-option *ngFor="let player of players" [value]="player">
+            {{player.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error>
+        <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+</mat-card>-->
 
 <app-handicap-lookup></app-handicap-lookup>
