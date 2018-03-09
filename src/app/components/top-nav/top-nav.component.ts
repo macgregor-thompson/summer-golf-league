@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTES } from '../../routes/routes';
+import { Nav } from '../../models/nav';
 
 
 @Component({
@@ -8,7 +8,34 @@ import { ROUTES } from '../../routes/routes';
   styleUrls: ['./top-nav.component.scss']
 })
 export class TopNavComponent implements OnInit {
-  routes = ROUTES;
+  routes: Nav[] = [
+    {
+      path: '/',
+      name: 'Home',
+      exact: true
+    },
+    {
+      path: '/rankings',
+      name: 'Rankings',
+      exact: true
+    },
+    {
+      path: '/players',
+      name: 'Players',
+      exact: true
+    },
+    {
+      path: '/scores',
+      name: 'Scores',
+      exact: true
+    },
+    {
+      path: '/rules',
+      name: 'Rules',
+      exact: true
+    }
+  ];
+
 
   constructor() { }
 

@@ -35,6 +35,10 @@ import { ScoreToParPipe } from './pipes/score-to-par.pipe';
 import { ScoreEditorComponent } from './components/score-editor/score-editor.component';
 import { LoginComponent } from './components/login/login.component';
 import { ScoreComponent } from './components/score/score.component';
+import { HandicapLookupComponent } from './components/handicap-lookup/handicap-lookup.component';
+import { SafePipe } from './pipes/safe.pipe';
+import { PlayersComponent } from './components/players/players.component';
+import { PlayersDashboardComponent } from './components/players-dashboard/players-dashboard.component';
 
 
 const routes: Routes = [
@@ -42,6 +46,7 @@ const routes: Routes = [
   { path: 'scores', component: ScoresComponent, pathMatch: 'full' },
   { path: 'score/:id', component: ScoreViewComponent, pathMatch: 'full' },
   { path: 'rankings', component: RankingsComponent, pathMatch: 'full' },
+  { path: 'players', component: PlayersDashboardComponent, pathMatch: 'full' },
   { path: 'player/:id', component: PlayerDashboardComponent, pathMatch: 'full' },
   { path: 'rules', component: RulesComponent, pathMatch: 'full' },
   { path: 'score-editor', component: ScoreEditorComponent, pathMatch: 'full' },
@@ -66,7 +71,11 @@ const routes: Routes = [
     ScoreToParPipe,
     ScoreEditorComponent,
     LoginComponent,
-    ScoreComponent
+    ScoreComponent,
+    HandicapLookupComponent,
+    SafePipe,
+    PlayersComponent,
+    PlayersDashboardComponent
   ],
   imports: [
     BrowserModule,
