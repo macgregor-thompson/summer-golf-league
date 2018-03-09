@@ -1,67 +1,60 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
-
-import 'rxjs/add/operator/switchMap';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
 import { MatTableDataSource } from '@angular/material';
 
+import { Round } from '../../models/round';
+import { SidePlayed } from '../../models/enums/side-played.enum';
 import { Score } from '../../models/score';
-import { MockDataService } from '../../services/mock-data.service';
-import { Course } from '../../models/course';
 
 
 @Component({
   selector: 'app-score-view',
   templateUrl: './score-view.component.html',
-  styleUrls: [ './score-view.component.scss' ]
+  styleUrls: ['./score-view.component.scss']
 })
-export class ScoreViewComponent implements OnInit {
-  score: Score;
-  dataSource: MatTableDataSource<Score>;
-  course: Course;
+export class ScoreViewComponent implements OnInit, OnChanges {
+  @Input() round: Round;
+  SidePlayed = SidePlayed;
+  //dataSource: MatTableDataSource<Round>;
+  displayedColumns: string[];
 
- /* displayedColumns = [
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', 'out',
-    '10', '11', '12', '13', '14', '15', '16', '17', '18', 'in', 'total'
-  ];*/
-
- frontNineColumns = [
-   'hole', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'out'
- ];
-
- backNineColumns = [
-   'hole', '10', '11', '12', '13', '14', '15', '16', '17', '18', 'in'
- ];
-
-  //dataSource = new MatTableDataSource(...{...frontNine} = this.score.frontNine, );
-
-  constructor( private router: Router,
-               private route: ActivatedRoute,
-               private mockDataService: MockDataService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.route.params
-      .switchMap((score: Score) => this.mockDataService.getScore(score.id))
-      .subscribe(data => {
-        //must return an array for the Mat Table
-        console.log('data:', typeof data, data);
-        this.score = data[0];
-        this.dataSource = new MatTableDataSource(data);
-        if (this.score.frontNine && this.score.backNine) {
-          this.backNineColumns = this.backNineColumns.concat('total');
-        }
-        console.log('dataSource:', this.dataSource);
-        this.mockDataService.getCourse(data[0].courseId)
-          .subscribe((course: Course) => {
-            this.course = course;
-            console.log('course:', this.course);
-          });
-      });
+    console.log('round:', this.round);
+    //this.setData();
   }
 
-  goBack() {
-    // this is called imperative routing because we're using the native api
-    this.router.navigate(['']);
+  ngOnChanges(changes) {
+    console.log('something changed:', changes);
+    //this.setData();
+  }
+
+ /* setData() {
+    if (this.round.sidePlayed === this.SidePlayed.Front) {
+      this.displayedColumns = ['hole', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'total'];
+    } else {
+      this.displayedColumns = ['hole', '10', '11', '12', '13', '14', '15', '16', '17', '18', 'total'];
+    }
+    this.dataSource = new MatTableDataSource([this.round]);
+  }*/
+
+  scoreClass(score: Score) {
+    if (score.score === score.par) {
+      return 'par';
+    } else if (score.score === score.par + 1) {
+      return 'bogie';
+    } else if (score.score === score.par + 2) {
+      return 'double-bogie';
+    }  else if (score.score > score.par + 2) {
+      return 'other';
+    } else if (score.score === score.par - 1) {
+      return 'birdie';
+    } else if (score.score === score.par - 2) {
+      return 'eagle';
+    } else {
+      return 'unknown';
+    }
   }
 
 

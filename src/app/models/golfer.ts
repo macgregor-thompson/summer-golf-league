@@ -1,5 +1,6 @@
-import { LeagueStatus } from './league-status.enum';
-import { Score } from './score';
+import { LeagueStatus } from './enums/league-status.enum';
+import { Round } from './round';
+import { Team } from './team';
 
 export interface Golfer {
   id: number;
@@ -7,7 +8,8 @@ export interface Golfer {
   lastName: string;
   nickname?: string;
   email: string;
+  team: Team;
   leagueStatus: LeagueStatus;
   handicap: number;
-  scores: Score[];
+  scores: Round[];
 }

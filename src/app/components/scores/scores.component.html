@@ -1,78 +1,66 @@
 <div class="view-container">
-  <mat-accordion class="table-headers-align">
-    <!-- Panel -->
-    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Personal data
-        </mat-panel-title>
-        <mat-panel-description>
-          Type your name and age
-          <mat-icon>account_circle</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+  <button mat-raised-button color="primary" routerLink="/">
+    <i class="material-icons">arrow_back</i>
+    Go Back
+  </button>
+  <h1>Score View</h1>
+  <div class="table-container mat-elevation-z8">
+    <!-- <div class="table-header">
+       <mat-form-field>
+         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+       </mat-form-field>
+     </div>-->
 
-      <mat-form-field>
-        <input matInput placeholder="First name">
-      </mat-form-field>
+    <!-- Front Nine -->
+    <mat-table #table [dataSource]="dataSource" *ngIf="round">
+      <ng-container matColumnDef="hole">
+        <mat-header-cell *matHeaderCellDef>Hole</mat-header-cell>
+        <mat-cell *matCellDef="let r">Score</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="1">
+        <mat-header-cell *matHeaderCellDef>1</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.scores['1']}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="2">
+        <mat-header-cell *matHeaderCellDef>2</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.scores['2']}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="3">
+        <mat-header-cell *matHeaderCellDef>3</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.scores['3']}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="4">
+        <mat-header-cell *matHeaderCellDef>4</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.scores['4']}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="5">
+        <mat-header-cell *matHeaderCellDef>5</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.scores['5']}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="6">
+        <mat-header-cell *matHeaderCellDef>6</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.scores['6']}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="7">
+        <mat-header-cell *matHeaderCellDef>7</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.scores['7']}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="8">
+        <mat-header-cell *matHeaderCellDef>8</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.scores['8']}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="9">
+        <mat-header-cell *matHeaderCellDef>9</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.scores['9']}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="out">
+        <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+        <mat-cell *matCellDef="let r"> {{r.total}}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 
-      <mat-form-field>
-        <input matInput type="number" min="1" placeholder="Age">
-      </mat-form-field>
-
-      <mat-action-row>
-        <button mat-button color="primary" (click)="nextStep()">Next</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-    <!-- End Panel -->
-
-    <!-- Panel -->
-    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Destination
-        </mat-panel-title>
-        <mat-panel-description>
-          Type the country name
-          <mat-icon>map</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <mat-form-field>
-        <input matInput placeholder="Country">
-      </mat-form-field>
-
-      <mat-action-row>
-        <button mat-button color="warn" (click)="prevStep()">Previous</button>
-        <button mat-button color="primary" (click)="nextStep()">Next</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-    <!-- End Panel -->
-
-
-    <!-- Panel -->
-    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Day of the trip
-        </mat-panel-title>
-        <mat-panel-description>
-          Inform the date you wish to travel
-          <mat-icon>date_range</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-
-     <mat-form-field>
-        <input matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" readonly>
-      </mat-form-field>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-action-row>
-        <button mat-button color="warn" (click)="prevStep()">Previous</button>
-        <button mat-button color="primary" (click)="nextStep()">End</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-    <!-- End Panel -->
-
-  </mat-accordion>
+  </div>
 
 </div>

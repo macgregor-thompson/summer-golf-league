@@ -20,6 +20,11 @@ export const ROUTES: Nav[] = [
     path: '/rules',
     name: 'Rules',
     exact: true
-  }
+  }/*,
+  {
+    path: '/score-editor',
+    name: 'Score Editor',
+    exact: true
+  }*/
 
 ];

@@ -1,2 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
+@include mat-core();
+@import 'assets/styles/utils';
+
+.summer-league-app {
+  font-family: 'Roboto', sans-serif;
+}
+
+.team-colors {
+  $alternate-primary: mat-palette($mat-red);
+  $alternate-accent:  mat-palette($mat-blue);
+  $alternate-warn:  mat-palette($mat-green, 600);
+  $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent, $alternate-warn);
+
+  @include angular-material-theme($alternate-theme);
+}

@@ -4,7 +4,7 @@ import { Par } from './par';
 
 export class Hole {
   number: number;
-  par: number | Par;
+  par: number;
   yardage: number;
   handicap: number;
 }

@@ -1,4 +1,3 @@
-/* Structure */
 .table-container {
   display: flex;
   flex-direction: column;
@@ -19,3 +18,96 @@
   overflow: auto;
   max-height: 500px;
 }
+
+.mat-header-cell {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, .54);
+}
+
+.mat-cell, .mat-header-cell {
+  text-align: center;
+}
+
+.mat-header-row, .mat-row {
+  padding: 0;
+}
+
+.score-cell {
+  height: 26px;
+}
+
+.par-cell {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, .54);
+  padding-bottom: 10px;
+}
+
+.birdie {
+  height: 22px;
+  width: 22px;
+  border: 2px solid red;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.par {
+  height: 26px;
+  width: 26px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bogie {
+  height: 22px;
+  width: 22px;
+  border: 2px solid #000;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.double-bogie {
+  height: 18px;
+  width: 18px;
+  border: 4px double #000;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.other {
+  height: 22px;
+  width: 22px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid #000;
+  background-color: #000;
+  color: #fff;
+}
+
+.eagle {
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid red;
+  background-color: red;
+  color: #fff;
+}
+
+.unknown {
+}
+
+.total-score-td {
+
+}
+
+.total-score-div {
+  border: 2px solid red;
+  background-color: red;
+  color: #fff;
+}
+
+

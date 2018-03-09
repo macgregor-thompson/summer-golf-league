@@ -3,112 +3,610 @@
     {
       "id": 101,
       "golferId": 1,
-      "date": "2/28/2018",
+      "date": "5/17/2018",
+      "week": 1,
       "courseId": 1,
-      "tees": "Maroon",
-      "holesPlayed": 0,
-      "total": 71,
-      "frontNine": {
-        "out": 36,
-        "1": 4,
-        "2": 5,
-        "3": 4,
-        "4": 3,
-        "5": 5,
-        "6": 3,
-        "7": 4,
-        "8": 4,
-        "9": 4
-      },
-      "backNine": {
-        "in": 35,
-        "10": 4,
-        "11": 4,
-        "12": 5,
-        "13": 4,
-        "14": 3,
-        "15": 4,
-        "16": 4,
-        "17": 3,
-        "18": 4
-      }
+      "tees": "Combo",
+      "sidePlayed": 1,
+      "total": 39,
+      "par": 36,
+      "scores": [
+        {
+          "score": 4,
+          "number": 1,
+          "par": 4,
+          "yardage": 335,
+          "handicap": 12
+        },
+        {
+          "score": 4,
+          "number": 2,
+          "par": 5,
+          "yardage": 490,
+          "handicap": 10
+        },
+        {
+          "score": 5,
+          "number": 3,
+          "par": 4,
+          "yardage": 362,
+          "handicap": 4
+        },
+        {
+          "score": 5,
+          "number": 4,
+          "par": 3,
+          "yardage": 179,
+          "handicap": 18
+        },
+        {
+          "score": 3,
+          "number": 5,
+          "par": 5,
+          "yardage": 525,
+          "handicap": 8
+        },
+        {
+          "score": 6,
+          "number": 6,
+          "par": 3,
+          "yardage": 126,
+          "handicap": 16
+        },
+        {
+          "score": 4,
+          "number": 7,
+          "par": 4,
+          "yardage": 368,
+          "handicap": 2
+        },
+        {
+          "score": 4,
+          "number": 8,
+          "par": 4,
+          "yardage": 328,
+          "handicap": 6
+        },
+        {
+          "score": 4,
+          "number": 9,
+          "par": 4,
+          "yardage": 341,
+          "handicap": 14
+        }
+      ]
     },
     {
       "id": 102,
-      "golferId": 1,
-      "date": "2/22/2018",
+      "golferId": 2,
+      "date": "5/17/2018",
+      "week": 1,
       "courseId": 1,
-      "tees": "Maroon",
-      "holesPlayed": 0,
-      "total": 68,
-      "frontNine": {
-        "out": 33,
-        "1": 4,
-        "2": 4,
-        "3": 5,
-        "4": 3,
-        "5": 4,
-        "6": 3,
-        "7": 4,
-        "8": 4,
-        "9": 3
-      },
-      "backNine": {
-        "in": 35,
-        "10": 4,
-        "11": 5,
-        "12": 4,
-        "13": 4,
-        "14": 3,
-        "15": 3,
-        "16": 4,
-        "17": 3,
-        "18": 5
-      }
+      "tees": "Combo",
+      "sidePlayed": 1,
+      "total": 38,
+      "par": 36,
+      "scores": [
+        {
+          "score": 5,
+          "number": 1,
+          "par": 4,
+          "yardage": 335,
+          "handicap": 12
+        },
+        {
+          "score": 5,
+          "number": 2,
+          "par": 5,
+          "yardage": 490,
+          "handicap": 10
+        },
+        {
+          "score": 5,
+          "number": 3,
+          "par": 4,
+          "yardage": 362,
+          "handicap": 4
+        },
+        {
+          "score": 3,
+          "number": 4,
+          "par": 3,
+          "yardage": 179,
+          "handicap": 18
+        },
+        {
+          "score": 5,
+          "number": 5,
+          "par": 5,
+          "yardage": 525,
+          "handicap": 8
+        },
+        {
+          "score": 3,
+          "number": 6,
+          "par": 3,
+          "yardage": 126,
+          "handicap": 16
+        },
+        {
+          "score": 4,
+          "number": 7,
+          "par": 4,
+          "yardage": 368,
+          "handicap": 2
+        },
+        {
+          "score": 4,
+          "number": 8,
+          "par": 4,
+          "yardage": 328,
+          "handicap": 6
+        },
+        {
+          "score": 4,
+          "number": 9,
+          "par": 4,
+          "yardage": 341,
+          "handicap": 14
+        }
+      ]
     },
     {
       "id": 103,
-      "golferId": 1,
-      "date": "1/13/2018",
+      "golferId": 3,
+      "date": "5/17/2018",
+      "week": 1,
       "courseId": 1,
-      "tees": "Maroon",
-      "holesPlayed": 1,
-      "total": 34,
-      "frontNine": {
-        "out": 34,
-        "1": 4,
-        "2": 4,
-        "3": 5,
-        "4": 3,
-        "5": 4,
-        "6": 3,
-        "7": 4,
-        "8": 4,
-        "9": 4
-      },
-      "backNine": null
+      "tees": "Combo",
+      "sidePlayed": 1,
+      "total": 40,
+      "par": 36,
+      "scores": [
+        {
+          "score": 5,
+          "number": 1,
+          "par": 4,
+          "yardage": 335,
+          "handicap": 12
+        },
+        {
+          "score": 5,
+          "number": 2,
+          "par": 5,
+          "yardage": 490,
+          "handicap": 10
+        },
+        {
+          "score": 5,
+          "number": 3,
+          "par": 4,
+          "yardage": 362,
+          "handicap": 4
+        },
+        {
+          "score": 3,
+          "number": 4,
+          "par": 3,
+          "yardage": 179,
+          "handicap": 18
+        },
+        {
+          "score": 5,
+          "number": 5,
+          "par": 5,
+          "yardage": 525,
+          "handicap": 8
+        },
+        {
+          "score": 3,
+          "number": 6,
+          "par": 3,
+          "yardage": 126,
+          "handicap": 16
+        },
+        {
+          "score": 4,
+          "number": 7,
+          "par": 4,
+          "yardage": 368,
+          "handicap": 2
+        },
+        {
+          "score": 5,
+          "number": 8,
+          "par": 4,
+          "yardage": 328,
+          "handicap": 6
+        },
+        {
+          "score": 5,
+          "number": 9,
+          "par": 4,
+          "yardage": 341,
+          "handicap": 14
+        }
+      ]
     },
     {
       "id": 104,
-      "golferId": 1,
-      "date": "2/14/2018",
+      "golferId": 4,
+      "date": "5/17/2018",
+      "week": 1,
       "courseId": 1,
-      "tees": "Maroon",
-      "holesPlayed": 2,
+      "tees": "Combo",
+      "sidePlayed": 1,
+      "total": 48,
+      "par": 36,
+      "scores": [
+        {
+          "score": 4,
+          "number": 1,
+          "par": 4,
+          "yardage": 335,
+          "handicap": 12
+        },
+        {
+          "score": 5,
+          "number": 2,
+          "par": 5,
+          "yardage": 490,
+          "handicap": 10
+        },
+        {
+          "score": 5,
+          "number": 3,
+          "par": 4,
+          "yardage": 362,
+          "handicap": 4
+        },
+        {
+          "score": 2,
+          "number": 4,
+          "par": 3,
+          "yardage": 179,
+          "handicap": 18
+        },
+        {
+          "score": 5,
+          "number": 5,
+          "par": 5,
+          "yardage": 525,
+          "handicap": 8
+        },
+        {
+          "score": 3,
+          "number": 6,
+          "par": 3,
+          "yardage": 126,
+          "handicap": 16
+        },
+        {
+          "score": 4,
+          "number": 7,
+          "par": 4,
+          "yardage": 368,
+          "handicap": 2
+        },
+        {
+          "score": 5,
+          "number": 8,
+          "par": 4,
+          "yardage": 328,
+          "handicap": 6
+        },
+        {
+          "score": 5,
+          "number": 9,
+          "par": 4,
+          "yardage": 341,
+          "handicap": 14
+        }
+      ]
+    },
+    {
+      "id": 201,
+      "golferId": 1,
+      "date": "5/24/2018",
+      "week": 2,
+      "courseId": 1,
+      "tees": "Combo",
+      "sidePlayed": 2,
+      "total": 38,
+      "par": 35,
+      "scores": [
+        {
+          "score": 4,
+          "number": 10,
+          "par": 4,
+          "yardage": 302,
+          "handicap": 7
+        },
+        {
+          "score": 5,
+          "number": 11,
+          "par": 4,
+          "yardage": 473,
+          "handicap": 1
+        },
+        {
+          "score": 4,
+          "number": 12,
+          "par": 5,
+          "yardage": 526,
+          "handicap": 5
+        },
+        {
+          "score": 2,
+          "number": 13,
+          "par": 4,
+          "yardage": 311,
+          "handicap": 15
+        },
+        {
+          "score": 5,
+          "number": 14,
+          "par": 3,
+          "yardage": 165,
+          "handicap": 11
+        },
+        {
+          "score": 7,
+          "number": 15,
+          "par": 4,
+          "yardage": 359,
+          "handicap": 13
+        },
+        {
+          "score": 4,
+          "number": 16,
+          "par": 4,
+          "yardage": 395,
+          "handicap": 9
+        },
+        {
+          "score": 3,
+          "number": 17,
+          "par": 3,
+          "yardage": 158,
+          "handicap": 17
+        },
+        {
+          "score": 4,
+          "number": 18,
+          "par": 4,
+          "yardage": 384,
+          "handicap": 3
+        }
+      ]
+    },
+    {
+      "id": 202,
+      "golferId": 2,
+      "date": "5/24/2018",
+      "week": 2,
+      "courseId": 1,
+      "tees": "Combo",
+      "sidePlayed": 2,
       "total": 37,
-      "frontNine": null,
-      "backNine": {
-        "in": 37,
-        "10": 4,
-        "11": 5,
-        "12": 4,
-        "13": 4,
-        "14": 3,
-        "15": 5,
-        "16": 4,
-        "17": 3,
-        "18": 5
-      }
+      "par": 35,
+      "scores": [
+        {
+          "score": 4,
+          "number": 10,
+          "par": 4,
+          "yardage": 302,
+          "handicap": 7
+        },
+        {
+          "score": 5,
+          "number": 11,
+          "par": 4,
+          "yardage": 473,
+          "handicap": 1
+        },
+        {
+          "score": 5,
+          "number": 12,
+          "par": 5,
+          "yardage": 526,
+          "handicap": 5
+        },
+        {
+          "score": 4,
+          "number": 13,
+          "par": 4,
+          "yardage": 311,
+          "handicap": 15
+        },
+        {
+          "score": 3,
+          "number": 14,
+          "par": 3,
+          "yardage": 165,
+          "handicap": 11
+        },
+        {
+          "score": 4,
+          "number": 15,
+          "par": 4,
+          "yardage": 359,
+          "handicap": 13
+        },
+        {
+          "score": 4,
+          "number": 16,
+          "par": 4,
+          "yardage": 395,
+          "handicap": 9
+        },
+        {
+          "score": 3,
+          "number": 17,
+          "par": 3,
+          "yardage": 158,
+          "handicap": 17
+        },
+        {
+          "score": 5,
+          "number": 18,
+          "par": 4,
+          "yardage": 384,
+          "handicap": 3
+        }
+      ]
+    },
+    {
+      "id": 203,
+      "golferId": 3,
+      "date": "5/24/2018",
+      "week": 2,
+      "courseId": 1,
+      "tees": "Combo",
+      "sidePlayed": 2,
+      "total": 39,
+      "par": 35,
+      "scores": [
+        {
+          "score": 4,
+          "number": 10,
+          "par": 4,
+          "yardage": 302,
+          "handicap": 7
+        },
+        {
+          "score": 5,
+          "number": 11,
+          "par": 4,
+          "yardage": 473,
+          "handicap": 1
+        },
+        {
+          "score": 5,
+          "number": 12,
+          "par": 5,
+          "yardage": 526,
+          "handicap": 5
+        },
+        {
+          "score": 5,
+          "number": 13,
+          "par": 4,
+          "yardage": 311,
+          "handicap": 15
+        },
+        {
+          "score": 3,
+          "number": 14,
+          "par": 3,
+          "yardage": 165,
+          "handicap": 11
+        },
+        {
+          "score": 5,
+          "number": 15,
+          "par": 4,
+          "yardage": 359,
+          "handicap": 13
+        },
+        {
+          "score": 4,
+          "number": 16,
+          "par": 4,
+          "yardage": 395,
+          "handicap": 9
+        },
+        {
+          "score": 3,
+          "number": 17,
+          "par": 3,
+          "yardage": 158,
+          "handicap": 17
+        },
+        {
+          "score": 5,
+          "number": 18,
+          "par": 4,
+          "yardage": 384,
+          "handicap": 3
+        }
+      ]
+    },
+    {
+      "id": 204,
+      "golferId": 4,
+      "date": "5/24/2018",
+      "week": 2,
+      "courseId": 1,
+      "tees": "Combo",
+      "sidePlayed": 2,
+      "total": 38,
+      "par": 35,
+      "scores": [
+        {
+          "score": 3,
+          "number": 10,
+          "par": 4,
+          "yardage": 302,
+          "handicap": 7
+        },
+        {
+          "score": 5,
+          "number": 11,
+          "par": 4,
+          "yardage": 473,
+          "handicap": 1
+        },
+        {
+          "score": 5,
+          "number": 12,
+          "par": 5,
+          "yardage": 526,
+          "handicap": 5
+        },
+        {
+          "score": 5,
+          "number": 13,
+          "par": 4,
+          "yardage": 311,
+          "handicap": 15
+        },
+        {
+          "score": 3,
+          "number": 14,
+          "par": 3,
+          "yardage": 165,
+          "handicap": 11
+        },
+        {
+          "score": 5,
+          "number": 15,
+          "par": 4,
+          "yardage": 359,
+          "handicap": 13
+        },
+        {
+          "score": 4,
+          "number": 16,
+          "par": 4,
+          "yardage": 395,
+          "handicap": 9
+        },
+        {
+          "score": 3,
+          "number": 17,
+          "par": 3,
+          "yardage": 158,
+          "handicap": 17
+        },
+        {
+          "score": 5,
+          "number": 18,
+          "par": 4,
+          "yardage": 384,
+          "handicap": 3
+        }
+      ]
     }
   ]
 }

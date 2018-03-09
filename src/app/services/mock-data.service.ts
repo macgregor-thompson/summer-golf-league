@@ -6,7 +6,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { LeagueStatus } from '../models/league-status.enum';
+import { LeagueStatus } from '../models/enums/league-status.enum';
+import { Round } from '../models/round';
+import { Week } from '../models/week';
 
 @Injectable()
 export class MockDataService {
@@ -51,7 +53,7 @@ export class MockDataService {
       .map((data: object) => data['scores']);
   }
 
-  getScores(playerId: number): Observable<any> {
+  getPlayerScores(playerId: number): Observable<any> {
     return this.http
       .get('assets/mock-data/scores.json')
       .map((data: object) => data['scores'].filter(score => score.golferId === playerId));
@@ -63,6 +65,19 @@ export class MockDataService {
     return this.http
       .get('assets/mock-data/scores.json')
       .map((data: object) => data['scores'].filter(score => score.id == scoreId));
+  }
+
+  getScoresByWeek(weekNum: number): Observable<Round[]> {
+    console.log('getting scores from week :', weekNum);
+    return this.http
+      .get('assets/mock-data/scores.json')
+      .map((data: object) => data['scores'].filter((round: Round) => round.week === weekNum));
+  }
+
+  getWeeks(): Observable<Week[]> {
+    return this.http
+      .get('assets/mock-data/weeks.json')
+      .map((data: object) => data['weeks']);
   }
 
 

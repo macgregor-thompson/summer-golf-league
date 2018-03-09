@@ -1,0 +1,37 @@
+<mat-toolbar class="justify-content-between">
+  <a routerLink="/" class="navbar-brand">
+    Seacoast Men's League
+  </a>
+  <!-- This fills the remaining space of the current row -->
+  <span class="example-fill-remaining-space"></span>
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link
+       *ngFor="let link of routes"
+       [routerLink]="link.path"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive"
+       [routerLinkActiveOptions]="{ exact: link.exact }">
+      {{link.name}}
+    </a>
+    <a mat-tab-link
+       routerLink="/score-editor"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive"
+       [routerLinkActiveOptions]="{ exact: true }">
+      <mat-icon>edit</mat-icon>
+    </a>
+    <!--<a mat-tab-link [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </a>
+    <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
+      <button mat-menu-item >
+        <mat-icon>person</mat-icon>
+        <span>Login</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>-->
+  </nav>
+</mat-toolbar>

@@ -1,123 +1,104 @@
-<div class="view-container">
-  <button mat-raised-button color="primary" routerLink="/">
-    <i class="material-icons">arrow_back</i>
-    Go Back
-  </button>
-  <h1>Score View</h1>
-  <div class="table-container mat-elevation-z8">
-    <!-- <div class="table-header">
-       <mat-form-field>
-         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-       </mat-form-field>
-     </div>-->
+<div class="table-container mat-elevation-z8">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="text-muted">
+          <small>Hole</small>
+        </th>
+        <th class="text-muted" *ngFor="let score of round.scores">
+          <small>{{score.number}}</small>
+        </th>
+        <th class="text-muted">
+          <small>Total</small>
+        </th>
+      </tr>
+      <tr>
+        <th class="text-muted">
+          <small>Handicap</small>
+        </th>
+        <th class="text-muted" *ngFor="let score of round.scores">
+          <small>{{score.handicap}}</small>
+        </th>
+        <th class="text-muted">
+          <small>{{round.par}}</small>
+        </th>
+      </tr>
+      <tr>
+        <th class="text-muted">
+          <small>Par</small>
+        </th>
+        <th class="text-muted" *ngFor="let score of round.scores">
+          <small>{{score.par}}</small>
+        </th>
+        <th class="text-muted">
+          <small>{{round.par}}</small>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th class="text-muted">
+          <small>Gross</small>
+        </th>
+        <th *ngFor="let score of round.scores" class="text-center">
+          <div [ngClass]="scoreClass(score)">
+            {{score.score}}
+          </div>
+        </th>
+        <th class="total-score-td">
+          <div class="total-score-div">
+            {{round.total}}
+          </div>
+        </th>
+      </tr>
+      <tr>
+        <th class="text-muted">
+          <small>Net</small>
+        </th>
+        <th *ngFor="let score of round.scores" class="text-center">
+          <div [ngClass]="scoreClass(score)">
+            {{score.score}}
+          </div>
+        </th>
+        <th class="total-score-td">
+          <div class="total-score-div">
+            {{round.total}}
+          </div>
+        </th>
+      </tr>
 
-    <!-- Front Nine -->
-    <mat-table #table [dataSource]="dataSource" *ngIf="score?.frontNine">
-      <ng-container matColumnDef="hole">
-        <mat-header-cell *matHeaderCellDef>Hole</mat-header-cell>
-        <mat-cell *matCellDef="let s">Score</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="1">
-        <mat-header-cell *matHeaderCellDef>1</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['1']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="2">
-        <mat-header-cell *matHeaderCellDef>2</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['2']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="3">
-        <mat-header-cell *matHeaderCellDef>3</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['3']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="4">
-        <mat-header-cell *matHeaderCellDef>4</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['4']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="5">
-        <mat-header-cell *matHeaderCellDef>5</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['5']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="6">
-        <mat-header-cell *matHeaderCellDef>6</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['6']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="7">
-        <mat-header-cell *matHeaderCellDef>7</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['7']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="8">
-        <mat-header-cell *matHeaderCellDef>8</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['8']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="9">
-        <mat-header-cell *matHeaderCellDef>9</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['9']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="out">
-        <mat-header-cell *matHeaderCellDef>Out</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.frontNine['out']}}</mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="frontNineColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: frontNineColumns;"></mat-row>
-    </mat-table>
-    <!-- End Front Nine -->
-
-    <!-- Back Nine -->
-    <mat-table #table [dataSource]="dataSource" *ngIf="score?.backNine">
-      <ng-container matColumnDef="hole">
-        <mat-header-cell *matHeaderCellDef>Hole</mat-header-cell>
-        <mat-cell *matCellDef="let s">Score</mat-cell>
-      </ng-container>0
-      <ng-container matColumnDef="10">
-        <mat-header-cell *matHeaderCellDef>10</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['10']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="11">
-        <mat-header-cell *matHeaderCellDef>11</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['11']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="12">
-        <mat-header-cell *matHeaderCellDef>12</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['12']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="13">
-        <mat-header-cell *matHeaderCellDef>13</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['13']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="14">
-        <mat-header-cell *matHeaderCellDef>14</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['14']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="15">
-        <mat-header-cell *matHeaderCellDef>15</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['15']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="16">
-        <mat-header-cell *matHeaderCellDef>16</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['16']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="17">
-        <mat-header-cell *matHeaderCellDef>17</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['17']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="18">
-        <mat-header-cell *matHeaderCellDef>18</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['18']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="in">
-        <mat-header-cell *matHeaderCellDef>In</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.backNine['in']}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="total" *ngIf="score.frontNine && score.backNine">
-        <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
-        <mat-cell *matCellDef="let s"> {{s.total}}</mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="backNineColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: backNineColumns;"></mat-row>
-    </mat-table>
-    <!-- End Back Nine -->
-
+      </tbody>
+    </table>
   </div>
-
 </div>
+
+<!--<div class="table-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" *ngIf="dataSource">
+    <ng-container matColumnDef="hole" class="padding-bottom-20">
+      <mat-header-cell *matHeaderCellDef>Hole</mat-header-cell>
+      <mat-cell *matCellDef>
+        <div class="par-cell">Par</div>
+        <div class="score-cell">Score</div>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="{{score.number}}" *ngFor="let score of round.scores" class="padding-bottom-20">
+      <mat-header-cell *matHeaderCellDef>{{score.number}}</mat-header-cell>
+      <mat-cell *matCellDef="let r">
+        <div class="par-cell">{{score.par}}</div>
+        <div [ngClass]="scoreClass(score)">
+          {{score.score}}
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="total" class="padding-bottom-20">
+      <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+      <mat-cell *matCellDef="let r">
+        <div class="par-cell">{{r.par}}</div>
+        <div>{{r.total}}</div>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>-->
