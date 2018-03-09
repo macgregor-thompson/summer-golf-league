@@ -34,6 +34,7 @@ import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { ScoreToParPipe } from './pipes/score-to-par.pipe';
 import { ScoreEditorComponent } from './components/score-editor/score-editor.component';
 import { LoginComponent } from './components/login/login.component';
+import { ScoreComponent } from './components/score/score.component';
 
 
 const routes: Routes = [
@@ -64,7 +65,8 @@ const routes: Routes = [
     TopNavComponent,
     ScoreToParPipe,
     ScoreEditorComponent,
-    LoginComponent
+    LoginComponent,
+    ScoreComponent
   ],
   imports: [
     BrowserModule,

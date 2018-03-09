@@ -70,18 +70,16 @@ export class MainDashboardComponent implements OnInit {
 
   getScoresByWeek(weekNum: number) {
     this.spinner = true;
-    setTimeout(() => {
-      this.mockDataService.getScoresByWeek(weekNum)
-        .subscribe((data: Round[]) => {
-          this.rounds = data;
-          console.log('data2:', data);
-          console.log(`Week ${weekNum} rounds: ${this.rounds}`);
-          data.forEach((round: Round) => {
-            this.weeklyTotals[round.golferId] = round.total;
-          });
-          this.spinner = false;
-        }, err => this.spinner = false);
-    }, 3000);
+    this.mockDataService.getScoresByWeek(weekNum)
+      .subscribe((data: Round[]) => {
+        this.rounds = data;
+        console.log('data2:', data);
+        console.log(`Week ${weekNum} rounds: ${this.rounds}`);
+        data.forEach((round: Round) => {
+          this.weeklyTotals[round.golferId] = round.total;
+        });
+        this.spinner = false;
+      }, err => this.spinner = false);
   }
 
   filterRound(golfer): Round {
