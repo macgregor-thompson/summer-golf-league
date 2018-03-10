@@ -18,7 +18,6 @@ export class PlayersDashboardComponent implements OnInit {
   rounds: Round[];
   step = -1;
   result;
-  averages = {};
 
   constructor(private mockDataService: MockDataService,
               public dialog: MatDialog) { }
