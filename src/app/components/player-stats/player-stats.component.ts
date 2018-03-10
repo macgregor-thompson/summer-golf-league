@@ -14,9 +14,9 @@ import { Score } from '../../models/score';
 })
 export class PlayerStatsComponent implements OnInit {
   @Input() player: Golfer;
-  @Output() passUpAverage: EventEmitter<number> = new EventEmitter<number>();
+  @Input() rounds: Round[];
+  //@Output() passUpAverage: EventEmitter<number> = new EventEmitter<number>();
 
-  rounds: Round[];
   spinner = false;
   scores: object[];
   birdies = 0;
@@ -37,14 +37,15 @@ export class PlayerStatsComponent implements OnInit {
   };
 
 
-  constructor(private mockDataService: MockDataService,
+  constructor(/*private mockDataService: MockDataService,*/
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.getScores();
+    this.analyzeScores();
+    //this.getScores();
   }
 
-  getScores() {
+  /*getScores() {
     this.spinner = true;
     this.mockDataService.getPlayerScores(this.player.id)
       .subscribe((data: Round[]) => {
@@ -53,7 +54,7 @@ export class PlayerStatsComponent implements OnInit {
         this.calculateAverage();
         this.spinner = false;
       }, () => this.spinner = false);
-  }
+  }*/
 
   analyzeScores() {
     this.spinner = true;
@@ -85,13 +86,13 @@ export class PlayerStatsComponent implements OnInit {
     this.spinner = false;
   }
 
-  calculateAverage() {
+ /* calculateAverage() {
     let totals = 0;
     this.rounds.forEach((round: Round) => {
       totals = totals + round.total;
     });
     this.passUpAverage.emit(totals / this.rounds.length);
-  }
+  }*/
 
   onSelect(event) {
     console.log('event:', event);
@@ -126,3 +127,6 @@ export class PlayerStatsComponent implements OnInit {
   }
 
 }
+
+
+

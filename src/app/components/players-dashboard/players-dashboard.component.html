@@ -14,7 +14,7 @@
             {{golfer.handicap}}
             |
             <small>Average:</small>
-            {{averages[golfer.id]}}
+            <span *ngIf="rounds">{{calculateAverage(golfer.id)}}</span>
           </div>
           <mat-chip-list class="team-colors">
             <mat-chip selected="true" [color]="golfer.team.color">{{golfer.team.name}}</mat-chip>
@@ -26,10 +26,8 @@
       </mat-expansion-panel-header>
 
       <mat-divider></mat-divider>
-
       <ng-template matExpansionPanelContent>
-        <app-player-stats *ngIf="golfers" [player]="golfer"
-                          (passUpAverage)="setAverage($event, golfer)"></app-player-stats>
+        <app-player-stats *ngIf="golfers && rounds" [player]="golfer" [rounds]="filterRounds(golfer.id)"></app-player-stats>
       </ng-template>
 
       <mat-action-row>

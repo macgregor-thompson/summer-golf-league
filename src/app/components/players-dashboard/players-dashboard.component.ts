@@ -14,6 +14,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 export class PlayersDashboardComponent implements OnInit {
   spinner = false;
   golfers: Golfer[];
+  rounds: Round[];
   step = 0;
   averages = {};
 
@@ -21,6 +22,7 @@ export class PlayersDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getGolfers();
+    this.getAllScores();
   }
 
   getGolfers() {
@@ -32,14 +34,37 @@ export class PlayersDashboardComponent implements OnInit {
       }, () => this.spinner = false);
   }
 
-  setAverage(avg: number, golfer: Golfer) {
-    this.averages[golfer.id] = avg;
+  getAllScores() {
+    this.spinner = true;
+    this.mockDataService.getAllScores()
+      .subscribe((data: Round[]) => {
+        this.rounds = data;
+        this.spinner = false;
+      }, () => this.spinner = false);
   }
 
- /* editPlayer(golfer: Golfer, event) {
-    event.stopPropagation();
-    console.log('editing handicap for: ', golfer.firstName);
-  }*/
+  filterRounds(golferId: number) {
+    return this.rounds.filter((round: Round) => round.golferId === golferId);
+  }
+
+  calculateAverage(golferId: number) {
+    let totals = 0;
+    const rounds = this.filterRounds(golferId);
+    rounds.forEach((round: Round) => {
+      totals = totals + round.total;
+    });
+    return totals / rounds.length;
+  }
+
+
+  /* setAverage(avg: number, golfer: Golfer) {
+     this.averages[golfer.id] = avg;
+   }*/
+
+  /* editPlayer(golfer: Golfer, event) {
+     event.stopPropagation();
+     console.log('editing handicap for: ', golfer.firstName);
+   }*/
 
   setStep(index: number) {
     this.step = index;
