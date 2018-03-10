@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./handicap-lookup.component.scss']
 })
 export class HandicapLookupComponent implements OnInit {
+  spinner = true;
 
   constructor() { }
 

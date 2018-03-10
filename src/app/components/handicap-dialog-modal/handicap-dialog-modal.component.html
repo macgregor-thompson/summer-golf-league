@@ -2,14 +2,18 @@
 <mat-divider></mat-divider>
 
 <mat-dialog-content class="flex">
-  <div>
-    <form>
-      <mat-form-field *ngFor="let golfer of data" class="full-width">
-        <input matInput name="{{golfer.id}}" type="number" [placeholder]="golfer.nickname ? golfer.nickname : golfer.firstName"
-               [(ngModel)]="golfer.handicap">
-        <button mat-button *ngIf="golfer.handicap" matSuffix mat-icon-button aria-label="Clear"
+  <div class="form-div">
+    <form #golferForm="ngForm" novalidate class="handicap-form">
+      <mat-form-field *ngFor="let golfer of golfers" class="full-width" [ngClass]="{'updated': golfer['updated']}">
+        <input matInput name="{{golfer.id}}" [placeholder]="golfer.nickname ? golfer.nickname : golfer.firstName"
+               [(ngModel)]="golfer.handicap" type="number"  step="0.1">
+       <!-- <button mat-button *ngIf="golfer.handicap" matSuffix mat-icon-button aria-label="Clear"
                 (click)="golfer.handicap=''">
           <mat-icon>close</mat-icon>
+        </button>-->
+        <button mat-button *ngIf="golfer.handicap" matSuffix mat-icon-button aria-label="Clear" color="primary"
+                (click)="updateHandicap(golfer, $event)">
+          <mat-icon>check</mat-icon>
         </button>
       </mat-form-field>
     </form>
@@ -20,8 +24,8 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="button-row text-right">
-    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-    <button mat-button [mat-dialog-close]="data">Save</button>
+    <button mat-button [mat-dialog-close]="golfers">Save</button>
   </div>
 </mat-dialog-actions>

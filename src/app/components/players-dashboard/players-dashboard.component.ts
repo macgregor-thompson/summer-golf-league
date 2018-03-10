@@ -61,7 +61,7 @@ export class PlayersDashboardComponent implements OnInit {
   showHandicapModal() {
     const handicapModalRef = this.dialog.open(HandicapDialogModalComponent, {
       width: '800px',
-      data: this.golfers
+      data: this.golfers.slice()
     });
 
     handicapModalRef.afterClosed().subscribe(result => {
