@@ -1,106 +1,44 @@
-<div>
+<ngx-loading [show]="spinner"></ngx-loading>
 
-  <!-- Weekly Scores -->
-
-  <div class="view-container">
-    <div class="week-picker-card">
-      <div>
-        <h1>
-          Week {{weekSelected?.number}}
-          <small class="text-muted">({{weekSelected?.date | date: 'longDate'}})</small>
-        </h1>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
-            <mat-option *ngFor="let week of weeks" [value]="week">
-              Week {{ week.number }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-    <ngx-loading [show]="spinner"></ngx-loading>
-    <mat-accordion class="table-headers-align">
-      <mat-expansion-panel *ngFor="let golfer of golfers; let i = index; let first = first; let last = last"
-                           [expanded]="step === i" (opened)="setStep(i)" hideToggle="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <!--<i class="material-icons">arrow_drop_down</i>-->
-            {{golfer.nickname ? golfer.nickname : golfer.firstName}}
-          </mat-panel-title>
-          <mat-panel-description>
-            Score: {{weeklyTotals[golfer.id]}}
-            <mat-chip-list class="team-colors">
-              <mat-chip selected="true" [color]="golfer.team.color">{{golfer.team.name}}</mat-chip>
-            </mat-chip-list>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <app-score-view *ngIf="rounds" [round]="rounds | filterRound: golfer.id"></app-score-view>
-
-        <mat-action-row>
-          <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
-          <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    </mat-accordion>
+<div class="week-picker-card">
+  <div>
+    <h1>
+      Week {{weekSelected?.number}}
+      <small class="text-muted">({{weekSelected?.date | date: 'longDate'}})</small>
+    </h1>
   </div>
-
+  <div>
+    <mat-form-field>
+      <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
+        <mat-option *ngFor="let week of weeks" [value]="week">
+          Week {{ week.number }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
 
-<!--
-<h3>League Members:</h3>
-<ul>
-  <li *ngFor="let member of members" style="list-style-type: none">
-    <h4>{{ member.firstName }} {{ member.lastName }}</h4>
-    <div *ngIf="member.scores.length">
-      <p>Scores:</p>
-      <ul style="list-style-type: none">
-        <li *ngFor="let score of member.scores">
-            <span [ngSwitch]="score.holesPlayed">
-              <span *ngSwitchCase="HolesPlayed.All">All 18:</span>
-              <span *ngSwitchCase="HolesPlayed.Front">Front 9:</span>
-              <span *ngSwitchCase="HolesPlayed.Back">Back 9:</span>
-            </span>
-          <a mat-button color="primary" routerLink="score/{{score.id}}">
-            {{ score.total }}
-          </a>
-        </li>
-      </ul>
-    </div>
-  </li>
-</ul>
-
-<hr>
-
-<h3>League Substitutes:</h3>
-<ul>
-  <li *ngFor="let sub of substitutes" style="list-style-type: none">
-    <h4>{{ sub.firstName }} {{ sub.lastName }}</h4>
-    <div *ngIf="sub.scores.length">
-      <p>Scores:</p>
-      <ul style="list-style-type: none">
-        <li *ngFor="let score of sub.scores">
-            <span [ngSwitch]="score.holesPlayed">
-              <span *ngSwitchCase="HolesPlayed.All">All 18:</span>
-              <span *ngSwitchCase="HolesPlayed.Front">Front 9:</span>
-              <span *ngSwitchCase="HolesPlayed.Back">Back 9:</span>
-            </span>
-          <a>
-            {{ score.total }}
-          </a>
-        </li>
-      </ul>
-    </div>
-  </li>
-</ul>
-
-<hr>
-
-<h3>Courses:</h3>
-<div *ngFor="let course of courses">
-  <h4>{{ course.name }}</h4>
-</div>
-
--->
+<mat-accordion class="table-headers-align">
+  <mat-expansion-panel *ngFor="let golfer of golfers; let i = index; let first = first; let last = last"
+                       [expanded]="step === i" (opened)="setStep(i)" hideToggle="true">
+    <mat-expansion-panel-header color="pimary">
+      <mat-panel-title>
+        <!--<i class="material-icons">arrow_drop_down</i>-->
+        {{golfer.nickname ? golfer.nickname : golfer.firstName}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Score: {{weeklyTotals[golfer.id]}}
+        <mat-chip-list class="team-colors">
+          <mat-chip selected="true" [color]="golfer.team.color">{{golfer.team.name}}</mat-chip>
+        </mat-chip-list>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <!-- Accordion Body -->
+      <app-score-view *ngIf="rounds" [round]="rounds | filterRound: golfer.id"></app-score-view>
+    <!-- END Accordion Body -->
+    <mat-action-row>
+      <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
+      <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
