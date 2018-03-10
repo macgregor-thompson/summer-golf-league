@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 import { MockDataService } from '../../services/mock-data.service';
-import { MatDialog } from '@angular/material';
 import { Golfer } from '../../models/golfer';
 import { Round } from '../../models/round';
-import { forEach } from '@angular/router/src/utils/collection';
+import { HandicapDialogModalComponent } from '../handicap-dialog-modal/handicap-dialog-modal.component';
 
 
 @Component({
@@ -15,10 +16,12 @@ export class PlayersDashboardComponent implements OnInit {
   spinner = false;
   golfers: Golfer[];
   rounds: Round[];
-  step = 0;
+  step = -1;
+  result;
   averages = {};
 
-  constructor(private mockDataService: MockDataService) { }
+  constructor(private mockDataService: MockDataService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getGolfers();
@@ -54,6 +57,19 @@ export class PlayersDashboardComponent implements OnInit {
       totals = totals + round.total;
     });
     return totals / rounds.length;
+  }
+
+  showHandicapModal() {
+    const handicapModalRef = this.dialog.open(HandicapDialogModalComponent, {
+      width: '800px',
+      data: this.golfers
+    });
+
+    handicapModalRef.afterClosed().subscribe(result => {
+      console.log('result:', result);
+      this.result = result;
+    });
+
   }
 
 

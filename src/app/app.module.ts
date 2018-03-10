@@ -5,6 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule} from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+// AngularFire
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { environment } from '../environments/environment';
+
 
 // Angular Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -61,6 +66,11 @@ import { HeckleSnackComponent } from './components/heckle-snack/heckle-snack.com
     HttpClientModule,
     BrowserAnimationsModule,
 
+    // AngularFire
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+
+
     // Angular Material
     AppMaterialModule,
 
@@ -80,6 +90,9 @@ import { HeckleSnackComponent } from './components/heckle-snack/heckle-snack.com
     })
   ],
   providers: [MockDataService],
+  entryComponents: [
+    HandicapDialogModalComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

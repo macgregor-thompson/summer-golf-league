@@ -1,8 +1,11 @@
-<div class="view-container">
-  <h1>All Scores</h1>
-  <!--<div class="table-container mat-elevation-z8">
+<h1>All Scores</h1>
+<!--<div class="table-container mat-elevation-z8">
+{{rounds | json}}
+</div>-->
 
-  </div>-->
-  {{rounds | json}}
 
-</div>
+<ul>
+  <li class="text" *ngFor="let golfer of golfers | async">
+    {{golfer.firstName}}
+  </li>
+</ul>

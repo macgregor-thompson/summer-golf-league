@@ -1,5 +1,15 @@
 <div class="container">
   <ngx-loading [show]="spinner"></ngx-loading>
+
+    <div class="button-row text-right">
+
+      <!-- <button mat-raised-button color="primary">Primary</button>
+       <button mat-raised-button color="accent">Accent</button>
+       <button mat-raised-button color="warn">Warn</button>-->
+
+      <button mat-raised-button color="accent" (click)="showHandicapModal()">Update Handicaps</button>
+    </div>
+
   <mat-accordion class="table-headers-align">
     <mat-expansion-panel *ngFor="let golfer of golfers; let i = index; let first = first; let last = last;"
                          [expanded]="step === i" (opened)="setStep(i)" hideToggle="true">

@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+
+
 import { MockDataService } from '../../services/mock-data.service';
 import { Round } from '../../models/round';
-import { SidePlayed } from '../../models/enums/side-played.enum';
+import { Golfer } from '../../models/golfer';
+
 
 
 @Component({
@@ -12,8 +17,13 @@ import { SidePlayed } from '../../models/enums/side-played.enum';
 })
 export class ScoresComponent implements OnInit {
   rounds: Round[];
+  golfers: Observable<any>;
 
-  constructor(private mockDataService: MockDataService) { }
+  constructor(private mockDataService: MockDataService,
+              db: AngularFirestore) {
+    this.golfers = db.collection('golfers').valueChanges();
+
+  }
 
   ngOnInit() {
     this.getAllScores();

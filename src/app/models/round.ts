@@ -11,6 +11,6 @@ export interface Round {
   sidePlayed: SidePlayed;
   total: number;
   par: number;
-  handicap: number;
+  handicap: number; // remember this value will change every few weeks...
   scores: Score[];
 }

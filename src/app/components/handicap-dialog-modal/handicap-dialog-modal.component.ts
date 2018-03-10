@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Golfer } from '../../models/golfer';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class HandicapDialogModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<HandicapDialogModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: Golfer[]) { }
 
   ngOnInit() {
   }
