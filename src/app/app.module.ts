@@ -8,13 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Angular Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatList, MatTableModule, MatButtonModule, MatExpansionModule, MatIconModule,
-  MatDatepickerModule, MatToolbar, MatToolbarModule, MatTabsModule, MatNativeDateModule, MatInputModule, MatCardModule,
-  MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatSnackBarModule
-} from '@angular/material';
-import { MatListModule } from '@angular/material/list';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { AppMaterialModule } from './app-material/app-material.module';
+
 
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -22,7 +17,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Custom
 import { AppComponent } from './app.component';
-import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
+import { MainDashboardComponent } from './home/main-dashboard/main-dashboard.component';
 import { MockDataService } from './services/mock-data.service';
 import { ScoreViewComponent } from './components/score-view/score-view.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -80,9 +75,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
 
     // Angular Material
-    MatTableModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatExpansionModule,
-    MatIconModule, MatDatepickerModule, MatNativeDateModule, MatToolbarModule, MatTabsModule, MatCardModule,
-    MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatSnackBarModule,
+    AppMaterialModule,
 
     NgxChartsModule,
 
