@@ -18,7 +18,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 // Custom
 import { ROUTES} from './routes/routes';
 import { AppComponent } from './app.component';
-import { MainDashboardComponent } from './home/main-dashboard/main-dashboard.component';
+import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
 import { MockDataService } from './services/mock-data.service';
 import { ScoreViewComponent } from './components/score-view/score-view.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';

@@ -7,7 +7,7 @@ import { LoginComponent } from '../components/login/login.component';
 import { PlayerDashboardComponent } from '../components/player-dashboard/player-dashboard.component';
 import { ScoreEditorComponent } from '../components/score-editor/score-editor.component';
 import { ScoresComponent } from '../components/scores/scores.component';
-import { MainDashboardComponent } from '../home/main-dashboard/main-dashboard.component';
+import { MainDashboardComponent } from '../components/main-dashboard/main-dashboard.component';
 import { NotFoundComponent } from '../components/not-found/not-found.component';
 import { ScoreViewComponent } from '../components/score-view/score-view.component';
 
