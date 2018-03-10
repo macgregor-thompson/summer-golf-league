@@ -3,8 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 // Angular Material
@@ -12,12 +11,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatList, MatTableModule, MatButtonModule, MatExpansionModule, MatIconModule,
   MatDatepickerModule, MatToolbar, MatToolbarModule, MatTabsModule, MatNativeDateModule, MatInputModule, MatCardModule,
-  MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule
+  MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatSnackBarModule
 } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 // Custom
@@ -41,6 +41,9 @@ import { HandicapLookupComponent } from './components/handicap-lookup/handicap-l
 import { SafePipe } from './pipes/safe.pipe';
 import { PlayersComponent } from './components/players/players.component';
 import { PlayersDashboardComponent } from './components/players-dashboard/players-dashboard.component';
+import { HandicapDialogModalComponent } from './components/handicap-dialog-modal/handicap-dialog-modal.component';
+import { PlayerStatsComponent } from './components/player-stats/player-stats.component';
+import { HeckleSnackComponent } from './components/heckle-snack/heckle-snack.component';
 
 
 const routes: Routes = [
@@ -60,49 +63,29 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,
-    MainDashboardComponent,
-    ScoreViewComponent,
-    ScoresComponent,
-    RankingsComponent,
-    PlayerDashboardComponent,
-    RulesComponent,
-    TeamChipComponent,
-    FilterRoundPipe,
-    TopNavComponent,
-    ScoreToParPipe,
-    ScoreEditorComponent,
-    LoginComponent,
-    ScoreComponent,
-    HandicapLookupComponent,
-    SafePipe,
-    PlayersComponent,
-    PlayersDashboardComponent
+    NotFoundComponent, MainDashboardComponent, ScoreViewComponent, ScoresComponent, RankingsComponent,
+    PlayerDashboardComponent, RulesComponent, TeamChipComponent, FilterRoundPipe, TopNavComponent,
+    ScoreToParPipe, ScoreEditorComponent, LoginComponent, ScoreComponent, HandicapLookupComponent,
+    SafePipe, PlayersComponent, PlayersDashboardComponent, HandicapDialogModalComponent,
+    PlayerStatsComponent,
+    HeckleSnackComponent
   ],
   imports: [
     BrowserModule,
-    // import HttpClientModule after BrowserModule
     RouterModule.forRoot(routes),
-    FormsModule,
-    ReactiveFormsModule,
+    FormsModule, ReactiveFormsModule,
+
+    // import HttpClientModule after BrowserModule
     HttpClientModule,
     BrowserAnimationsModule,
-    MatTableModule,
-    MatListModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatToolbarModule,
-    MatTabsModule,
-    MatCardModule,
-    MatSelectModule,
-    MatChipsModule,
-    MatMenuModule,
-    MatAutocompleteModule,
+
+    // Angular Material
+    MatTableModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatExpansionModule,
+    MatIconModule, MatDatepickerModule, MatNativeDateModule, MatToolbarModule, MatTabsModule, MatCardModule,
+    MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatSnackBarModule,
+
+    NgxChartsModule,
+
     LoadingModule.forRoot({
 // ANIMATION_TYPES:
 // chasingDots, circle, circleSwish, cubeGrid

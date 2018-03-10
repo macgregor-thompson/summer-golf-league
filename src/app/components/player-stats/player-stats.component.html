@@ -1,0 +1,12 @@
+<div class="chart-div">
+  <ngx-loading [show]="spinner"></ngx-loading>
+  <div *ngIf="scores">
+    <ngx-charts-pie-chart
+      [scheme]="colorScheme"
+      [results]="scores"
+      [legend]="true"
+      [labels]="true"
+      (select)="onSelect($event)">
+    </ngx-charts-pie-chart>
+  </div>
+</div>

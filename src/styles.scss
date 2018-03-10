@@ -4,7 +4,9 @@
 @include mat-core();
 @import 'assets/styles/utils';
 
-
+body {
+  margin: 0;
+}
 .summer-league-app {
   font-family: 'Roboto', sans-serif;
 }
