@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule} from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -16,6 +16,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 // Custom
+import { ROUTES} from './routes/routes';
 import { AppComponent } from './app.component';
 import { MainDashboardComponent } from './home/main-dashboard/main-dashboard.component';
 import { MockDataService } from './services/mock-data.service';
@@ -41,20 +42,6 @@ import { PlayerStatsComponent } from './components/player-stats/player-stats.com
 import { HeckleSnackComponent } from './components/heckle-snack/heckle-snack.component';
 
 
-const routes: Routes = [
-  { path: '', component: MainDashboardComponent, pathMatch: 'full' },
-  { path: 'scores', component: ScoresComponent, pathMatch: 'full' },
-  { path: 'score/:id', component: ScoreViewComponent, pathMatch: 'full' },
-  { path: 'rankings', component: RankingsComponent, pathMatch: 'full' },
-  { path: 'players', component: PlayersDashboardComponent, pathMatch: 'full' },
-  { path: 'player/:id', component: PlayerDashboardComponent, pathMatch: 'full' },
-  { path: 'rules', component: RulesComponent, pathMatch: 'full' },
-  { path: 'score-editor', component: ScoreEditorComponent, pathMatch: 'full' },
-  { path: 'login', component: LoginComponent, pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent }
-];
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +54,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(ROUTES),
     FormsModule, ReactiveFormsModule,
 
     // import HttpClientModule after BrowserModule
