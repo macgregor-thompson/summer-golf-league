@@ -1,3 +1,3 @@
 export enum ChartTypes {
-  Pie, AdvancedPie, PieGrid, Bar, Line
+  Pie, AdvancedPie, PieGrid, NumberCard, Bar, Line
 }

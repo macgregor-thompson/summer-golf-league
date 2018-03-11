@@ -1,0 +1,19 @@
+.full-width {
+  width: 100%;
+}
+
+mat-dialog-content {
+  display: flex;
+  flex-wrap: wrap;
+  div {
+    flex: 1;
+  }
+}
+
+mat-divider {
+  margin-bottom: 15px;
+}
+
+mat-dialog-actions {
+  display: block;
+}

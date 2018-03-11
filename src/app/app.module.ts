@@ -45,6 +45,8 @@ import { PlayersDashboardComponent } from './components/players-dashboard/player
 import { HandicapDialogModalComponent } from './components/handicap-dialog-modal/handicap-dialog-modal.component';
 import { PlayerStatsComponent } from './components/player-stats/player-stats.component';
 import { HeckleSnackComponent } from './components/heckle-snack/heckle-snack.component';
+import { PlayerEditorComponent } from './components/player-editor/player-editor.component';
+import { PlayerDialogModalComponent } from './components/player-dialog-modal/player-dialog-modal.component';
 
 
 @NgModule({
@@ -55,7 +57,9 @@ import { HeckleSnackComponent } from './components/heckle-snack/heckle-snack.com
     ScoreToParPipe, ScoreEditorComponent, LoginComponent, ScoreComponent, HandicapLookupComponent,
     SafePipe, PlayersComponent, PlayersDashboardComponent, HandicapDialogModalComponent,
     PlayerStatsComponent,
-    HeckleSnackComponent
+    HeckleSnackComponent,
+    PlayerEditorComponent,
+    PlayerDialogModalComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +95,8 @@ import { HeckleSnackComponent } from './components/heckle-snack/heckle-snack.com
   ],
   providers: [MockDataService],
   entryComponents: [
-    HandicapDialogModalComponent
+    HandicapDialogModalComponent,
+    PlayerDialogModalComponent
   ],
   bootstrap: [AppComponent]
 })

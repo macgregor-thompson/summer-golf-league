@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Player Editor</h2>
+<mat-divider></mat-divider>
+
+<mat-dialog-content>
+
+  <app-player-editor></app-player-editor>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="button-row text-right">
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-raised-button color="primary" [mat-dialog-close]="">Save</button>
+  </div>
+</mat-dialog-actions>

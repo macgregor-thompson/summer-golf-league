@@ -47,9 +47,9 @@ export class PlayerStatsComponent implements OnInit {
       '#f44336', // birdies
       '#43a047', // pars
       '#333333', // bogies
-      '#923eaa', // doubles
-      '#009baa', // eagles
-      '#c77f40' // others
+      '#ffc500', // doubles
+      '#3f99fa', // eagles
+      '#aa6600' // others
     ]
   };
 

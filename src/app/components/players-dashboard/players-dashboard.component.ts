@@ -8,6 +8,7 @@ import {MockDataService} from '../../services/mock-data.service';
 import {Golfer} from '../../models/golfer';
 import {Round} from '../../models/round';
 import {HandicapDialogModalComponent} from '../handicap-dialog-modal/handicap-dialog-modal.component';
+import { PlayerDialogModalComponent } from '../player-dialog-modal/player-dialog-modal.component';
 
 
 @Component({
@@ -65,6 +66,13 @@ export class PlayersDashboardComponent implements OnInit {
     });
   }
 
+  showPlayerEditorModal() {
+    const playerEditorDialogRef = this.dialog.open(PlayerDialogModalComponent, {width: '800px'});
+    playerEditorDialogRef.afterClosed().subscribe(result => {
+      console.log('result:', result);
+      //add player to firestore here
+    });
+  }
 
   /* setAverage(avg: number, golfer: Golfer) {
      this.averages[golfer.id] = avg;

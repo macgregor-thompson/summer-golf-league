@@ -1,7 +1,10 @@
 <ngx-loading [show]="spinner"></ngx-loading>
 
 <div class="button-row text-right">
-  <button mat-raised-button color="primary" class="handicap-btn" (click)="showHandicapModal()">Update Handicaps</button>
+  <button mat-raised-button color="primary" (click)="showHandicapModal()">Update Handicaps</button>
+  <button mat-raised-button color="accent" (click)="showPlayerEditorModal()">
+    Add Player
+  </button>
 </div>
 
 <mat-accordion class="table-headers-align">
