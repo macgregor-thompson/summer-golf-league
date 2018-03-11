@@ -14,5 +14,6 @@ export interface Round {
   total: number;
   par: number;
   handicap: number; // remember this value will change every few weeks...
+  courseHandicap: number;
   scores: Score[];
 }

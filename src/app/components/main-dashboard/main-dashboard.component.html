@@ -27,7 +27,9 @@
         {{golfer.nickname ? golfer.nickname : golfer.firstName}}
       </mat-panel-title>
       <mat-panel-description>
-        Score: {{weeklyTotals[golfer.id]}}
+        Gross: {{weeklyTotals[golfer.id]}}
+        |
+        Net: {{weeklyNet[golfer.id]}}
         <mat-chip-list class="team-colors">
           <mat-chip selected="true" [color]="golfer.team.color">{{golfer.team.name}}</mat-chip>
         </mat-chip-list>

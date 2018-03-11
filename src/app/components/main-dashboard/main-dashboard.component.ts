@@ -21,6 +21,7 @@ export class MainDashboardComponent implements OnInit {
   step = -1;
   weekSelected: Week;
   weeklyTotals = {};
+  weeklyNet = [];
   weeks: Week[];
   spinner = false;
 
@@ -77,6 +78,7 @@ export class MainDashboardComponent implements OnInit {
         console.log(`Week ${weekNum} rounds: ${this.rounds}`);
         data.forEach((round: Round) => {
           this.weeklyTotals[round.golferId] = round.total;
+          this.weeklyNet[round.golferId] = round.total - round.courseHandicap;
         });
         this.spinner = false;
       }, err => this.spinner = false);

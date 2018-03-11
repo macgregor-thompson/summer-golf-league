@@ -8,6 +8,8 @@
       "courseId": 1,
       "tees": "Combo",
       "sidePlayed": 1,
+      "handicap": 3.3,
+      "courseHandicap": 2,
       "total": 39,
       "par": 36,
       "scores": [
@@ -84,6 +86,8 @@
       "courseId": 1,
       "tees": "Combo",
       "sidePlayed": 1,
+      "handicap": 7.7,
+      "courseHandicap": 4,
       "total": 38,
       "par": 36,
       "scores": [
@@ -160,6 +164,8 @@
       "courseId": 1,
       "tees": "Combo",
       "sidePlayed": 1,
+      "handicap": 6.3,
+      "courseHandicap": 4,
       "total": 40,
       "par": 36,
       "scores": [
@@ -236,6 +242,8 @@
       "courseId": 1,
       "tees": "Combo",
       "sidePlayed": 1,
+      "handicap": 6.6,
+      "courseHandicap": 4,
       "total": 37,
       "par": 36,
       "scores": [
@@ -312,6 +320,8 @@
       "courseId": 1,
       "tees": "Combo",
       "sidePlayed": 2,
+      "handicap": 3.3,
+      "courseHandicap": 2,
       "total": 38,
       "par": 35,
       "scores": [
@@ -388,6 +398,8 @@
       "courseId": 1,
       "tees": "Combo",
       "sidePlayed": 2,
+      "handicap": 7.7,
+      "courseHandicap": 4,
       "total": 37,
       "par": 35,
       "scores": [
@@ -464,6 +476,8 @@
       "courseId": 1,
       "tees": "Combo",
       "sidePlayed": 2,
+      "handicap": 6.3,
+      "courseHandicap": 4,
       "total": 39,
       "par": 35,
       "scores": [
@@ -540,6 +554,8 @@
       "courseId": 1,
       "tees": "Combo",
       "sidePlayed": 2,
+      "handicap": 6.6,
+      "courseHandicap": 4,
       "total": 38,
       "par": 35,
       "scores": [

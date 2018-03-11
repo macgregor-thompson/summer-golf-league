@@ -21,7 +21,6 @@
           <small>{{score.handicap}}</small>
         </th>
         <th class="text-muted">
-          <small>{{round.par}}</small>
         </th>
       </tr>
       <tr>
@@ -29,7 +28,9 @@
           <small>Par</small>
         </th>
         <th class="text-muted" *ngFor="let score of round.scores">
-          <small>{{score.par}}</small>
+          <small >
+            {{score.par}} {{score.handicap <= round.courseHandicap * 2 ? '*' : ''}}
+          </small>
         </th>
         <th class="text-muted">
           <small>{{round.par}}</small>
@@ -42,14 +43,12 @@
           <small>Gross</small>
         </th>
         <th *ngFor="let score of round.scores" class="text-center">
-          <div [ngClass]="scoreClass(score)">
+          <div [ngClass]="grossScoreClass(score)">
             {{score.score}}
           </div>
         </th>
         <th class="total-score-td">
-          <div class="total-score-div">
-            {{round.total}}
-          </div>
+         <strong>{{round.total}}</strong>
         </th>
       </tr>
       <tr>
@@ -57,13 +56,13 @@
           <small>Net</small>
         </th>
         <th *ngFor="let score of round.scores" class="text-center">
-          <div [ngClass]="scoreClass(score)">
-            {{score.score}}
+          <div [ngClass]="netScoreClass(score)">
+            {{score.handicap <= round.courseHandicap * 2 ? score.score - 1 : score.score}}
           </div>
         </th>
         <th class="total-score-td">
           <div class="total-score-div">
-            {{round.total}}
+            {{round.total - round.courseHandicap}}
           </div>
         </th>
       </tr>
