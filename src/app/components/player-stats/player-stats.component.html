@@ -1,12 +1,41 @@
-<div class="chart-div">
-  <ngx-loading [show]="spinner"></ngx-loading>
-  <div *ngIf="scores">
-    <ngx-charts-pie-chart
-      [scheme]="colorScheme"
-      [results]="scores"
-      [legend]="true"
-      [labels]="true"
-      (select)="onSelect($event)">
-    </ngx-charts-pie-chart>
-  </div>
+<ngx-loading [show]="spinner"></ngx-loading>
+<div class="button-row text-right">
+  <mat-form-field>
+    <mat-select [(value)]="scores">
+      <mat-option [value]="net.scores">Net Scores</mat-option>
+      <mat-option [value]="gross.scores">Gross Scores</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select [(value)]="chartType">
+      <mat-option [value]="ChartTypes.Pie">Pie Chart</mat-option>
+      <mat-option [value]="ChartTypes.AdvancedPie">Advanced Pie Chart</mat-option>
+      <mat-option [value]="ChartTypes.PieGrid">Pie Grid Chart</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="chart-div" *ngIf="scores">
+  <ngx-charts-pie-chart
+    *ngIf="chartType === ChartTypes.Pie"
+    [scheme]="colorScheme"
+    [results]="scores"
+    [legend]="true"
+    [labels]="true"
+    (select)="onSelect($event)">
+  </ngx-charts-pie-chart>
+
+  <ngx-charts-advanced-pie-chart
+    *ngIf="chartType === ChartTypes.AdvancedPie"
+    [scheme]="colorScheme"
+    [results]="scores"
+    (select)="onSelect($event)">
+  </ngx-charts-advanced-pie-chart>
+
+  <ngx-charts-pie-grid
+    *ngIf="chartType === ChartTypes.PieGrid"
+    [scheme]="colorScheme"
+    [results]="scores"
+    (select)="onSelect($event)">
+  </ngx-charts-pie-grid>
+
 </div>
