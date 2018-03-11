@@ -4,8 +4,14 @@ import { Component } from '@angular/core';
   selector: 'app-not-found',
   template: `
     <div>
-      These are not the droids you are looking for...
-      <a routerLink="/">Go Home</a>
+      <h2>
+        <mat-icon color="warn">mood_bad</mat-icon>
+        <span>Oops...not sure where you were trying to go dummy...</span>
+      </h2>
+      <button mat-raised-button color="warn" routerLink="/">
+        <mat-icon>home</mat-icon>
+        <span>Go Home</span>
+      </button>
     </div>
   `
 })
