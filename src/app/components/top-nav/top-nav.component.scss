@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Handlee');
 
 .mat-tab-link {
-  padding: 0 15px;
+  padding: 0 25px;
   min-width: 50px;
 }
 
@@ -15,4 +15,19 @@
 
 mat-toolbar {
   margin-bottom: 30px;
+  @media (min-width: 768px) {
+    .menu-btn-div {
+      display: none;
+    }
+  }
+  @media (max-width: 992px) {
+    nav mat-icon {
+      display: none;
+    }
+  }
+  @media (max-width: 768px) {
+    nav {
+      display: none;
+    }
+  }
 }

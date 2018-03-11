@@ -12,27 +12,32 @@ export class TopNavComponent implements OnInit {
     {
       path: '/',
       name: 'Home',
-      exact: true
+      exact: true,
+      icon: 'home'
     },
     {
       path: '/rankings',
       name: 'Rankings',
-      exact: true
-    },
-    {
-      path: '/players',
-      name: 'Players',
-      exact: true
+      exact: true,
+      icon: 'format_list_numbered'
     },
     {
       path: '/scores',
       name: 'Scores',
-      exact: true
+      exact: true,
+      icon: 'golf_course'
+    },
+    {
+      path: '/players',
+      name: 'Players',
+      exact: true,
+      icon: 'people'
     },
     {
       path: '/rules',
       name: 'Rules',
-      exact: true
+      exact: true,
+      icon: 'priority_high'
     }
   ];
 

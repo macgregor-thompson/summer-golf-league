@@ -10,27 +10,21 @@
        routerLinkActive #rla="routerLinkActive"
        [active]="rla.isActive"
        [routerLinkActiveOptions]="{ exact: link.exact }">
-      {{link.name}}
+      <mat-icon>{{link.icon}}</mat-icon>
+      &nbsp;
+      <span> {{link.name}}</span>
     </a>
-    <a mat-tab-link
-       routerLink="/score-editor"
-       routerLinkActive #rla="routerLinkActive"
-       [active]="rla.isActive"
-       [routerLinkActiveOptions]="{ exact: true }">
-      <mat-icon>edit</mat-icon>
-    </a>
-    <!--<a mat-tab-link [matMenuTriggerFor]="menu">
-      <mat-icon>account_circle</mat-icon>
-    </a>
-    <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
-      <button mat-menu-item >
-        <mat-icon>person</mat-icon>
-        <span>Login</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>exit_to_app</mat-icon>
-        <span>Logout</span>
-      </button>
-    </mat-menu>-->
   </nav>
+  <div class="menu-btn-div">
+    <button mat-icon-button="" [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
+      <button mat-menu-item  *ngFor="let link of routes"
+              [routerLink]="link.path">
+        <mat-icon>{{link.icon}}</mat-icon>
+        <span>{{link.name}}</span>
+      </button>
+    </mat-menu>
+  </div>
 </mat-toolbar>
