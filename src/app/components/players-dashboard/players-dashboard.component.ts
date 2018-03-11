@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 
-import { MockDataService } from '../../services/mock-data.service';
-import { Golfer } from '../../models/golfer';
-import { Round } from '../../models/round';
-import { HandicapDialogModalComponent } from '../handicap-dialog-modal/handicap-dialog-modal.component';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
+import {Observable} from 'rxjs/Observable';
+
+import {MockDataService} from '../../services/mock-data.service';
+import {Golfer} from '../../models/golfer';
+import {Round} from '../../models/round';
+import {HandicapDialogModalComponent} from '../handicap-dialog-modal/handicap-dialog-modal.component';
 
 
 @Component({
@@ -13,27 +16,23 @@ import { HandicapDialogModalComponent } from '../handicap-dialog-modal/handicap-
   styleUrls: ['./players-dashboard.component.scss']
 })
 export class PlayersDashboardComponent implements OnInit {
-  spinner = false;
-  golfers: Golfer[];
+  private golfersCollection: AngularFirestoreCollection<Golfer>;
+  golfers: Observable<Golfer[]>;
   rounds: Round[];
+  spinner = false;
   step = -1;
   result;
 
-  constructor(private mockDataService: MockDataService,
-              public dialog: MatDialog) { }
+  constructor(private afs: AngularFirestore,
+              private mockDataService: MockDataService,
+              public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.getGolfers();
+    this.golfersCollection = this.afs.collection<Golfer>('golfers');
+    this.golfers = this.golfersCollection.valueChanges();
     this.getAllScores();
-  }
-
-  getGolfers() {
-    this.spinner = true;
-    this.mockDataService.getGolfers()
-      .subscribe((data: Golfer[]) => {
-        this.golfers = data;
-        this.spinner = false;
-      }, () => this.spinner = false);
+    console.log('this.golfersCollection:', this.golfersCollection);
+    console.log('golfers:', this.golfers);
   }
 
   getAllScores() {
@@ -59,16 +58,11 @@ export class PlayersDashboardComponent implements OnInit {
   }
 
   showHandicapModal() {
-    const handicapModalRef = this.dialog.open(HandicapDialogModalComponent, {
-      width: '800px',
-      data: this.golfers.slice()
-    });
-
+    const handicapModalRef = this.dialog.open(HandicapDialogModalComponent, {width: '800px'});
     handicapModalRef.afterClosed().subscribe(result => {
       console.log('result:', result);
       this.result = result;
     });
-
   }
 
 

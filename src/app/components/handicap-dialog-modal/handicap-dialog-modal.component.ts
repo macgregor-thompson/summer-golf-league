@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { Golfer } from '../../models/golfer';
 
-import { MockDataService } from '../../services/mock-data.service';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -11,16 +12,22 @@ import { MockDataService } from '../../services/mock-data.service';
   styleUrls: ['./handicap-dialog-modal.component.scss']
 })
 export class HandicapDialogModalComponent implements OnInit {
-  golfers: Golfer[];
+  private golfersCollection: AngularFirestoreCollection<Golfer>;
+  golfers: Observable<Golfer[]>;
 
   constructor(public dialogRef: MatDialogRef<HandicapDialogModalComponent>,
-              private mockDataService: MockDataService) {}
+              private afs: AngularFirestore) {}
+
+  // This is just to serve as an example for how to add to the list
+ /* addGolfer(golfer: Golfer) {
+    this.golfersCollection.add(golfer);
+  }*/
 
   ngOnInit() {
-    this.mockDataService.getGolfers()
-      .subscribe((data: Golfer[]) => this.golfers = data);
-
+    this.golfersCollection = this.afs.collection<Golfer>('golfers');
+    this.golfers = this.golfersCollection.valueChanges();
   }
+
   updateHandicap(golfer: Golfer) {
     golfer['updated'] = true;
     console.log('golfer:', golfer);

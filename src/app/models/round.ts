@@ -3,7 +3,9 @@ import { Score } from './score';
 
 export interface Round {
   id: number;
-  golferId: number;
+  individual: boolean;
+  golfers: number[];
+  golferId: number; //TODO: refactor to just use the golfers array
   date: string;
   week: number;
   courseId: number;

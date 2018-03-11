@@ -1,4 +1,4 @@
 export class Handicap {
-  men: number;
-  women: number;
+  index: number;
+  date: string;
 }

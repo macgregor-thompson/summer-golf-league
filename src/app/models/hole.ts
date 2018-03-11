@@ -1,5 +1,4 @@
 import { Yardages } from './yardages';
-import { Handicap } from './handicap';
 import { Par } from './par';
 
 export class Hole {
