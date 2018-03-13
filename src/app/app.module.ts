@@ -10,15 +10,14 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 
-
 // Angular Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './app-material/app-material.module';
 
-
+// Other
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-
+import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 
 // Custom
 import { ROUTES} from './routes/routes';
@@ -79,6 +78,7 @@ import { PlayerDialogModalComponent } from './components/player-dialog-modal/pla
     AppMaterialModule,
 
     NgxChartsModule,
+    AsyncLocalStorageModule,
 
     LoadingModule.forRoot({
 // ANIMATION_TYPES:

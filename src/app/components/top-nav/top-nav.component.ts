@@ -28,6 +28,12 @@ export class TopNavComponent implements OnInit {
       icon: 'golf_course'
     },
     {
+      path: '/stats',
+      name: 'Stats',
+      exact: true,
+      icon: 'insert_chart'
+    },
+    {
       path: '/players',
       name: 'Players',
       exact: true,

@@ -10,6 +10,7 @@ import { ScoresComponent } from '../components/scores/scores.component';
 import { MainDashboardComponent } from '../components/main-dashboard/main-dashboard.component';
 import { NotFoundComponent } from '../components/not-found/not-found.component';
 import { ScoreViewComponent } from '../components/score-view/score-view.component';
+import { PlayersComponent } from '../components/players/players.component';
 
 export const ROUTES: Routes = [
   { path: '', component: MainDashboardComponent, pathMatch: 'full' },
@@ -17,7 +18,8 @@ export const ROUTES: Routes = [
   { path: 'score/:id', component: ScoreViewComponent, pathMatch: 'full' },
   { path: 'scores/editor', component: ScoreEditorComponent, pathMatch: 'full' },
   { path: 'rankings', component: RankingsComponent, pathMatch: 'full' },
-  { path: 'players', component: PlayersDashboardComponent, pathMatch: 'full' },
+  { path: 'stats', component: PlayersDashboardComponent, pathMatch: 'full' },
+  { path: 'players', component: PlayersComponent, pathMatch: 'full' },
   { path: 'player/:id', component: PlayerDashboardComponent, pathMatch: 'full' },
   { path: 'rules', component: RulesComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent, pathMatch: 'full' },

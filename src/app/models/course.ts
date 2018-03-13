@@ -7,8 +7,14 @@ export interface Course {
   tees: {
     [key: string]: {
       yardages: Yardages,
-      frontNine: Hole[],
-      backNine: Hole[]
+      frontNine: {
+        slope: number;
+        holes: Hole[]
+      },
+      backNine: {
+        slope: number;
+        holes: Hole[]
+      }
     }
   };
 }

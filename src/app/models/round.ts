@@ -17,6 +17,6 @@ export interface Round {
   par: number;
   handicap: number; // remember this value will change every few weeks...
   courseHandicap: number; // value will change so we need to have a handicap "tagged" with a round
-  team: Team;
+  team: Team; // focus on this instead of the team associated with the person
   scores: Score[];
 }

@@ -18,7 +18,7 @@ export class MainDashboardComponent implements OnInit {
   rounds: Round[];
   members: Golfer[];
   substitutes: Golfer[];
-  step = -1;
+  step = 0;
   weekSelected: Week;
   weeklyTotals = {};
   weeklyNet = [];
