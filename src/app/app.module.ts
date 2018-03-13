@@ -36,16 +36,15 @@ import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { ScoreToParPipe } from './pipes/score-to-par.pipe';
 import { ScoreEditorComponent } from './components/score-editor/score-editor.component';
 import { LoginComponent } from './components/login/login.component';
-import { ScoreComponent } from './components/score/score.component';
-import { HandicapLookupComponent } from './components/handicap-lookup/handicap-lookup.component';
+import { HandicapWidgetComponent } from './components/handicap-widget/handicap-widget.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { PlayersComponent } from './components/players/players.component';
-import { PlayersDashboardComponent } from './components/players-dashboard/players-dashboard.component';
 import { HandicapDialogModalComponent } from './components/handicap-dialog-modal/handicap-dialog-modal.component';
 import { PlayerStatsComponent } from './components/player-stats/player-stats.component';
 import { HeckleSnackComponent } from './components/heckle-snack/heckle-snack.component';
 import { PlayerEditorComponent } from './components/player-editor/player-editor.component';
 import { PlayerDialogModalComponent } from './components/player-dialog-modal/player-dialog-modal.component';
+import { StatsDashboardComponent } from './components/stats-dashboard/stats-dashboard.component';
 
 
 @NgModule({
@@ -53,12 +52,13 @@ import { PlayerDialogModalComponent } from './components/player-dialog-modal/pla
     AppComponent,
     NotFoundComponent, MainDashboardComponent, ScoreViewComponent, ScoresComponent, RankingsComponent,
     PlayerDashboardComponent, RulesComponent, TeamChipComponent, FilterRoundPipe, TopNavComponent,
-    ScoreToParPipe, ScoreEditorComponent, LoginComponent, ScoreComponent, HandicapLookupComponent,
-    SafePipe, PlayersComponent, PlayersDashboardComponent, HandicapDialogModalComponent,
+    ScoreToParPipe, ScoreEditorComponent, LoginComponent, HandicapWidgetComponent,
+    SafePipe, PlayersComponent, HandicapDialogModalComponent,
     PlayerStatsComponent,
     HeckleSnackComponent,
     PlayerEditorComponent,
-    PlayerDialogModalComponent
+    PlayerDialogModalComponent,
+    StatsDashboardComponent
   ],
   imports: [
     BrowserModule,

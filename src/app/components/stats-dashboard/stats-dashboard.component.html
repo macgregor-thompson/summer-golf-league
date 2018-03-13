@@ -5,7 +5,7 @@
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{golfer.nickname ? golfer.nickname : golfer.firstName}}
+        {{golfer.displayName}}
       </mat-panel-title>
       <mat-panel-description>
         <div>

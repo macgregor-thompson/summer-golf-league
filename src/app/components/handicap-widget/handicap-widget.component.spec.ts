@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayersDashboardComponent } from './players-dashboard.component';
+import { HandicapLookupComponent } from './handicap-widget.component';
 
-describe('PlayersDashboardComponent', () => {
-  let component: PlayersDashboardComponent;
-  let fixture: ComponentFixture<PlayersDashboardComponent>;
+describe('HandicapLookupComponent', () => {
+  let component: HandicapLookupComponent;
+  let fixture: ComponentFixture<HandicapLookupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayersDashboardComponent ]
+      declarations: [ HandicapLookupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlayersDashboardComponent);
+    fixture = TestBed.createComponent(HandicapLookupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

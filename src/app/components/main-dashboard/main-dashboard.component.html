@@ -24,7 +24,7 @@
     <mat-expansion-panel-header color="pimary">
       <mat-panel-title>
         <!--<i class="material-icons">arrow_drop_down</i>-->
-        {{golfer.nickname ? golfer.nickname : golfer.firstName}}
+        {{golfer.displayName}}
       </mat-panel-title>
       <mat-panel-description>
         Gross: {{weeklyTotals[golfer.id]}}

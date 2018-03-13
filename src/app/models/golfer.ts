@@ -7,7 +7,8 @@ export interface Golfer {
   id: number;
   firstName: string;
   lastName: string;
-  nickname?: string | null;
+  displayName: string;
+  ghinNumber: number;
   email: string;
   team: Team;
   leagueStatus: LeagueStatus; // Member = 1, Substitute = 2

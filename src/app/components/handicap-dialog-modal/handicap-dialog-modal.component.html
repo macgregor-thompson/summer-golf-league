@@ -5,12 +5,13 @@
   <div class="form-div">
     <form #golferForm="ngForm" novalidate class="handicap-form">
       <mat-form-field *ngFor="let golfer of golfers | async" class="full-width" [ngClass]="{'updated': golfer['updated']}">
-        <input matInput name="{{golfer.id}}" [placeholder]="golfer.nickname ? golfer.nickname : golfer.firstName"
+        <input matInput name="{{golfer.id}}" [placeholder]="golfer.displayName"
                [(ngModel)]="golfer.handicap" type="number"  step="0.1">
        <!-- <button mat-button *ngIf="golfer.handicap" matSuffix mat-icon-button aria-label="Clear"
                 (click)="golfer.handicap=''">
           <mat-icon>close</mat-icon>
         </button>-->
+
         <button mat-button *ngIf="golfer.handicap" matSuffix mat-icon-button aria-label="Clear" color="primary"
                 (click)="updateHandicap(golfer, $event)">
           <mat-icon>check</mat-icon>
@@ -19,7 +20,7 @@
     </form>
   </div>
   <div>
-    <app-handicap-lookup></app-handicap-lookup>
+    <app-handicap-widget></app-handicap-widget>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>

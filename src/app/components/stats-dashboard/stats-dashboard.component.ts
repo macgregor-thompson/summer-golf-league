@@ -7,22 +7,19 @@ import {Observable} from 'rxjs/Observable';
 import {MockDataService} from '../../services/mock-data.service';
 import {Golfer} from '../../models/golfer';
 import {Round} from '../../models/round';
-import {HandicapDialogModalComponent} from '../handicap-dialog-modal/handicap-dialog-modal.component';
-import { PlayerDialogModalComponent } from '../player-dialog-modal/player-dialog-modal.component';
 
 
 @Component({
-  selector: 'app-players-dashboard',
-  templateUrl: './players-dashboard.component.html',
-  styleUrls: ['./players-dashboard.component.scss']
+  selector: 'app-stats-dashboard',
+  templateUrl: './stats-dashboard.component.html',
+  styleUrls: ['./stats-dashboard.component.scss']
 })
-export class PlayersDashboardComponent implements OnInit {
+export class StatsDashboardComponent implements OnInit {
   private golfersCollection: AngularFirestoreCollection<Golfer>;
   golfers: Observable<Golfer[]>;
   rounds: Round[];
   spinner = false;
   step = -1;
-  result;
 
   constructor(private afs: AngularFirestore,
               private mockDataService: MockDataService,
@@ -58,22 +55,6 @@ export class PlayersDashboardComponent implements OnInit {
     return totals / rounds.length;
   }
 
-  showHandicapModal() {
-    const handicapModalRef = this.dialog.open(HandicapDialogModalComponent, {width: '800px'});
-    handicapModalRef.afterClosed().subscribe(result => {
-      console.log('result:', result);
-      this.result = result;
-    });
-  }
-
-  showPlayerEditorModal() {
-    const playerEditorDialogRef = this.dialog.open(PlayerDialogModalComponent, {width: '800px'});
-    playerEditorDialogRef.afterClosed().subscribe(result => {
-      console.log('result:', result);
-      //add player to firestore here
-    });
-  }
-
   /* setAverage(avg: number, golfer: Golfer) {
      this.averages[golfer.id] = avg;
    }*/
@@ -94,6 +75,5 @@ export class PlayersDashboardComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-
 
 }
