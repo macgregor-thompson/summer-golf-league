@@ -1,0 +1,14 @@
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-select [(value)]="currentGolfer" placeholder="Select yourself..." class="full-width">
+      <mat-option *ngFor="let golfer of data.golfers | async" [value]="golfer">{{golfer.displayName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="button-row text-right">
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-raised-button color="primary" [mat-dialog-close]="currentGolfer">Save</button>
+  </div>
+</mat-dialog-actions>

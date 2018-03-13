@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {MockDataService} from '../../services/mock-data.service';
 import {Golfer} from '../../models/golfer';
 import {Round} from '../../models/round';
+import {UserService} from '../../services/user.service';
 
 
 @Component({
@@ -17,11 +18,13 @@ import {Round} from '../../models/round';
 export class StatsDashboardComponent implements OnInit {
   private golfersCollection: AngularFirestoreCollection<Golfer>;
   golfers: Observable<Golfer[]>;
+  currentGolfer: Golfer;
   rounds: Round[];
   spinner = false;
   step = -1;
 
   constructor(private afs: AngularFirestore,
+              private userService: UserService,
               private mockDataService: MockDataService,
               public dialog: MatDialog) {}
 
@@ -31,6 +34,7 @@ export class StatsDashboardComponent implements OnInit {
     this.getAllScores();
     console.log('this.golfersCollection:', this.golfersCollection);
     console.log('golfers:', this.golfers);
+    this.getCurrentGolfer();
   }
 
   getAllScores() {
@@ -40,6 +44,10 @@ export class StatsDashboardComponent implements OnInit {
         this.rounds = data;
         this.spinner = false;
       }, () => this.spinner = false);
+  }
+
+  getCurrentGolfer() {
+    this.userService.getCurrentGolfer().subscribe((data: Golfer) => this.currentGolfer = data);
   }
 
   filterRounds(golferId: number) {

@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Handlee');
 
-.mat-tab-link {
-  padding: 0 23px;
-  min-width: 50px;
-}
 
 .indie-flower {
   font-family: 'Handlee', cursive;
@@ -13,19 +9,32 @@
   color: #f44336;
 }
 
+.mat-tab-link {
+  padding: 0 25px;
+  min-width: 50px;
+}
+
 mat-toolbar {
   margin-bottom: 30px;
-  @media (min-width: 768px) {
+  @media (min-width: 780px) {
     .menu-btn-div {
       display: none;
     }
-  }
-  @media (max-width: 992px) {
-    nav mat-icon {
-      display: none;
+    .mat-tab-link {
+      padding: 0 23px;
+      min-width: 50px;
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
+    nav .regular-links {
+      display: none;
+    }
+    .mat-tab-link {
+      padding: 0 18px;
+      min-width: 50px;
+    }
+  }
+  @media (max-width: 780px) {
     nav {
       display: none;
     }

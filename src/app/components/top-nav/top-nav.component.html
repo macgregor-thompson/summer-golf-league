@@ -10,20 +10,42 @@
        routerLinkActive #rla="routerLinkActive"
        [active]="rla.isActive"
        [routerLinkActiveOptions]="{ exact: link.exact }">
-      <mat-icon>{{link.icon}}</mat-icon>
+      <mat-icon class="regular-links">{{link.icon}}</mat-icon>
       &nbsp;
       <span> {{link.name}}</span>
     </a>
+    <button mat-icon-button="" [matMenuTriggerFor]="loginMenu">
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #loginMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+      <button *ngIf="!currentGolfer" mat-menu-item (click)="openLoginModal()">
+        <mat-icon>person</mat-icon>
+        <span>Login</span>
+      </button>
+      <button *ngIf="currentGolfer" mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
   </nav>
   <div class="menu-btn-div">
-    <button mat-icon-button="" [matMenuTriggerFor]="menu">
+    <button mat-icon-button="" [matMenuTriggerFor]="mainMenu">
       <mat-icon>menu</mat-icon>
     </button>
-    <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
-      <button mat-menu-item  *ngFor="let link of routes"
+    <mat-menu #mainMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+      <button mat-menu-item *ngFor="let link of routes"
               [routerLink]="link.path">
         <mat-icon>{{link.icon}}</mat-icon>
         <span>{{link.name}}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button *ngIf="!currentGolfer" mat-menu-item (click)="openLoginModal()">
+        <mat-icon>person</mat-icon>
+        <span>Login</span>
+      </button>
+      <button *ngIf="currentGolfer" mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
       </button>
     </mat-menu>
   </div>

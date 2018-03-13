@@ -45,6 +45,8 @@ import { HeckleSnackComponent } from './components/heckle-snack/heckle-snack.com
 import { PlayerEditorComponent } from './components/player-editor/player-editor.component';
 import { PlayerDialogModalComponent } from './components/player-dialog-modal/player-dialog-modal.component';
 import { StatsDashboardComponent } from './components/stats-dashboard/stats-dashboard.component';
+import { LoginModalComponent } from './components/login-modal/login-modal.component';
+import {UserService} from './services/user.service';
 
 
 @NgModule({
@@ -58,7 +60,8 @@ import { StatsDashboardComponent } from './components/stats-dashboard/stats-dash
     HeckleSnackComponent,
     PlayerEditorComponent,
     PlayerDialogModalComponent,
-    StatsDashboardComponent
+    StatsDashboardComponent,
+    LoginModalComponent
   ],
   imports: [
     BrowserModule,
@@ -93,10 +96,11 @@ import { StatsDashboardComponent } from './components/stats-dashboard/stats-dash
       tertiaryColour: '#007bff'
     })
   ],
-  providers: [MockDataService],
+  providers: [MockDataService, UserService],
   entryComponents: [
     HandicapDialogModalComponent,
-    PlayerDialogModalComponent
+    PlayerDialogModalComponent,
+    LoginModalComponent
   ],
   bootstrap: [AppComponent]
 })

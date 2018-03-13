@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Nav } from '../../models/nav';
+import {Component, OnInit} from '@angular/core';
+import {Nav} from '../../models/nav';
+import {MatDialog} from '@angular/material';
+import {LoginModalComponent} from '../login-modal/login-modal.component';
+import {Golfer} from '../../models/golfer';
+import {AsyncLocalStorage} from 'angular-async-local-storage';
+import {AngularFirestore} from 'angularfire2/firestore';
+import {Observable} from 'rxjs/Observable';
+import {UserService} from '../../services/user.service';
 
 
 @Component({
@@ -8,6 +15,8 @@ import { Nav } from '../../models/nav';
   styleUrls: ['./top-nav.component.scss']
 })
 export class TopNavComponent implements OnInit {
+  golfers: Observable<Golfer[]>;
+  currentGolfer: Golfer;
   routes: Nav[] = [
     {
       path: '/',
@@ -48,9 +57,42 @@ export class TopNavComponent implements OnInit {
   ];
 
 
-  constructor() { }
+  constructor(private afs: AngularFirestore,
+              public dialog: MatDialog,
+              private userService: UserService) {
+  }
 
   ngOnInit() {
+    this.golfers = this.afs.collection<Golfer>('golfers').valueChanges();
+    this.getCurrentGolfer();
+  }
+
+  openLoginModal() {
+    const loginModalRef = this.dialog.open(LoginModalComponent,
+      {
+        width: '400px',
+        data: {golfers: this.golfers, currentGolfer: this.currentGolfer}
+      });
+    loginModalRef.afterClosed().subscribe((result: Golfer) => {
+      console.log('result:', result);
+      this.setGolfer(result);
+    });
+  }
+
+  getCurrentGolfer() {
+    this.userService.getCurrentGolfer().subscribe((data: Golfer) => this.currentGolfer = data);
+  }
+
+  setGolfer(golfer: Golfer) {
+    this.currentGolfer = golfer;
+   this.userService.setCurrentGolfer(golfer).subscribe(data => console.log('set user...data:', data));
+
+  }
+
+  logout() {
+    console.log('logging out');
+    this.currentGolfer = null;
+    this.userService.removeCurrentGolfer().subscribe(data => console.log('set user...data:', data));
   }
 
 }
