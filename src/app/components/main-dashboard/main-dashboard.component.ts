@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { MockDataService } from '../../services/mock-data.service';
-import { Course } from '../../models/course';
-import { Golfer } from '../../models/golfer';
-import { LeagueStatus } from '../../models/enums/league-status.enum';
-import { Round } from '../../models/round';
-import { Week } from '../../models/week';
+import {MockDataService} from '../../services/mock-data.service';
+import {Course} from '../../models/course';
+import {Golfer} from '../../models/golfer';
+import {LeagueStatus} from '../../models/enums/league-status.enum';
+import {Round} from '../../models/round';
+import {Week} from '../../models/week';
+import {AngularFirestore} from 'angularfire2/firestore';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-main-dashboard',
@@ -14,7 +16,7 @@ import { Week } from '../../models/week';
 })
 export class MainDashboardComponent implements OnInit {
   courses: Course[];
-  golfers: Golfer[];
+  golfers: Observable<Golfer[]>;
   rounds: Round[];
   members: Golfer[];
   substitutes: Golfer[];
@@ -26,7 +28,9 @@ export class MainDashboardComponent implements OnInit {
   spinner = false;
 
 
-  constructor(private mockDataService: MockDataService) { }
+  constructor(private afs: AngularFirestore,
+              private mockDataService: MockDataService) {
+  }
 
   ngOnInit() {
     this.getWeeks();
@@ -51,12 +55,7 @@ export class MainDashboardComponent implements OnInit {
   }
 
   getGolfers() {
-    this.mockDataService.getGolfers()
-      .subscribe((data: Golfer[]) => {
-        this.golfers = data;
-        this.members = data.filter((golfer: Golfer) => golfer.leagueStatus === LeagueStatus.Member);
-        this.substitutes = data.filter((golfer: Golfer) => golfer.leagueStatus === LeagueStatus.Substitute);
-      });
+    this.golfers = this.afs.collection<Golfer>('golfers').valueChanges();
   }
 
   getAllScores() {
