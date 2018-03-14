@@ -1,6 +1,7 @@
 import { SidePlayed } from './enums/side-played.enum';
 import { Score } from './score';
 import { Team } from './team';
+import {Format} from './enums/format.enum';
 
 export interface Round {
   id: number;
@@ -17,6 +18,8 @@ export interface Round {
   par: number;
   handicap: number; // remember this value will change every few weeks...
   courseHandicap: number; // value will change so we need to have a handicap "tagged" with a round
+  calculatedCourseHandicap: number; // what will be used to compare rounds
+  format: Format;
   team: Team; // focus on this instead of the team associated with the person
   scores: Score[];
 }

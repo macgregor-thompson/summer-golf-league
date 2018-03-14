@@ -3,7 +3,6 @@ import {Nav} from '../../models/nav';
 import {MatDialog} from '@angular/material';
 import {LoginModalComponent} from '../login-modal/login-modal.component';
 import {Golfer} from '../../models/golfer';
-import {AsyncLocalStorage} from 'angular-async-local-storage';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../../services/user.service';
