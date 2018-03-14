@@ -34,6 +34,7 @@ import { SharedModule } from './shared/shared.module';
 import { StatsModule } from './stats/stats.module';
 import { PlayersModule } from './players/players.module';
 import { RulesModule } from './rules/rules.module';
+import { GolfersService } from './services/golfers.service';
 
 
 @NgModule({
@@ -67,13 +68,8 @@ import { RulesModule } from './rules/rules.module';
     NgxChartsModule,
     AsyncLocalStorageModule,
     LoadingModule.forRoot({
-// ANIMATION_TYPES:
-// chasingDots, circle, circleSwish, cubeGrid
-// doubleBounce, pulse, rectangleBounce
-// rotatingPlane, threeBounce, wanderingCubes
       animationType: ANIMATION_TYPES.threeBounce,
       backdropBackgroundColour: 'rgba(0,0,0,0.3)', // make the backdrop invisible
-      //backdropBorderRadius: '100px',
       primaryColour: '#ff4227',
       secondaryColour: '#ffffff',
       tertiaryColour: '#007bff'
@@ -81,7 +77,7 @@ import { RulesModule } from './rules/rules.module';
   ],
 
   // These providers (injectables) are application scoped and all sub components/modules will share the same instance
-  providers: [MockDataService, UserService],
+  providers: [MockDataService, UserService, GolfersService],
   entryComponents: [
     LoginModalComponent
   ],

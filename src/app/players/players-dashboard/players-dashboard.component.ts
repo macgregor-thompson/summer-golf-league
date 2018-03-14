@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
@@ -16,6 +16,8 @@ import { Golfer } from '../../models/golfer';
 export class PlayersDashboardComponent implements OnInit {
   private golfersCollection: AngularFirestoreCollection<Golfer>;
   golfers: Observable<Golfer[]>;
+  displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  dataSource = new MatTableDataSource();
   result;
 
   constructor(private afs: AngularFirestore,
@@ -26,6 +28,13 @@ export class PlayersDashboardComponent implements OnInit {
     this.golfers = this.golfersCollection.valueChanges();
     console.log('this.golfersCollection:', this.golfersCollection);
     console.log('golfers:', this.golfers);
+  }
+
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 
   showHandicapModal() {
