@@ -18,11 +18,12 @@
   </div>
 </div>
 
-<mat-accordion class="table-headers-align">
+<mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
   <mat-expansion-panel *ngFor="let golfer of golfers | async; let i = index; let first = first; let last = last"
-                       [expanded]="step === i" (opened)="setStep(i)" hideToggle="true">
-    <mat-expansion-panel-header color="pimary">
+                       [expanded]="step === i" (opened)="setStep(i)" hideToggle="true" (click)="toggleIndicator()">
+    <mat-expansion-panel-header>
       <mat-panel-title>
+        <mat-icon class="text-muted">{{icon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
         {{golfer.displayName}}
       </mat-panel-title>
       <mat-panel-description>

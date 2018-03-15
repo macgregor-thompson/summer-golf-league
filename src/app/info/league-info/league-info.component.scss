@@ -1,0 +1,12 @@
+mat-list-item h2 {
+  font-size: 1.5em!important;
+}
+
+::ng-deep .mat-list .mat-list-item .mat-line{
+  word-wrap: normal;
+  white-space: normal;
+}
+
+::ng-deep  .mat-list .mat-list-item{
+  height:initial!important;
+}

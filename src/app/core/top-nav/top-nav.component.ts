@@ -5,7 +5,7 @@ import {LoginModalComponent} from '../login-modal/login-modal.component';
 import {Golfer} from '../../models/golfer';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
-import {UserService} from '../../services/user.service';
+import {UserService} from '../services/user.service';
 
 
 @Component({
@@ -48,10 +48,10 @@ export class TopNavComponent implements OnInit {
       icon: 'people'
     },
     {
-      path: '/rules',
-      name: 'Rules',
+      path: '/league-info',
+      name: 'Info',
       exact: true,
-      icon: 'priority_high'
+      icon: 'info'
     }
   ];
 

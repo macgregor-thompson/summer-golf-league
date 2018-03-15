@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
-import {MockDataService} from '../../services/mock-data.service';
+import {MockDataService} from '../../core/services/mock-data.service';
 import {Course} from '../../models/course';
 import {Golfer} from '../../models/golfer';
 import {Round} from '../../models/round';
@@ -31,12 +31,18 @@ export class HomeDashboardComponent implements OnInit {
               private mockDataService: MockDataService) {
   }
 
+  icon = false;
+
   ngOnInit() {
     this.getWeeks();
     this.getCourses();
     this.getGolfers();
     //this.getAllScores();
     this.getScoresByWeek(2);
+  }
+
+  toggleIndicator() {
+    this.icon = !this.icon;
   }
 
   getWeeks() {

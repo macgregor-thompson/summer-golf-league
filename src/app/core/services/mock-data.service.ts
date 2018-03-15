@@ -6,9 +6,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { LeagueStatus } from '../models/enums/league-status.enum';
-import { Round } from '../models/round';
-import { Week } from '../models/week';
+import { LeagueStatus } from '../../models/enums/league-status.enum';
+import { Round } from '../../models/round';
+import { Week } from '../../models/week';
 
 @Injectable()
 export class MockDataService {

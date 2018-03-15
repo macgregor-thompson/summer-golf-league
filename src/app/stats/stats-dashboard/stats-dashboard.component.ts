@@ -4,10 +4,10 @@ import {MatDialog} from '@angular/material';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 
-import {MockDataService} from '../../services/mock-data.service';
+import {MockDataService} from '../../core/services/mock-data.service';
 import {Golfer} from '../../models/golfer';
 import {Round} from '../../models/round';
-import {UserService} from '../../services/user.service';
+import {UserService} from '../../core/services/user.service';
 
 
 @Component({

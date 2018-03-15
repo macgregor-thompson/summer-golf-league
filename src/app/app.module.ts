@@ -2,7 +2,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // AngularFire
 import { AngularFireModule } from 'angularfire2';
@@ -21,29 +20,22 @@ import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 // Custom
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MockDataService } from './services/mock-data.service';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { TopNavComponent } from './components/top-nav/top-nav.component';
-import { LoginComponent } from './components/login/login.component';
-import { LoginModalComponent } from './components/login-modal/login-modal.component';
-import {UserService} from './services/user.service';
+import { MockDataService } from './core/services/mock-data.service';
+import {UserService} from './core/services/user.service';
 import { HomeModule } from './home/home.module';
 import { ScoresModule } from './scores/scores.module';
 import { RankingsModule } from './rankings/rankings.module';
 import { SharedModule } from './shared/shared.module';
 import { StatsModule } from './stats/stats.module';
 import { PlayersModule } from './players/players.module';
-import { RulesModule } from './rules/rules.module';
-import { GolfersService } from './services/golfers.service';
+import { GolfersService } from './core/services/golfers.service';
+import { CoreModule } from './core/core.module';
+import { InfoModule } from './info/info.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,
-    TopNavComponent,
-    LoginComponent,
-    LoginModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +48,7 @@ import { GolfersService } from './services/golfers.service';
     AppMaterialModule,
 
     // Feature Modules
+    CoreModule,
     SharedModule,
    // AppRoutingModule,
     HomeModule,
@@ -63,24 +56,9 @@ import { GolfersService } from './services/golfers.service';
     ScoresModule,
     StatsModule,
     PlayersModule,
-    RulesModule,
-
-    NgxChartsModule,
-    AsyncLocalStorageModule,
-    LoadingModule.forRoot({
-      animationType: ANIMATION_TYPES.threeBounce,
-      backdropBackgroundColour: 'rgba(0,0,0,0.3)', // make the backdrop invisible
-      primaryColour: '#ff4227',
-      secondaryColour: '#ffffff',
-      tertiaryColour: '#007bff'
-    })
+    InfoModule,
   ],
-
   // These providers (injectables) are application scoped and all sub components/modules will share the same instance
-  providers: [MockDataService, UserService, GolfersService],
-  entryComponents: [
-    LoginModalComponent
-  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

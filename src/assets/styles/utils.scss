@@ -1,17 +1,21 @@
-.justify-content-between {
-  justify-content: space-between;
-}
-
 .justify-content-center {
   justify-content: center;
 }
 
-.justify-content-around {
-  justify-content: space-around;
+.justify-content-between {
+  -webkit-box-pack: justify!important;
+  -ms-flex-pack: justify!important;
+  justify-content: space-between!important;
 }
 
-.justify-content-evenly {
-  justify-content: space-evenly;
+.w-100 {
+  width: 100%!important;
+}
+
+.d-flex {
+  display: -webkit-box!important;
+  display: -ms-flexbox!important;
+  display: flex!important;
 }
 
 .text-muted {
@@ -37,4 +41,9 @@
 
 .text-green {
   color: #43a047;
+}
+
+.small, small {
+  font-size: 80%;
+  font-weight: 400;
 }

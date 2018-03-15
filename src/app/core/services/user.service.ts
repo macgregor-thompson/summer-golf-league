@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AsyncLocalStorage} from 'angular-async-local-storage';
-import {Golfer} from '../models/golfer';
+import {Golfer} from '../../models/golfer';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
