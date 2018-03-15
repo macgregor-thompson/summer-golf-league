@@ -9,9 +9,19 @@ import 'rxjs/add/observable/of';
 export class UserService {
   currentGolfer: Golfer;
 
+  teams = [
+    {name: 'Putt Pirates', color: 'primary'},
+    {name: 'Happy Hookers', color: 'accent'},
+    {name: 'Ball Washers', color: 'warn'},
+    {name: 'Subs', color: 'foo'}
+  ];
+
   constructor(protected localStorage: AsyncLocalStorage) {
   }
 
+  getTeams() {
+    return this.teams;
+  }
 
   // TODO: Make this work where when you change or log out it will push that change to the subscribers of current golfer...
 

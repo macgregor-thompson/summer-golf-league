@@ -18,6 +18,9 @@ body {
   $alternate-accent:  mat-palette($mat-blue);
   $alternate-warn:  mat-palette($mat-green, 600);
   $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent, $alternate-warn);
-
   @include angular-material-theme($alternate-theme);
+  .mat-chip:not(.mat-basic-chip) {
+    background-color: #444;
+    color: #fff;
+  }
 }

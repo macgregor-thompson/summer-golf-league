@@ -8,11 +8,25 @@ export interface Golfer {
   firstName: string;
   lastName: string;
   displayName: string;
-  ghinNumber: number;
+  ghinNumber: number | null;
   email: string;
-  team: Team;
+  team: Team | null;
   leagueStatus: LeagueStatus; // Member = 1, Substitute = 2
   handicap: number;
-  handicaps: Handicap[];
-  scores: Round[];
+  handicaps: Handicap[] | null;
+  scores: Round[] | null;
+}
+
+export class Player {
+  id: number;
+  firstName: string;
+  lastName: string;
+  displayName: string;
+  ghinNumber: number | null;
+  email: string;
+  team: Team | null;
+  leagueStatus: LeagueStatus; // Member = 1, Substitute = 2
+  handicap: number;
+  handicaps: Handicap[] | null;
+  scores: Round[] | null;
 }

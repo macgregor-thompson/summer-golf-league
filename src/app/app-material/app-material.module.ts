@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import {
   MatTableModule, MatButtonModule, MatExpansionModule, MatIconModule,
   MatDatepickerModule, MatToolbarModule, MatTabsModule, MatNativeDateModule, MatInputModule, MatCardModule,
-  MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatSnackBarModule
+  MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatSnackBarModule,
+  MatCheckboxModule, MatRadioModule
 } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,12 +16,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatTableModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatExpansionModule,
     MatIconModule, MatDatepickerModule, MatNativeDateModule, MatToolbarModule, MatTabsModule, MatCardModule,
     MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatSnackBarModule,
+    MatCheckboxModule, MatRadioModule
   ],
   declarations: [],
   exports: [
     MatTableModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatExpansionModule,
     MatIconModule, MatDatepickerModule, MatNativeDateModule, MatToolbarModule, MatTabsModule, MatCardModule,
     MatSelectModule, MatChipsModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatSnackBarModule,
+    MatCheckboxModule, MatRadioModule
   ]
 })
 export class AppMaterialModule { }

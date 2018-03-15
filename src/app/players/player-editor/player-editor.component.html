@@ -1,3 +1,37 @@
-<p>
-  player-editor works!
-</p>
+<p>PLayer editor</p>
+<div class="form-container">
+   <div>
+     <mat-form-field>
+       <input matInput placeholder="First Name" class="full-width" [(ngModel)]="golfer.firstName">
+     </mat-form-field>
+     <mat-form-field>
+       <input matInput placeholder="Last Name" class="full-width" [(ngModel)]="golfer.lastName">
+     </mat-form-field>
+   </div>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="Nickname" class="full-width" [(ngModel)]="golfer.displayName">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" class="full-width" [(ngModel)]="golfer.email">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-select [(ngModel)]="golfer.team" class="full-width">
+        <mat-option *ngFor="let team of teams" [value]="team">
+          {{team.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Handicap" class="full-width" [(ngModel)]="golfer.handicap" type="number">
+    </mat-form-field>
+  </div>
+
+  {{ golfer | json }}
+  <button mat-raised-button color="warn" (click)="logForm()">
+    Log Form
+  </button>
+
+</div>

@@ -15,9 +15,9 @@ import { Golfer } from '../../models/golfer';
 })
 export class PlayersDashboardComponent implements OnInit {
   private golfersCollection: AngularFirestoreCollection<Golfer>;
-  golfers: Observable<Golfer[]>;
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource();
+  //golfers: Observable<Golfer[]>;
+  golfers: MatTableDataSource<Golfer>;
+  displayedColumns = ['name', 'handicap', 'team', 'edit'];
   result;
 
   constructor(private afs: AngularFirestore,
@@ -25,16 +25,17 @@ export class PlayersDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.golfersCollection = this.afs.collection<Golfer>('golfers');
-    this.golfers = this.golfersCollection.valueChanges();
-    console.log('this.golfersCollection:', this.golfersCollection);
-    console.log('golfers:', this.golfers);
+    //this.golfers = this.golfersCollection.valueChanges();
+    this.golfersCollection.valueChanges().subscribe((data: Golfer[]) => {
+      this.golfers = new MatTableDataSource<Golfer>(data);
+    });
   }
 
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.golfers.filter = filterValue;
   }
 
   showHandicapModal() {
@@ -45,11 +46,14 @@ export class PlayersDashboardComponent implements OnInit {
     });
   }
 
-  showPlayerEditorModal() {
-    const playerEditorDialogRef = this.dialog.open(PlayerDialogModalComponent, { width: '800px' });
+  showPlayerEditorModal(golfer: Golfer) {
+    const playerEditorDialogRef = this.dialog.open(PlayerDialogModalComponent, {
+      data: { golfer: Object.assign({}, golfer)}
+    });
     playerEditorDialogRef.afterClosed().subscribe(result => {
       console.log('result:', result);
       //add player to firestore here
     });
   }
+
 }

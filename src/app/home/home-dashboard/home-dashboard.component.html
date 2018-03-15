@@ -30,9 +30,7 @@
         Gross: {{weeklyTotals[golfer.id]}}
         |
         Net: {{weeklyNet[golfer.id]}}
-        <mat-chip-list class="team-colors">
-          <mat-chip selected="true" [color]="golfer.team.color">{{golfer.team.name}}</mat-chip>
-        </mat-chip-list>
+        <app-team-chip [golfer]="golfer"></app-team-chip>
       </mat-panel-description>
     </mat-expansion-panel-header>
 
