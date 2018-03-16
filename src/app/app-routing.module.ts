@@ -14,13 +14,10 @@ import { LeagueInfoComponent } from './info/league-info/league-info.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
-  /*{ path: '', loadChildren: 'app/home/home.module#HomeModule' },
-  { path: 'rankings', loadChildren: 'app/rankings/rankings.module#RankingsModule' },
-  { path: 'scores', loadChildren: 'app/scores/scores.module#ScoresModule' },*/
   { path: '', component: ScoresDashboardComponent },
   { path: 'rankings', component: RankingsDashboardComponent },
   { path: 'scores', component: ScoresDashboardComponent },
-  { path: 'editor', component: ScoreEditorComponent },
+  { path: 'score-editor', component: ScoreEditorComponent },
   { path: 'score/:id', component: ScorecardComponent  },
   { path: 'stats', component: StatsDashboardComponent  },
   { path: 'players', component: PlayersDashboardComponent  },

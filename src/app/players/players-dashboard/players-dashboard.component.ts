@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { PlayerDialogModalComponent } from '../player-dialog-modal/player-dialog-modal.component';
 import { HandicapDialogModalComponent } from '../handicap-dialog-modal/handicap-dialog-modal.component';
 import { Golfer } from '../../models/golfer';
+import { PlayerService } from '../../core/services/player.service';
 
 @Component({
   selector: 'app-players-dashboard',
@@ -15,17 +16,19 @@ import { Golfer } from '../../models/golfer';
 })
 export class PlayersDashboardComponent implements OnInit {
   private golfersCollection: AngularFirestoreCollection<Golfer>;
-  //golfers: Observable<Golfer[]>;
+  //players: Observable<Golfer[]>;
   golfers: MatTableDataSource<Golfer>;
-  displayedColumns = ['name', 'handicap', 'team', 'edit'];
+  adminColumns = ['name', 'handicap', 'matches', 'team', 'edit'];
+  displayedColumns = ['name', 'handicap', 'matches', 'team'];
   result;
 
-  constructor(private afs: AngularFirestore,
+  constructor(public playerService: PlayerService,
+              private afs: AngularFirestore,
               public dialog: MatDialog) { }
 
   ngOnInit() {
     this.golfersCollection = this.afs.collection<Golfer>('golfers');
-    //this.golfers = this.golfersCollection.valueChanges();
+    //this.players = this.golfersCollection.valueChanges();
     this.golfersCollection.valueChanges().subscribe((data: Golfer[]) => {
       this.golfers = new MatTableDataSource<Golfer>(data);
     });

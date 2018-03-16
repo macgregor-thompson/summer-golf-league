@@ -1,4 +1,4 @@
-<div class="button-row text-right">
+<div class="button-row text-right" *ngIf="playerService.afAuth.authState | async">
   <button mat-raised-button color="primary" (click)="showHandicapModal()">Update Handicaps</button>
   <button mat-raised-button color="accent" (click)="showPlayerEditorModal()">
     Add Player
@@ -6,7 +6,72 @@
 </div>
 
 
-<!--<div class="table-container mat-elevation-z8" *ngIf="golfers">
+<div class="table-container mat-elevation-z8" *ngIf="golfers">
+  <!--<div class="table-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>-->
+  <mat-table #table [dataSource]="golfers" *ngIf="playerService.afAuth.authState | async else showOtherTable">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Player</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"> {{golfer.displayName}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="handicap">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Handicap</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"> {{golfer.handicap}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="matches">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Matches</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"> {{golfer.matches.length}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="team">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Team</mat-header-cell>
+      <mat-cell *matCellDef="let golfer">
+        <app-team-chip [golfer]="golfer"></app-team-chip>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef> Edit</mat-header-cell>
+      <mat-cell *matCellDef="let golfer">
+        <button mat-icon-button (click)="showPlayerEditorModal(golfer)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="adminColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: adminColumns;"></mat-row>
+  </mat-table>
+
+
+  <ng-template #showOtherTable>
+    <mat-table #table [dataSource]="golfers">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Player</mat-header-cell>
+        <mat-cell *matCellDef="let golfer"> {{golfer.displayName}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="handicap">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Handicap</mat-header-cell>
+        <mat-cell *matCellDef="let golfer"> {{golfer.handicap}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="matches">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Matches</mat-header-cell>
+        <mat-cell *matCellDef="let golfer"> {{golfer.matches.length}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="team">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Team</mat-header-cell>
+        <mat-cell *matCellDef="let golfer">
+          <app-team-chip [golfer]="golfer"></app-team-chip>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </ng-template>
+</div>
+
+<!--  Used Mat table because you could sort so easily! -->
+<!--<div class="table-container mat-elevation-z8" *ngIf="players">
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -18,20 +83,24 @@
           <small>Handicap</small>
         </th>
         <th class="text-muted">
-          <small>Team</small>
+          <small>Matches</small>
         </th>
         <th class="text-muted">
+          <small>Team</small>
+        </th>
+        <th class="text-muted" *ngIf="playerService.afAuth.authState | async">
           <small>Edit</small>
         </th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let golfer of golfers | async">
-        <td>{{golfer.displayName}}</td>
-        <td>{{golfer.handicap}}</td>
-        <td><app-team-chip [golfer]="golfer"></app-team-chip></td>
-        <td>
-          <button mat-icon-button color="warn" (click)="showPlayerEditorModal(golfer)">
+      <tr *ngFor="let player of players | async">
+        <td>{{player.displayName}}</td>
+        <td>{{player.handicap}}</td>
+        <td>{{player.matches ? player.matches.length : 0}}</td>
+        <td><app-team-chip [golfer]="player"></app-team-chip></td>
+        <td *ngIf="playerService.afAuth.authState | async">
+          <button mat-icon-button color="warn" (click)="showPlayerEditorModal(player)">
             <mat-icon>edit</mat-icon>
           </button>
         </td>
@@ -41,37 +110,3 @@
   </div>
 </div>-->
 
-
-<div class="table-container mat-elevation-z8" *ngIf="golfers">
- <!-- <div class="table-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>-->
-  <mat-table #table [dataSource]="golfers">
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Player </mat-header-cell>
-      <mat-cell *matCellDef="let golfer"> {{golfer.displayName}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="handicap">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Handicap </mat-header-cell>
-      <mat-cell *matCellDef="let golfer"> {{golfer.handicap}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="team">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Team </mat-header-cell>
-      <mat-cell *matCellDef="let golfer">
-        <app-team-chip [golfer]="golfer"></app-team-chip>
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let golfer" class="text-right">
-        <button mat-icon-button (click)="showPlayerEditorModal(golfer)">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-</div>

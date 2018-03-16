@@ -7,6 +7,7 @@ import {Round} from '../../models/round';
 import {Week} from '../../models/week';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
+import { PlayerService } from '../../core/services/player.service';
 
 @Component({
   selector: 'app-scores-dashboard',
@@ -26,6 +27,7 @@ export class ScoresDashboardComponent implements OnInit {
 
 
   constructor(private afs: AngularFirestore,
+              public playerService: PlayerService,
               private mockDataService: MockDataService) {
 
   }

@@ -2,6 +2,7 @@ import { LeagueStatus } from './enums/league-status.enum';
 import { Round } from './round';
 import { Team } from './team';
 import {Handicap} from './handicap';
+import { Match } from './match';
 
 export interface Golfer {
   id: number;
@@ -15,6 +16,7 @@ export interface Golfer {
   handicap: number;
   handicaps: Handicap[] | null;
   scores: Round[] | null;
+  matches: Match[];
 }
 
 export class Player {
@@ -29,4 +31,5 @@ export class Player {
   handicap: number;
   handicaps: Handicap[] | null;
   scores: Round[] | null;
+  matches: Match[];
 }

@@ -27,3 +27,12 @@
   overflow: auto;
   /*max-height: 500px;*/
 }
+
+.table td {
+  text-align: center;
+}
+
+/*::ng-deep mat-chip.mat-chip {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}*/

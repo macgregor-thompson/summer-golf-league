@@ -6,24 +6,24 @@
 </h1>
 
 <div class="d-flex justify-content-between">
-  <div class="button-row">
-    <button mat-raised-button color="warn" routerLink="/scores/editor">
+  <div class="button-row" *ngIf="playerService.afAuth.authState | async">
+    <button mat-raised-button color="warn" routerLink="/score-editor">
       <mat-icon>add</mat-icon>
       <span>Add Scores</span>
     </button>
-  </div>
-  <div class="button-row">
-    <mat-form-field>
-      <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
-        <mat-option *ngFor="let week of weeks" [value]="week">
-          Week {{ week.number }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-mini-fab color="accent" (click)="addWeek()">
+    <button mat-raised-button color="primary" (click)="addWeek()">
       <mat-icon>add</mat-icon>
+      <span>Add Week</span>
     </button>
   </div>
+  <div class="example-fill-remaining-space"></div>
+  <mat-form-field>
+    <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
+      <mat-option *ngFor="let week of weeks" [value]="week">
+        Week {{ week.number }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
@@ -31,7 +31,7 @@
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle="true" (click)="toggleIndicator()">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <mat-icon class="text-muted">{{icon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+        <mat-icon class="text-muted">{{icon ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
         {{golfer.displayName}}
       </mat-panel-title>
       <mat-panel-description>

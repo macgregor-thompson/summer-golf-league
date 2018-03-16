@@ -10,7 +10,7 @@ export class UserService {
   currentGolfer: Golfer;
 
   teams = [
-    {name: 'Putt Pirates', color: 'primary'},
+    {name: 'Putt Pirates', color: 'primary', },
     {name: 'Happy Hookers', color: 'accent'},
     {name: 'Ball Washers', color: 'warn'},
     {name: 'Subs', color: 'foo'}
