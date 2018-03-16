@@ -5,7 +5,7 @@ import {LoginModalComponent} from '../login-modal/login-modal.component';
 import {Golfer} from '../../models/golfer';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
-import {UserService} from '../services/user.service';
+import { PlayerService } from '../services/player.service';
 
 
 @Component({
@@ -57,41 +57,19 @@ export class TopNavComponent implements OnInit {
 
 
   constructor(private afs: AngularFirestore,
-              public dialog: MatDialog,
-              private userService: UserService) {
+              public playerService: PlayerService) {
   }
 
   ngOnInit() {
     this.golfers = this.afs.collection<Golfer>('golfers').valueChanges();
-    this.getCurrentGolfer();
   }
 
-  openLoginModal() {
-    const loginModalRef = this.dialog.open(LoginModalComponent,
-      {
-        width: '400px',
-        data: {golfers: this.golfers, currentGolfer: this.currentGolfer}
-      });
-    loginModalRef.afterClosed().subscribe((result: Golfer) => {
-      console.log('result:', result);
-      this.setGolfer(result);
-    });
-  }
-
-  getCurrentGolfer() {
-    this.userService.getCurrentGolfer().subscribe((data: Golfer) => this.currentGolfer = data);
-  }
-
-  setGolfer(golfer: Golfer) {
-    this.currentGolfer = golfer;
-   this.userService.setCurrentGolfer(golfer).subscribe(data => console.log('set user...data:', data));
-
+  gitHubLogin() {
+    this.playerService.loginWithGitHub();
   }
 
   logout() {
-    console.log('logging out');
-    this.currentGolfer = null;
-    this.userService.removeCurrentGolfer().subscribe(data => console.log('set user...data:', data));
+    this.playerService.logout();
   }
 
 }

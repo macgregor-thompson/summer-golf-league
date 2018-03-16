@@ -18,14 +18,18 @@
       <mat-icon>person</mat-icon>
     </button>
     <mat-menu #loginMenu="matMenu" yPosition="below" [overlapTrigger]="false">
-      <button *ngIf="!currentGolfer" mat-menu-item (click)="openLoginModal()">
-        <mat-icon>person</mat-icon>
-        <span>Login</span>
-      </button>
-      <button *ngIf="currentGolfer" mat-menu-item (click)="logout()">
-        <mat-icon>exit_to_app</mat-icon>
-        <span>Logout</span>
-      </button>
+      <div *ngIf="playerService.afAuth.authState | async as player; else showLogin">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+      <ng-template #showLogin>
+        <button mat-menu-item (click)="gitHubLogin()">
+          <mat-icon>person</mat-icon>
+          <span>MacGregor Only</span>
+        </button>
+      </ng-template>
     </mat-menu>
   </nav>
   <div class="menu-btn-div">
@@ -39,14 +43,18 @@
         <span>{{link.name}}</span>
       </button>
       <mat-divider></mat-divider>
-      <button *ngIf="!currentGolfer" mat-menu-item (click)="openLoginModal()">
-        <mat-icon>person</mat-icon>
-        <span>Login</span>
-      </button>
-      <button *ngIf="currentGolfer" mat-menu-item (click)="logout()">
-        <mat-icon>exit_to_app</mat-icon>
-        <span>Logout</span>
-      </button>
+      <div *ngIf="playerService.afAuth.authState | async as player; else showLogin">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+      <ng-template #showLogin>
+        <button mat-menu-item (click)="gitHubLogin()">
+          <mat-icon>person</mat-icon>
+          <span>MacGregor Only</span>
+        </button>
+      </ng-template>
     </mat-menu>
   </div>
 </mat-toolbar>

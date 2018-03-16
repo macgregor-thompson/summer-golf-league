@@ -31,6 +31,7 @@ import { PlayersModule } from './players/players.module';
 import { GolfersService } from './core/services/golfers.service';
 import { CoreModule } from './core/core.module';
 import { InfoModule } from './info/info.module';
+import { AdminModule } from './admin/admin.module';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { InfoModule } from './info/info.module';
     StatsModule,
     PlayersModule,
     InfoModule,
+    AdminModule
   ],
   // These providers (injectables) are application scoped and all sub components/modules will share the same instance
   bootstrap: [AppComponent]

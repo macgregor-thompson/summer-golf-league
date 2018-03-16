@@ -1,6 +1,7 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {Golfer} from '../../models/golfer';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -10,7 +11,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 export class LoginModalComponent implements OnInit {
   currentGolfer: Golfer;
 
-  constructor(public dialogRef: MatDialogRef<LoginModalComponent>,
+  constructor(public playerService: PlayerService,
+              public dialogRef: MatDialogRef<LoginModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -20,6 +22,14 @@ export class LoginModalComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  gitHubLogin() {
+    this.playerService.loginWithGitHub();
+  }
+
+  logout() {
+    this.playerService.logout();
   }
 
 }

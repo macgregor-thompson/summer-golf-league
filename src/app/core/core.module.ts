@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 import { MockDataService } from './services/mock-data.service';
 import { UserService } from './services/user.service';
 import { GolfersService } from './services/golfers.service';
+import { PlayerService } from './services/player.service';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @NgModule({
   imports: [
@@ -24,6 +26,6 @@ import { GolfersService } from './services/golfers.service';
   entryComponents: [
     LoginModalComponent
   ],
-  providers: [MockDataService, UserService, GolfersService],
+  providers: [MockDataService, UserService, GolfersService, PlayerService, AngularFireAuth],
 })
 export class CoreModule { }
