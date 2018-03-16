@@ -1,10 +1,52 @@
-<h1>Scores Dash</h1>
+<ngx-loading [show]="spinner"></ngx-loading>
 
-<div class="button-row text-right">
-  <button mat-raised-button color="primary" routerLink="/scores/editor">
-    <mat-icon>add</mat-icon>
-    <span>Add Scores</span>
-  </button>
+<h1 class="text-center">
+  Week {{weekSelected?.number}}
+  <small class="text-muted">({{weekSelected?.date | date: 'longDate'}})</small>
+</h1>
+
+<div class="d-flex justify-content-between">
+  <div class="button-row">
+    <button mat-raised-button color="warn" routerLink="/scores/editor">
+      <mat-icon>add</mat-icon>
+      <span>Add Scores</span>
+    </button>
+  </div>
+  <div class="button-row">
+    <mat-form-field>
+      <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
+        <mat-option *ngFor="let week of weeks" [value]="week">
+          Week {{ week.number }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-mini-fab color="accent" (click)="addWeek()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 </div>
 
-{{ rounds | json }}
+<mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
+  <mat-expansion-panel *ngFor="let golfer of golfers | async; let i = index; let first = first; let last = last"
+                       [expanded]="step === i" (opened)="setStep(i)" hideToggle="true" (click)="toggleIndicator()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon class="text-muted">{{icon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+        {{golfer.displayName}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Gross: {{weeklyTotals[golfer.id]}}
+        |
+        Net: {{weeklyNet[golfer.id]}}
+        <app-team-chip [golfer]="golfer"></app-team-chip>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <app-scorecard *ngIf="rounds" [round]="rounds | filterRound: golfer.id"></app-scorecard>
+
+    <mat-action-row>
+      <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
+      <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

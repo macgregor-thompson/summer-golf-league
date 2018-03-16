@@ -19,9 +19,9 @@ export class TopNavComponent implements OnInit {
   routes: Nav[] = [
     {
       path: '/',
-      name: 'Home',
+      name: 'Scores',
       exact: true,
-      icon: 'home'
+      icon: 'golf_course'
     },
     {
       path: '/rankings',
@@ -29,7 +29,7 @@ export class TopNavComponent implements OnInit {
       exact: true,
       icon: 'format_list_numbered'
     },
-    {
+    /*{
       path: '/scores',
       name: 'Scores',
       exact: true,
@@ -40,7 +40,7 @@ export class TopNavComponent implements OnInit {
       name: 'Stats',
       exact: true,
       icon: 'insert_chart'
-    },
+    },*/
     {
       path: '/players',
       name: 'Players',

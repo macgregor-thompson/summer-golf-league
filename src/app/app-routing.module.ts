@@ -16,7 +16,7 @@ const routes: Routes = [
   /*{ path: '', loadChildren: 'app/home/home.module#HomeModule' },
   { path: 'rankings', loadChildren: 'app/rankings/rankings.module#RankingsModule' },
   { path: 'scores', loadChildren: 'app/scores/scores.module#ScoresModule' },*/
-  { path: '', component: HomeDashboardComponent },
+  { path: '', component: ScoresDashboardComponent },
   { path: 'rankings', component: RankingsDashboardComponent },
   { path: 'scores', component: ScoresDashboardComponent },
   { path: 'editor', component: ScoreEditorComponent },
