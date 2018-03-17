@@ -14,11 +14,9 @@ export class ScorecardComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    console.log('round:', this.round);
   }
 
   ngOnChanges(changes) {
-    console.log('something changed:', changes);
   }
 
   grossScoreClass(score: Score) {

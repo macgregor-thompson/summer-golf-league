@@ -1,2 +1,7 @@
-<p>If you are MacGregor Thompson....</p>
-<button mat-raised-button color="warn">Login with GitHub</button>
+<div *ngIf="playerService.afAuth.authState | async as player; else showLogin">
+  <button mat-raised-button (click)="logout()">Logout</button>
+</div>
+<ng-template #showLogin>
+  <p>If you are MacGregor Thompson....</p>
+  <button mat-raised-button color="warn" (click)="gitHubLogin()">Login with GitHub</button>
+</ng-template>

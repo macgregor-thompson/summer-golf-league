@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import { SharedModule } from '../../shared/shared.module';
 import {MockDataService} from '../../core/services/mock-data.service';
-import {Course} from '../../models/course';
 import {Golfer} from '../../models/golfer';
 import {Round} from '../../models/round';
 import {Week} from '../../models/week';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import { PlayerService } from '../../core/services/player.service';
+import { MatDialog } from '@angular/material';
+import { WeekModalComponent } from '../week-modal/week-modal.component';
 
 @Component({
   selector: 'app-scores-dashboard',
@@ -28,6 +28,7 @@ export class ScoresDashboardComponent implements OnInit {
 
   constructor(private afs: AngularFirestore,
               public playerService: PlayerService,
+              public dialog: MatDialog,
               private mockDataService: MockDataService) {
 
   }
@@ -44,16 +45,15 @@ export class ScoresDashboardComponent implements OnInit {
   }
 
   getWeeks() {
-    this.mockDataService.getWeeks()
+    this.afs.collection<Week>('mockWeeks', ref => ref.orderBy('number')).valueChanges()
       .subscribe((data: Week[]) => {
         this.weeks = data;
         this.weekSelected = data.filter((week: Week) => week.number === data.length)[0];
-        console.log('weekSelected:', this.weekSelected);
       });
   }
 
-  addWeek() {
-
+  openWeekModal() {
+    this.dialog.open(WeekModalComponent);
   }
 
 
@@ -66,8 +66,6 @@ export class ScoresDashboardComponent implements OnInit {
     this.mockDataService.getScoresByWeek(weekNum)
       .subscribe((data: Round[]) => {
         this.rounds = data;
-        console.log('data2:', data);
-        console.log(`Week ${weekNum} rounds: ${this.rounds}`);
         data.forEach((round: Round) => {
           this.weeklyTotals[round.golferId] = round.total;
           this.weeklyNet[round.golferId] = round.total - round.courseHandicap;

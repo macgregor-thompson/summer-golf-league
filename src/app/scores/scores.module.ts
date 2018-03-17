@@ -8,6 +8,7 @@ import { ANIMATION_TYPES, LoadingModule } from 'ngx-loading';
 
 import { ScoresDashboardComponent } from './scores-dashboard/scores-dashboard.component';
 import { ScoreEditorComponent } from './score-editor/score-editor.component';
+import { WeekModalComponent } from './week-modal/week-modal.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { ScoreEditorComponent } from './score-editor/score-editor.component';
       tertiaryColour: '#007bff'
     })
   ],
-  declarations: [ScoresDashboardComponent, ScoreEditorComponent],
-  exports: []
+  declarations: [ScoresDashboardComponent, ScoreEditorComponent, WeekModalComponent],
+  exports: [],
+  entryComponents: [WeekModalComponent]
 })
 export class ScoresModule {}
