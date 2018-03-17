@@ -13,32 +13,32 @@
     </button>
     <button mat-raised-button color="primary" (click)="openWeekModal()">
       <mat-icon>add</mat-icon>
-      <span>Add Week</span>
+      Add Week
     </button>
   </div>
-  <div class="example-fill-remaining-space"></div>
-  <mat-form-field>
-    <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
-      <mat-option *ngFor="let week of weeks" [value]="week">
-        Week {{ week.number }} | <small>{{ week.date }}</small>
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div>
+    <mat-form-field>
+      <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
+        <mat-option *ngFor="let week of weeks" [value]="week">
+          Week {{ week.number }} | <small>{{ week.date }}</small>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
 
 <mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
   <mat-expansion-panel *ngFor="let golfer of golfers | async; let i = index; let first = first; let last = last"
-                       [expanded]="step === i" (opened)="setStep(i)" hideToggle="true" (click)="toggleIndicator()">
+                       [expanded]="step === i" (opened)="setStep(i)" hideToggle="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <mat-icon class="text-muted">{{icon ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
         {{golfer.displayName}}
       </mat-panel-title>
       <mat-panel-description>
         Gross: {{weeklyTotals[golfer.id]}}
         |
         Net: {{weeklyNet[golfer.id]}}
-        <app-team-chip [golfer]="golfer"></app-team-chip>
+        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
       </mat-panel-description>
     </mat-expansion-panel-header>
 

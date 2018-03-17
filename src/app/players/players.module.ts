@@ -9,12 +9,11 @@ import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 import { PlayersRoutingModule } from './players-routing.module';
 import { PlayersDashboardComponent } from './players-dashboard/players-dashboard.component';
 import { PlayerDialogModalComponent } from './player-dialog-modal/player-dialog-modal.component';
-import { HandicapDialogModalComponent } from './handicap-dialog-modal/handicap-dialog-modal.component';
-import { HandicapWidgetComponent } from './handicap-widget/handicap-widget.component';
+import { HandicapModalComponent } from './handicap-modal/handicap-modal.component';
 import { PlayerEditorComponent } from './player-editor/player-editor.component';
 import { HeckleSnackComponent } from './heckle-snack/heckle-snack.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { GhinLookupWidgetComponent } from './ghin-lookup-widget/ghin-lookup-widget.component';
 
 
 @NgModule({
@@ -36,11 +35,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     })
   ],
   declarations: [
-    PlayersDashboardComponent, PlayerDialogModalComponent, HandicapDialogModalComponent,
-    HandicapWidgetComponent, PlayerEditorComponent, HeckleSnackComponent
+    PlayersDashboardComponent, PlayerDialogModalComponent, HandicapModalComponent,
+    PlayerEditorComponent, HeckleSnackComponent, GhinLookupWidgetComponent
   ],
   entryComponents: [
-    HandicapDialogModalComponent,
+    HandicapModalComponent,
     PlayerDialogModalComponent
   ],
 })

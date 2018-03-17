@@ -1,12 +1,8 @@
-<h2 mat-dialog-title *ngIf="data.golfer">Editing {{data.golfer.displayName}}</h2>
+<h2 mat-dialog-title *ngIf="data.golfer">Editing {{data?.golfer.displayName}}</h2>
 <h2 mat-dialog-title *ngIf="!data.golfer">Add New Player</h2>
-
 <mat-divider></mat-divider>
-
 <mat-dialog-content>
-
   <app-player-editor [golfer]="data.golfer"></app-player-editor>
-
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="button-row text-right">

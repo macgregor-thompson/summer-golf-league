@@ -12,8 +12,6 @@ export class PlayerDialogModalComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-
-
   ngOnInit() {
   }
 

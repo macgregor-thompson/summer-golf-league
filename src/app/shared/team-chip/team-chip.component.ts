@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Golfer } from '../../models/golfer';
+import { Team } from '../../models/team';
 
 @Component({
   selector: 'app-team-chip',
@@ -7,9 +7,7 @@ import { Golfer } from '../../models/golfer';
   styleUrls: ['./team-chip.component.scss']
 })
 export class TeamChipComponent implements OnInit {
-  @Input() golfer: Golfer;
-
-
+  @Input() team: Team;
 
   constructor() { }
 

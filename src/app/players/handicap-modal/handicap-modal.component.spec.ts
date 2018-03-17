@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HandicapLookupComponent } from './handicap-widget.component';
+import { HandicapModalComponent } from './handicap-modal.component';
 
-describe('HandicapLookupComponent', () => {
-  let component: HandicapLookupComponent;
-  let fixture: ComponentFixture<HandicapLookupComponent>;
+describe('HandicapModalComponent', () => {
+  let component: HandicapModalComponent;
+  let fixture: ComponentFixture<HandicapModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HandicapLookupComponent ]
+      declarations: [ HandicapModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HandicapLookupComponent);
+    fixture = TestBed.createComponent(HandicapModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

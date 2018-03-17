@@ -8,14 +8,14 @@ import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-handicap-dialog-modal',
-  templateUrl: './handicap-dialog-modal.component.html',
-  styleUrls: ['./handicap-dialog-modal.component.scss']
+  templateUrl: './handicap-modal.component.html',
+  styleUrls: ['./handicap-modal.component.scss']
 })
-export class HandicapDialogModalComponent implements OnInit {
+export class HandicapModalComponent implements OnInit {
   private golfersCollection: AngularFirestoreCollection<Golfer>;
   golfers: Observable<Golfer[]>;
 
-  constructor(public dialogRef: MatDialogRef<HandicapDialogModalComponent>,
+  constructor(public dialogRef: MatDialogRef<HandicapModalComponent>,
               private afs: AngularFirestore) {}
 
   // This is just to serve as an example for how to add to the list

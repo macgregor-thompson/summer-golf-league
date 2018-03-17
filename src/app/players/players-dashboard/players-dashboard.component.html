@@ -1,17 +1,19 @@
-<div class="button-row text-right" *ngIf="playerService.afAuth.authState | async">
-  <button mat-raised-button color="primary" (click)="showHandicapModal()">Update Handicaps</button>
-  <button mat-raised-button color="accent" (click)="showPlayerEditorModal()">
-    Add Player
-  </button>
+<div class="d-flex justify-content-between" *ngIf="playerService.afAuth.authState | async">
+  <div class="button-row">
+  </div>
+  <div class="button-row">
+    <button mat-raised-button color="primary" (click)="showHandicapModal()">
+      <mat-icon>edit</mat-icon>
+      Update Handicaps
+    </button>
+    <button mat-raised-button color="warn" (click)="showPlayerEditorModal(false)">
+      <mat-icon>add</mat-icon>
+      Add Player
+    </button>
+  </div>
 </div>
 
-
 <div class="table-container mat-elevation-z8" *ngIf="golfers">
-  <!--<div class="table-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>-->
   <mat-table #table [dataSource]="golfers" *ngIf="playerService.afAuth.authState | async else showOtherTable">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Player</mat-header-cell>
@@ -28,7 +30,7 @@
     <ng-container matColumnDef="team">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Team</mat-header-cell>
       <mat-cell *matCellDef="let golfer">
-        <app-team-chip [golfer]="golfer"></app-team-chip>
+        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="edit">
@@ -44,6 +46,7 @@
   </mat-table>
 
 
+  <!-- Easier to do it this way than to check authorization a million times -->
   <ng-template #showOtherTable>
     <mat-table #table [dataSource]="golfers">
       <ng-container matColumnDef="name">
@@ -61,7 +64,7 @@
       <ng-container matColumnDef="team">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Team</mat-header-cell>
         <mat-cell *matCellDef="let golfer">
-          <app-team-chip [golfer]="golfer"></app-team-chip>
+          <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -69,44 +72,4 @@
     </mat-table>
   </ng-template>
 </div>
-
-<!--  Used Mat table because you could sort so easily! -->
-<!--<div class="table-container mat-elevation-z8" *ngIf="players">
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-      <tr>
-        <th class="text-muted">
-          <small>Player</small>
-        </th>
-        <th class="text-muted">
-          <small>Handicap</small>
-        </th>
-        <th class="text-muted">
-          <small>Matches</small>
-        </th>
-        <th class="text-muted">
-          <small>Team</small>
-        </th>
-        <th class="text-muted" *ngIf="playerService.afAuth.authState | async">
-          <small>Edit</small>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let player of players | async">
-        <td>{{player.displayName}}</td>
-        <td>{{player.handicap}}</td>
-        <td>{{player.matches ? player.matches.length : 0}}</td>
-        <td><app-team-chip [golfer]="player"></app-team-chip></td>
-        <td *ngIf="playerService.afAuth.authState | async">
-          <button mat-icon-button color="warn" (click)="showPlayerEditorModal(player)">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-</div>-->
 

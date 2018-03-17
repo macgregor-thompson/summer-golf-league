@@ -12,14 +12,13 @@ export interface Golfer {
   ghinNumber: number | null;
   email: string;
   team: Team | null;
-  leagueStatus: LeagueStatus; // Member = 1, Substitute = 2
   handicap: number;
   handicaps: Handicap[] | null;
-  scores: Round[] | null;
   matches: Match[];
+  teamId: number;
 }
 
-export class Player {
+export class Player implements Golfer {
   id: number;
   firstName: string;
   lastName: string;
@@ -27,9 +26,8 @@ export class Player {
   ghinNumber: number | null;
   email: string;
   team: Team | null;
-  leagueStatus: LeagueStatus; // Member = 1, Substitute = 2
+  teamId: number;
   handicap: number;
   handicaps: Handicap[] | null;
-  scores: Round[] | null;
-  matches: Match[];
+  matches: Match[] | null;
 }

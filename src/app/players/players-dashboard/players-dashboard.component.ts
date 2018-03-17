@@ -5,9 +5,10 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs/Observable';
 
 import { PlayerDialogModalComponent } from '../player-dialog-modal/player-dialog-modal.component';
-import { HandicapDialogModalComponent } from '../handicap-dialog-modal/handicap-dialog-modal.component';
+import { HandicapModalComponent } from '../handicap-modal/handicap-modal.component';
 import { Golfer } from '../../models/golfer';
 import { PlayerService } from '../../core/services/player.service';
+import { Team } from '../../models/team';
 
 @Component({
   selector: 'app-players-dashboard',
@@ -16,7 +17,7 @@ import { PlayerService } from '../../core/services/player.service';
 })
 export class PlayersDashboardComponent implements OnInit {
   private golfersCollection: AngularFirestoreCollection<Golfer>;
-  //players: Observable<Golfer[]>;
+  teams: Team[];
   golfers: MatTableDataSource<Golfer>;
   adminColumns = ['name', 'handicap', 'matches', 'team', 'edit'];
   displayedColumns = ['name', 'handicap', 'matches', 'team'];
@@ -28,21 +29,16 @@ export class PlayersDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.golfersCollection = this.afs.collection<Golfer>('golfers');
-    //this.players = this.golfersCollection.valueChanges();
+    this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => {
+      this.teams = data;
+    });
     this.golfersCollection.valueChanges().subscribe((data: Golfer[]) => {
       this.golfers = new MatTableDataSource<Golfer>(data);
     });
   }
 
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.golfers.filter = filterValue;
-  }
-
   showHandicapModal() {
-    const handicapModalRef = this.dialog.open(HandicapDialogModalComponent, { width: '800px' });
+    const handicapModalRef = this.dialog.open(HandicapModalComponent, { width: '800px' });
     handicapModalRef.afterClosed().subscribe(result => {
       console.log('result:', result);
       this.result = result;
@@ -50,13 +46,17 @@ export class PlayersDashboardComponent implements OnInit {
   }
 
   showPlayerEditorModal(golfer: Golfer) {
-    const playerEditorDialogRef = this.dialog.open(PlayerDialogModalComponent, {
-      data: { golfer: Object.assign({}, golfer)}
+    let playerEditorDialogRef = this.dialog.open(PlayerDialogModalComponent, {
+      data: { golfer: golfer ? Object.assign({}, golfer) : undefined}
     });
     playerEditorDialogRef.afterClosed().subscribe(result => {
       console.log('result:', result);
       //add player to firestore here
     });
+  }
+
+  filterTeam(teamId: number) {
+    return this.teams.filter((team: Team) => team.id === teamId)[0];
   }
 
 }

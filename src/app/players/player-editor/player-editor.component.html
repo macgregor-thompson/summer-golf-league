@@ -12,19 +12,21 @@
       <input matInput placeholder="Nickname" class="full-width" [(ngModel)]="golfer.displayName">
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Email" class="full-width" [(ngModel)]="golfer.email">
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field>
       <mat-select placeholder="Team" class="full-width" [(ngModel)]="golfer.team" [compareWith]="compareFn">
         <mat-option *ngFor="let team of teams" [value]="team">
           {{team.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="GHIN #" class="full-width" [(ngModel)]="golfer.ghinNumber">
+    </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Handicap" class="full-width" [(ngModel)]="golfer.handicap" type="number">
     </mat-form-field>
   </div>
 </div>
+
+<button mat-raised-button color="warn" (click)="log()">Log out player</button>

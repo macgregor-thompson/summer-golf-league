@@ -14,8 +14,6 @@ export class PlayerEditorComponent implements OnInit {
   @Input() golfer: Golfer;
   teams: Team[];
 
-  selected = 'option2';
-
   constructor(private afs: AngularFirestore) {}
 
   ngOnInit() {
@@ -25,17 +23,16 @@ export class PlayerEditorComponent implements OnInit {
     console.log('1:', this.golfer);
     if (!this.golfer) {
       this.golfer = new Player;
-      console.log('1:', this.golfer);
+      console.log('new player:', this.golfer);
     }
   }
 
-  logForm(foo) {
-    console.log(foo);
-  }
-
-
   compareFn(team1: Team, team2: Team): boolean {
     return team1 && team2 ? team1.id === team2.id : team1 === team2;
+  }
+
+  log() {
+    console.log('player:', this.golfer);
   }
 
 }

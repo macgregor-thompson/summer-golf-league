@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import { PlayerService } from '../../core/services/player.service';
 import { MatDialog } from '@angular/material';
 import { WeekModalComponent } from '../week-modal/week-modal.component';
+import { Team } from '../../models/team';
 
 @Component({
   selector: 'app-scores-dashboard',
@@ -17,13 +18,13 @@ import { WeekModalComponent } from '../week-modal/week-modal.component';
 export class ScoresDashboardComponent implements OnInit {
   golfers: Observable<Golfer[]>;
   rounds: Round[];
+  teams: Team[];
   step = 0;
   weekSelected: Week;
   weeklyTotals = {};
   weeklyNet = [];
   weeks: Week[];
   spinner = false;
-  icon = false;
 
 
   constructor(private afs: AngularFirestore,
@@ -38,10 +39,9 @@ export class ScoresDashboardComponent implements OnInit {
     this.getWeeks();
     this.getGolfers();
     this.getScoresByWeek(2);
-  }
-
-  toggleIndicator() {
-    this.icon = !this.icon;
+    this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => {
+      this.teams = data;
+    });
   }
 
   getWeeks() {
@@ -76,6 +76,10 @@ export class ScoresDashboardComponent implements OnInit {
 
   filterRound(golfer): Round {
     return this.rounds.filter(round => round.golferId === golfer.id)[0];
+  }
+
+  filterTeam(teamId: number) {
+    return this.teams.filter((team: Team) => team.id === teamId)[0];
   }
 
   onWeekChange(event) {
