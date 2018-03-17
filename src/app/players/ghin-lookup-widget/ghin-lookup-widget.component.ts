@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ghin-lookup-widget.component.scss']
 })
 export class GhinLookupWidgetComponent implements OnInit {
+  spinner = true;
 
   constructor() { }
 
