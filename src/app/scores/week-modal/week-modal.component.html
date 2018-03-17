@@ -2,11 +2,12 @@
 <mat-divider></mat-divider>
 <mat-dialog-content>
   <mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="Choose a date"
-           ([value])="newWeek.date">
+    <input #date matInput [matDatepicker]="picker" [value]="today"
+           placeholder="Choose a date" (dateChange)="setDate(date.value)">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <mat-datepicker #picker [startAt]="newWeek.date"></mat-datepicker>
   </mat-form-field>
+  <button (click)="setDate(date.value)">Log Out Date</button>
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="button-row text-right">

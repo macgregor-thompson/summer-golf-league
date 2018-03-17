@@ -1,13 +1,12 @@
-<p>PLayer editor</p>
 <div class="form-container">
-   <div>
-     <mat-form-field>
-       <input matInput placeholder="First Name" class="full-width" [(ngModel)]="golfer.firstName">
-     </mat-form-field>
-     <mat-form-field>
-       <input matInput placeholder="Last Name" class="full-width" [(ngModel)]="golfer.lastName">
-     </mat-form-field>
-   </div>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="First Name" class="full-width" [(ngModel)]="golfer.firstName">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Last Name" class="full-width" [(ngModel)]="golfer.lastName">
+    </mat-form-field>
+  </div>
   <div>
     <mat-form-field>
       <input matInput placeholder="Nickname" class="full-width" [(ngModel)]="golfer.displayName">
@@ -18,7 +17,7 @@
   </div>
   <div>
     <mat-form-field>
-      <mat-select [(ngModel)]="golfer.team" class="full-width">
+      <mat-select placeholder="Team" class="full-width" [(ngModel)]="golfer.team" [compareWith]="compareFn">
         <mat-option *ngFor="let team of teams" [value]="team">
           {{team.name}}
         </mat-option>
@@ -28,10 +27,4 @@
       <input matInput placeholder="Handicap" class="full-width" [(ngModel)]="golfer.handicap" type="number">
     </mat-form-field>
   </div>
-
-  {{ golfer | json }}
-  <button mat-raised-button color="warn" (click)="logForm()">
-    Log Form
-  </button>
-
 </div>

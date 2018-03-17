@@ -1,5 +1,6 @@
 export interface Team {
-  captain?: number; // playerId
+  id: number;
+  captain: number | null; // playerId
   name: string;
   color: string;
 }

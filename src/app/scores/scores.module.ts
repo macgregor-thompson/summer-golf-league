@@ -9,11 +9,13 @@ import { ANIMATION_TYPES, LoadingModule } from 'ngx-loading';
 import { ScoresDashboardComponent } from './scores-dashboard/scores-dashboard.component';
 import { ScoreEditorComponent } from './score-editor/score-editor.component';
 import { WeekModalComponent } from './week-modal/week-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
 
     //Common Modules
     AppMaterialModule,

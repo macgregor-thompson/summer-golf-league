@@ -29,23 +29,6 @@ export class MockDataService {
       .map((data: object) => data['courses'].filter(course => course.id == courseId));
   }
 
-  getGolfers(): Observable<any> {
-    return this.http
-      .get('assets/mock-data/golfers.json')
-      .map((data: object) => data['golfers']);
-  }
-
-  getMembers(): Observable<any> {
-    return this.http
-      .get('assets/mock-data/golfers.json')
-      .map((data: object) => data['golfers'].filter(golfer => golfer.leagueStatus === LeagueStatus.Member));
-  }
-
-  getSubstitutes(): Observable<any> {
-    return this.http
-      .get('assets/mock-data/golfers.json')
-      .map((data: object) => data['golfers'].filter(golfer => golfer.leagueStatus === LeagueStatus.Substitute));
-  }
 
   getAllScores(): Observable<any> {
     return this.http
