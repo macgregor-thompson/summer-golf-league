@@ -16,26 +16,26 @@
 <div class="table-container mat-elevation-z8" *ngIf="golfers">
   <mat-table #table [dataSource]="golfers" *ngIf="playerService.afAuth.authState | async else showOtherTable">
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Player</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"> {{golfer.displayName}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Player</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.displayName}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="handicap">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Handicap</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"> {{golfer.handicap}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Handicap</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.handicap}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="matches">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Matches</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"> {{golfer.matches.length}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Matches</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.matches.length}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="team">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Team</mat-header-cell>
-      <mat-cell *matCellDef="let golfer">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Team</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="flex-2">
         <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef> Edit</mat-header-cell>
-      <mat-cell *matCellDef="let golfer">
+      <mat-header-cell *matHeaderCellDef class="flex-1"> Edit</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="flex-1">
         <button mat-icon-button (click)="showPlayerEditorModal(golfer)">
           <mat-icon>edit</mat-icon>
         </button>
@@ -44,7 +44,6 @@
     <mat-header-row *matHeaderRowDef="adminColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: adminColumns;"></mat-row>
   </mat-table>
-
 
   <!-- Easier to do it this way than to check authorization a million times -->
   <ng-template #showOtherTable>

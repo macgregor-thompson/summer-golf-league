@@ -3,23 +3,16 @@
 
 <mat-dialog-content class="flex">
   <div class="form-div">
-    <form #golferForm="ngForm" novalidate class="handicap-form">
-      <mat-form-field *ngFor="let golfer of golfers | async" class="full-width"
-                      [ngClass]="{'updated': golfer['updated']}">
-        <input matInput name="{{golfer.id}}" placeholder="{{golfer.firstName + ' ' + golfer.lastName}}"
-               [(ngModel)]="golfer.handicap" type="number" step="0.1">
-        <!--<mat-hint align="end">{{message.value.length}} / 256</mat-hint>-->
-        <!-- <button mat-button *ngIf="golfer.handicap" matSuffix mat-icon-button aria-label="Clear"
-                 (click)="golfer.handicap=''">
-           <mat-icon>close</mat-icon>
-         </button>-->
-
-        <button mat-button *ngIf="golfer.handicap" matSuffix mat-icon-button aria-label="Clear" color="primary"
-                (click)="updateHandicap(golfer, $event)">
-          <mat-icon>check</mat-icon>
-        </button>
-      </mat-form-field>
-    </form>
+    <mat-form-field *ngFor="let golfer of golfers | async" class="full-width"
+                    [ngClass]="{'updated': updatedGolfers.indexOf(golfer.id) > -1}">
+      <input matInput name="{{golfer.id}}" placeholder="{{golfer.firstName + ' ' + golfer.lastName}}"
+             [(ngModel)]="golfer.handicap" type="number" step="0.1" (keyup.enter)="updateHandicap(golfer)">
+      <mat-hint align="end">{{golfer.ghinNumber}}</mat-hint>
+      <button mat-button matSuffix mat-icon-button aria-label="Update handicap" color="primary"
+              (click)="updateHandicap(golfer)">
+        <mat-icon>check</mat-icon>
+      </button>
+    </mat-form-field>
   </div>
   <div>
     <app-ghin-lookup-widget></app-ghin-lookup-widget>
@@ -29,6 +22,6 @@
   <div class="button-row text-right">
     <button mat-raised-button (click)="onNoClick()">Cancel</button>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-    <button mat-raised-button color="primary" [mat-dialog-close]="golfers">Save</button>
+    <button mat-raised-button color="primary" mat-dialog-close>OK</button>
   </div>
 </mat-dialog-actions>

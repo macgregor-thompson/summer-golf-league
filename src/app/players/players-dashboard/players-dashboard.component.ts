@@ -28,7 +28,7 @@ export class PlayersDashboardComponent implements OnInit {
               public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.golfersCollection = this.afs.collection<Golfer>('golfers');
+    this.golfersCollection = this.afs.collection<Golfer>('golfers', ref => ref.orderBy('displayName'));
     this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => {
       this.teams = data;
     });
@@ -56,7 +56,11 @@ export class PlayersDashboardComponent implements OnInit {
   }
 
   filterTeam(teamId: number) {
-    return this.teams.filter((team: Team) => team.id === teamId)[0];
+    if (teamId) {
+      return this.teams.filter((team: Team) => team.id === teamId)[0];
+    } else {
+      return null;
+    }
   }
 
 }

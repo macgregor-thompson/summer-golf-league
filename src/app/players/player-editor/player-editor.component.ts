@@ -27,12 +27,9 @@ export class PlayerEditorComponent implements OnInit {
     }
   }
 
+  // this is how we can have a default team selected
   compareFn(team1: Team, team2: Team): boolean {
     return team1 && team2 ? team1.id === team2.id : team1 === team2;
-  }
-
-  log() {
-    console.log('player:', this.golfer);
   }
 
 }

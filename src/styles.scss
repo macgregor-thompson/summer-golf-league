@@ -8,6 +8,7 @@
 
 body {
   margin: 0;
+  padding-bottom: 100px;
 }
 .summer-league-app {
   font-family: 'Roboto', sans-serif;
@@ -23,4 +24,11 @@ body {
     background-color: #444;
     color: #fff;
   }
+}
+
+.flex-1 {
+  flex: 1!important;
+}
+.flex-2 {
+  flex: 2!important;
 }

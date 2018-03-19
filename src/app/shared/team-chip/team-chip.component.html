@@ -1,3 +1,8 @@
-<mat-chip-list class="team-colors">
+<mat-chip-list class="team-colors" *ngIf="team">
   <mat-chip selected="true" [color]="team.color">{{team.name}}</mat-chip>
 </mat-chip-list>
+
+<mat-chip-list *ngIf="!team">
+  <mat-chip>Undrafted</mat-chip>
+</mat-chip-list>
+

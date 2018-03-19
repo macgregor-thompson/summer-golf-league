@@ -5,7 +5,7 @@ import {Handicap} from './handicap';
 import { Match } from './match';
 
 export interface Golfer {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   displayName: string;
@@ -19,7 +19,7 @@ export interface Golfer {
 }
 
 export class Player implements Golfer {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   displayName: string;

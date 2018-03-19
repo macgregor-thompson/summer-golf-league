@@ -45,7 +45,7 @@ export class ScoresDashboardComponent implements OnInit {
   }
 
   getWeeks() {
-    this.afs.collection<Week>('mockWeeks', ref => ref.orderBy('number')).valueChanges()
+    this.afs.collection<Week>('weeks', ref => ref.orderBy('number')).valueChanges()
       .subscribe((data: Week[]) => {
         this.weeks = data;
         this.weekSelected = data.filter((week: Week) => week.number === data.length)[0];

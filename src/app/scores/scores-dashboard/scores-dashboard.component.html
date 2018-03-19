@@ -1,34 +1,53 @@
 <ngx-loading [show]="spinner"></ngx-loading>
 
-<h1 class="text-center">
-  Week {{weekSelected?.number}}
-  <small class="text-muted">({{weekSelected?.date | date: 'longDate'}})</small>
-</h1>
+<div *ngIf="!weeks?.length">
+  <h1 class="text-center">
+    Week 1
+    <small class="text-muted">(May 14, 2018)</small>
+  </h1>
 
-<div class="d-flex justify-content-between">
-  <div class="button-row" *ngIf="playerService.afAuth.authState | async">
-    <button mat-raised-button color="warn" routerLink="/score-editor">
-      <mat-icon>add</mat-icon>
-      <span>Add Scores</span>
-    </button>
-    <button mat-raised-button color="primary" (click)="openWeekModal()">
-      <mat-icon>add</mat-icon>
-      Add Week
-    </button>
-  </div>
-  <div>
-    <mat-form-field>
-      <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
-        <mat-option *ngFor="let week of weeks" [value]="week">
-          Week {{ week.number }} | <small>{{ week.date }}</small>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div class="alert alert-primary text-center">
+    <h2>Score will be posted here after week 1.</h2>
   </div>
 </div>
 
-<mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
-  <mat-expansion-panel *ngFor="let golfer of golfers | async; let i = index; let first = first; let last = last"
+
+
+
+<div *ngIf="weeks?.length">
+  <h1 class="text-center">
+    Week {{weekSelected?.number}}
+    <small class="text-muted">({{weekSelected?.date | date: 'longDate'}})</small>
+  </h1>
+
+  <div class="d-flex justify-content-between">
+    <div class="button-row" *ngIf="playerService.afAuth.authState | async">
+      <button mat-raised-button color="warn" routerLink="/score-editor">
+        <mat-icon>add</mat-icon>
+        <span>Add Scores</span>
+      </button>
+      <button mat-raised-button color="primary" (click)="openWeekModal()">
+        <mat-icon>add</mat-icon>
+        Add Week
+      </button>
+    </div>
+    <div></div>
+    <div class="text-right">
+      <mat-form-field>
+        <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
+          <mat-option *ngFor="let week of weeks" [value]="week">
+            Week {{ week.number }} | <small>{{ week.date }}</small>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+
+
+<!--<mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
+  <mat-expansion-panel *ngFor="let round of rounds let i = index; let first = first; let last = last"
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -49,4 +68,4 @@
       <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
     </mat-action-row>
   </mat-expansion-panel>
-</mat-accordion>
+</mat-accordion>-->
