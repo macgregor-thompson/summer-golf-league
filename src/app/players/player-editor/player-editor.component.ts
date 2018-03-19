@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Golfer, Player } from '../../models/golfer';
+import { Golfer } from '../../models/interfaces/golfer';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Team } from '../../models/team';
+import { Team } from '../../models/interfaces/team';
 import { Observable } from 'rxjs/Observable';
-import { UserService } from '../../core/services/user.service';
+import { Player } from '../../models/classes/player';
 
 @Component({
   selector: 'app-player-editor',

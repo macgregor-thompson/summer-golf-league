@@ -1,6 +1,6 @@
 import { Hole } from './hole';
 
-export class Tee {
+export interface Tee {
   frontNine: Hole[];
   backNine: Hole[];
 }

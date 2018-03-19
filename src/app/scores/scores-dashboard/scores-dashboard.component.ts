@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {MockDataService} from '../../core/services/mock-data.service';
-import {Golfer} from '../../models/golfer';
-import {Round} from '../../models/round';
-import {Week} from '../../models/week';
+import {Golfer} from '../../models/interfaces/golfer';
+import {Round} from '../../models/interfaces/round';
+import {Week} from '../../models/interfaces/week';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import { PlayerService } from '../../core/services/player.service';
 import { MatDialog } from '@angular/material';
 import { WeekModalComponent } from '../week-modal/week-modal.component';
-import { Team } from '../../models/team';
+import { Team } from '../../models/interfaces/team';
 
 @Component({
   selector: 'app-scores-dashboard',

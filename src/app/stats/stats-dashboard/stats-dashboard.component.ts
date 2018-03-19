@@ -5,8 +5,8 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import {Observable} from 'rxjs/Observable';
 
 import {MockDataService} from '../../core/services/mock-data.service';
-import {Golfer} from '../../models/golfer';
-import {Round} from '../../models/round';
+import {Golfer} from '../../models/interfaces/golfer';
+import {Round} from '../../models/interfaces/round';
 import {UserService} from '../../core/services/user.service';
 
 

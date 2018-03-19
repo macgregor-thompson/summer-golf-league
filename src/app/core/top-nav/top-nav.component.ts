@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Nav} from '../../models/nav';
+import {Nav} from '../../models/interfaces/nav';
 import {MatDialog} from '@angular/material';
 import {LoginModalComponent} from '../login-modal/login-modal.component';
-import {Golfer} from '../../models/golfer';
+import {Golfer} from '../../models/interfaces/golfer';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import { PlayerService } from '../services/player.service';

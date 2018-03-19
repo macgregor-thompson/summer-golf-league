@@ -1,4 +1,4 @@
-export class Par {
+export interface Par {
   men: number;
   women: number;
 }

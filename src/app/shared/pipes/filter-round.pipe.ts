@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Round } from '../../models/round';
+import { Round } from '../../models/interfaces/round';
 
 @Pipe({
   name: 'filterRound'

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import {MockDataService} from '../../core/services/mock-data.service';
-import {Course} from '../../models/course';
-import {Golfer} from '../../models/golfer';
-import {Round} from '../../models/round';
-import {Week} from '../../models/week';
+import {Course} from '../../models/interfaces/course';
+import {Golfer} from '../../models/interfaces/golfer';
+import {Round} from '../../models/interfaces/round';
+import {Week} from '../../models/interfaces/week';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Team } from '../../models/team';
+import { Team } from '../../models/interfaces/team';
 
 @Component({
   selector: 'app-team-chip',

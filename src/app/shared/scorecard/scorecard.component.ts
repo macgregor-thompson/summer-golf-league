@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
-import { Round } from '../../models/round';
-import { Score } from '../../models/score';
+import { Round } from '../../models/interfaces/round';
+import { Score } from '../../models/interfaces/score';
 
 @Component({
   selector: 'app-scorecard',

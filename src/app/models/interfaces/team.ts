@@ -3,4 +3,5 @@ export interface Team {
   captain: number | null; // playerId
   name: string;
   color: string;
+  points: number;
 }

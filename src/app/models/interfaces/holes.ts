@@ -1,6 +1,6 @@
 import { Hole } from './hole';
 
-export class Holes {
+export interface Holes {
   frontNine: Hole[];
   backNine: Hole[];
 }

@@ -1,4 +1,4 @@
-export class Score {
+export interface Score {
   score: number;
   number: number;
   par: number;

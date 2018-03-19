@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { Golfer } from '../../models/golfer';
-import { Round } from '../../models/round';
-import { Score } from '../../models/score';
+import { Golfer } from '../../models/interfaces/golfer';
+import { Round } from '../../models/interfaces/round';
+import { Score } from '../../models/interfaces/score';
 import { ChartTypes } from '../../models/enums/chart-types.enum';
 
 

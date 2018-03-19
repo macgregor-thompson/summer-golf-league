@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 
 import { PlayerDialogModalComponent } from '../player-dialog-modal/player-dialog-modal.component';
 import { HandicapModalComponent } from '../handicap-modal/handicap-modal.component';
-import { Golfer } from '../../models/golfer';
+import { Golfer } from '../../models/interfaces/golfer';
 import { PlayerService } from '../../core/services/player.service';
-import { Team } from '../../models/team';
+import { Team } from '../../models/interfaces/team';
 
 @Component({
   selector: 'app-players-dashboard',

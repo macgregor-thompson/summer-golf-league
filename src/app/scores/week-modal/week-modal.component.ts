@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Week } from '../../models/week';
+import { Week } from '../../models/interfaces/week';
 import { MatDialogRef } from '@angular/material';
 import { TemplateRef } from '@angular/core';
 

@@ -1,6 +1,6 @@
 import { Tee} from './tee';
 
-export class Slope {
+export interface Slope {
   tee: Tee;
   total: number;
   frontNine: number;

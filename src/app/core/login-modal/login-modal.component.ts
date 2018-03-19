@@ -1,5 +1,5 @@
 import {Component, OnInit, Inject} from '@angular/core';
-import {Golfer} from '../../models/golfer';
+import {Golfer} from '../../models/interfaces/golfer';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import { PlayerService } from '../services/player.service';
 

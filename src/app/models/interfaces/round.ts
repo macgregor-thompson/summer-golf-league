@@ -1,7 +1,7 @@
-import { SidePlayed } from './enums/side-played.enum';
+import { SidePlayed } from '../enums/side-played.enum';
 import { Score } from './score';
 import { Team } from './team';
-import {Format} from './enums/format.enum';
+import {Format} from '../enums/format.enum';
 
 export interface Round {
   id: number;
