@@ -4,7 +4,7 @@
   margin-right: auto;
 }
 
-/deep/ .chart-legend .legend-title-text {
+::ng-deep .chart-legend .legend-title-text {
   visibility: hidden !important;
 }
 
