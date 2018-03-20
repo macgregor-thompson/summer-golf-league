@@ -6,16 +6,17 @@
       <mat-icon>edit</mat-icon>
       Update Handicaps
     </button>
-    <button mat-raised-button color="warn" (click)="showPlayerEditorModal(false)">
+   <!-- <button mat-raised-button color="warn" (click)="showPlayerEditorModal(false)">
       <mat-icon>add</mat-icon>
       Add Player
-    </button>
+    </button>-->
   </div>
 </div>
 
 <div class="table-container mat-elevation-z8" *ngIf="golfers">
-  <mat-table #table [dataSource]="golfers" *ngIf="playerService.afAuth.authState | async else showOtherTable">
-    <ng-container matColumnDef="name">
+<mat-table #table [dataSource]="golfers" matSort matSortActive="displayName"
+           *ngIf="playerService.afAuth.authState | async else showOtherTable">
+    <ng-container matColumnDef="displayName">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Player</mat-header-cell>
       <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.displayName}}</mat-cell>
     </ng-container>
@@ -47,8 +48,8 @@
 
   <!-- Easier to do it this way than to check authorization a million times -->
   <ng-template #showOtherTable>
-    <mat-table #table [dataSource]="golfers">
-      <ng-container matColumnDef="name">
+    <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName">
+      <ng-container matColumnDef="displayName">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Player</mat-header-cell>
         <mat-cell *matCellDef="let golfer"> {{golfer.displayName}}</mat-cell>
       </ng-container>

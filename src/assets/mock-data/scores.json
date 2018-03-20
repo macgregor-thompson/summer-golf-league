@@ -2,7 +2,7 @@
   "scores": [
     {
       "id": 101,
-      "golferId": 1,
+      "golferId": "vuyfBTQyI2rbM1cCnQrx",
       "date": "5/17/2018",
       "week": 1,
       "courseId": 1,
@@ -80,7 +80,7 @@
     },
     {
       "id": 102,
-      "golferId": 2,
+      "golferId": "F1lrSIWYcfVXZ7NfVTGd",
       "date": "5/17/2018",
       "week": 1,
       "courseId": 1,
@@ -158,7 +158,7 @@
     },
     {
       "id": 103,
-      "golferId": 3,
+      "golferId": "fK0YrDBKgS616y7bfvgm",
       "date": "5/17/2018",
       "week": 1,
       "courseId": 1,
@@ -236,7 +236,7 @@
     },
     {
       "id": 104,
-      "golferId": 4,
+      "golferId": "9Oy5MJtSun9mYjGnfKL2",
       "date": "5/17/2018",
       "week": 1,
       "courseId": 1,
@@ -314,7 +314,7 @@
     },
     {
       "id": 201,
-      "golferId": 1,
+      "golferId": "vuyfBTQyI2rbM1cCnQrx",
       "date": "5/24/2018",
       "week": 2,
       "courseId": 1,
@@ -392,7 +392,7 @@
     },
     {
       "id": 202,
-      "golferId": 2,
+      "golferId": "F1lrSIWYcfVXZ7NfVTGd",
       "date": "5/24/2018",
       "week": 2,
       "courseId": 1,
@@ -470,7 +470,7 @@
     },
     {
       "id": 203,
-      "golferId": 3,
+      "golferId": "fK0YrDBKgS616y7bfvgm",
       "date": "5/24/2018",
       "week": 2,
       "courseId": 1,
@@ -548,7 +548,7 @@
     },
     {
       "id": 204,
-      "golferId": 4,
+      "golferId": "9Oy5MJtSun9mYjGnfKL2",
       "date": "5/24/2018",
       "week": 2,
       "courseId": 1,

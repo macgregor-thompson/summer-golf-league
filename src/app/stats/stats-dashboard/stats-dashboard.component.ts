@@ -8,6 +8,7 @@ import {MockDataService} from '../../core/services/mock-data.service';
 import {Golfer} from '../../models/interfaces/golfer';
 import {Round} from '../../models/interfaces/round';
 import {UserService} from '../../core/services/user.service';
+import { Team } from '../../models/interfaces/team';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class StatsDashboardComponent implements OnInit {
   private golfersCollection: AngularFirestoreCollection<Golfer>;
   golfers: Observable<Golfer[]>;
   currentGolfer: Golfer;
+  teams: Team[];
   rounds: Round[];
   spinner = false;
   step = -1;
@@ -31,6 +33,7 @@ export class StatsDashboardComponent implements OnInit {
   ngOnInit() {
     this.golfersCollection = this.afs.collection<Golfer>('golfers');
     this.golfers = this.golfersCollection.valueChanges();
+    this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => this.teams = data);
     this.getAllScores();
     console.log('this.golfersCollection:', this.golfersCollection);
     console.log('golfers:', this.golfers);
@@ -54,6 +57,14 @@ export class StatsDashboardComponent implements OnInit {
     return this.rounds.filter((round: Round) => round.golferId === golferId);
   }
 
+  filterTeam(teamId: number) {
+    if (teamId) {
+      return this.teams.filter((team: Team) => team.id === teamId)[0];
+    } else {
+      return null;
+    }
+  }
+
   calculateAverage(golferId: number) {
     let totals = 0;
     const rounds = this.filterRounds(golferId);
@@ -63,14 +74,6 @@ export class StatsDashboardComponent implements OnInit {
     return totals / rounds.length;
   }
 
-  /* setAverage(avg: number, golfer: Golfer) {
-     this.averages[golfer.id] = avg;
-   }*/
-
-  /* editPlayer(golfer: Golfer, event) {
-     event.stopPropagation();
-     console.log('editing handicap for: ', golfer.firstName);
-   }*/
 
   setStep(index: number) {
     this.step = index;

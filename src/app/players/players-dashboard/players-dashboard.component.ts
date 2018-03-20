@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 
@@ -14,12 +14,13 @@ import { Team } from '../../models/interfaces/team';
   templateUrl: './players-dashboard.component.html',
   styleUrls: ['./players-dashboard.component.scss']
 })
-export class PlayersDashboardComponent implements OnInit {
+export class PlayersDashboardComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatSort) sort: MatSort;
   private golfersCollection: AngularFirestoreCollection<Golfer>;
   teams: Team[];
   golfers: MatTableDataSource<Golfer>;
-  adminColumns = ['name', 'handicap', 'matches', 'team', 'edit'];
-  displayedColumns = ['name', 'handicap', 'matches', 'team'];
+  adminColumns = ['displayName', 'handicap', 'matches', 'team', 'edit'];
+  displayedColumns = ['displayName', 'handicap', 'matches', 'team'];
   result;
 
   constructor(public playerService: PlayerService,
@@ -33,15 +34,20 @@ export class PlayersDashboardComponent implements OnInit {
     });
     this.golfersCollection.valueChanges().subscribe((data: Golfer[]) => {
       this.golfers = new MatTableDataSource<Golfer>(data);
+      this.golfers.sort = this.sort;
     });
   }
 
+  /**
+   * Set the sort after the view init since this component will
+   * be able to query its view for the initialized sort.
+   */
+  ngAfterViewInit() {
+
+  }
+
   showHandicapModal() {
-    const handicapModalRef = this.dialog.open(HandicapModalComponent, { width: '800px' });
-    handicapModalRef.afterClosed().subscribe(result => {
-      console.log('result:', result);
-      this.result = result;
-    });
+    this.dialog.open(HandicapModalComponent, { width: '800px' });
   }
 
   showPlayerEditorModal(golfer: Golfer) {
