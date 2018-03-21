@@ -6,8 +6,6 @@ p {
 
 mat-list-item h2 {
   font-size: 1.7em !important;
-  font-weight: 500 !important;
-
 }
 
 mat-list-item h3 {
@@ -30,8 +28,4 @@ mat-list-item h3 {
 ::ng-deep .mat-list-item-content{
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-}
-
-strong {
-  font-weight: 600;
 }

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
-import {Observable} from 'rxjs/Observable';
+import {AngularFirestore} from 'angularfire2/firestore';
 
 import {MockDataService} from '../../core/services/mock-data.service';
 import {Golfer} from '../../models/interfaces/golfer';
@@ -17,8 +16,7 @@ import { Team } from '../../models/interfaces/team';
   styleUrls: ['./stats-dashboard.component.scss']
 })
 export class StatsDashboardComponent implements OnInit {
-  private golfersCollection: AngularFirestoreCollection<Golfer>;
-  golfers: Observable<Golfer[]>;
+  golfers: Golfer[];
   currentGolfer: Golfer;
   teams: Team[];
   rounds: Round[];
@@ -31,13 +29,12 @@ export class StatsDashboardComponent implements OnInit {
               public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.golfersCollection = this.afs.collection<Golfer>('golfers');
-    this.golfers = this.golfersCollection.valueChanges();
-    this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => this.teams = data);
+    this.afs.collection<Golfer>('golfers').valueChanges()
+      .subscribe((data: Golfer[]) => this.golfers = data);
+    this.afs.collection<Team>('teams').valueChanges()
+      .subscribe((data: Team[]) => this.teams = data);
+
     this.getAllScores();
-    console.log('this.golfersCollection:', this.golfersCollection);
-    console.log('golfers:', this.golfers);
-    this.getCurrentGolfer();
   }
 
   getAllScores() {
@@ -47,10 +44,6 @@ export class StatsDashboardComponent implements OnInit {
         this.rounds = data;
         this.spinner = false;
       }, () => this.spinner = false);
-  }
-
-  getCurrentGolfer() {
-    this.userService.getCurrentGolfer().subscribe((data: Golfer) => this.currentGolfer = data);
   }
 
   filterRounds(golferId: number) {

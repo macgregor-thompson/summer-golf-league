@@ -46,7 +46,7 @@ export class RankingsDashboardComponent implements OnInit {
   }
 
   onSelect(event) {
-    console.log('event:', event);
+    console.log('event:', event, this.points);
 
     /*   switch (event.name) {
          case '':

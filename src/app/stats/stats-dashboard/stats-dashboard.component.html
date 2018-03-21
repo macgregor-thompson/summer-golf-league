@@ -1,7 +1,7 @@
 <ngx-loading [show]="spinner"></ngx-loading>
 
 <mat-accordion class="table-headers-align">
-  <mat-expansion-panel *ngFor="let golfer of golfers | async; let i = index; let first = first; let last = last;"
+  <mat-expansion-panel *ngFor="let golfer of golfers; let i = index; let first = first; let last = last;"
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
