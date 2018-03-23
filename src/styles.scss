@@ -4,7 +4,7 @@
 @include mat-core();
 @import 'assets/styles/utils';
 @import 'assets/styles/bootstrap';
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,900');
 
 
 body {
@@ -12,7 +12,7 @@ body {
   padding-bottom: 100px;
 }
 
-$custom-typography: mat-typography-config($font-family: 'Open Sans');
+$custom-typography: mat-typography-config($font-family: 'Railway');
 @include mat-core($custom-typography);
 
 .team-colors {
@@ -32,4 +32,8 @@ $custom-typography: mat-typography-config($font-family: 'Open Sans');
 }
 .flex-2 {
   flex: 2!important;
+}
+
+strong, .strong {
+  font-weight: 900!important;
 }
