@@ -4,16 +4,15 @@
 @include mat-core();
 @import 'assets/styles/utils';
 @import 'assets/styles/bootstrap';
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,900');
+/*@import url('https://fonts.googleapis.com/css?family=Raleway:400');*/
 
+/*$custom-typography: mat-typography-config($font-family: 'Raleway');
+@include mat-core($custom-typography);*/
 
 body {
   margin: 0;
   padding-bottom: 100px;
 }
-
-$custom-typography: mat-typography-config($font-family: 'Railway');
-@include mat-core($custom-typography);
 
 .team-colors {
   $alternate-primary: mat-palette($mat-red);
@@ -34,6 +33,6 @@ $custom-typography: mat-typography-config($font-family: 'Railway');
   flex: 2!important;
 }
 
-strong, .strong {
+/*strong, .strong {
   font-weight: 900!important;
-}
+}*/
