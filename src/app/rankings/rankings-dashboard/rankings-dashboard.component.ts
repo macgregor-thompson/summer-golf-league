@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+
 import { Team } from '../../models/interfaces/team';
 import { NgxObject } from '../../models/interfaces/ngx-object';
 import { ChartTypes } from '../../models/enums/chart-types.enum';
+import {Golfer} from '../../models/interfaces/golfer';
 
 @Component({
   selector: 'app-rankings-dashboard',
@@ -12,6 +15,8 @@ import { ChartTypes } from '../../models/enums/chart-types.enum';
 export class RankingsDashboardComponent implements OnInit {
   spinner = false;
   points: NgxObject[] = [];
+  teams: Team[];
+  golfers: MatTableDataSource<Golfer>;
   ChartTypes = ChartTypes;
   chartType = ChartTypes.NumberCard;
   // bar chart options
@@ -25,24 +30,57 @@ export class RankingsDashboardComponent implements OnInit {
   yAxisLabel = 'Points';
   colorScheme = {
     domain: [
-      '#f44336', // MacGregor's team
-      '#43a047', // Warbird's team
-      '#2196f3', // GanMan's team
+      //'#f44336', // MacGregor's team
+     // '#43a047', // Warbird's team
+     // '#2196f3', // GanMan's team
     ]
   };
+  displayedColumns = ['ranking', 'displayName', 'points', 'team'];
+
 
   constructor(private afs: AngularFirestore) { }
 
   ngOnInit() {
-    this.afs.collection<Team>('teams', ref => ref.where('id', '<', 4)).valueChanges()
+    this.afs.collection<Team>('teams', ref => ref.orderBy('points', 'desc')).valueChanges()
       .subscribe((data: Team[]) => {
+        this.teams = data;
+        data.forEach((team: Team) => {
+          if (team.id < 4) {
+            this.colorScheme.domain.push(team.colorScheme);
+            this.points.push({
+              name: team.name,
+              value: team.points
+            });
+          }
+        });
+      }, e => console.log('Error fetching teams:', e));
+
+   /* this.afs.collection<Team>('teams', ref => ref.where('id', '<', 4)).valueChanges()
+      .subscribe((data: Team[]) => {
+        this.teams = data;
         data.forEach((team: Team) => {
           this.points.push({
             name: team.name,
             value: team.points
           });
         });
-      }, e => console.log('Error fetching teams:', e));
+      }, e => console.log('Error fetching teams:', e));*/
+
+    this.afs.collection<Golfer>('golfers', ref => ref.orderBy('points', 'desc')).valueChanges()
+      .subscribe((data: Golfer[]) => {
+        let members = data.filter(g => g.teamId < 4);
+        this.golfers = new MatTableDataSource<Golfer>(members);
+      });
+
+
+  }
+
+  filterTeam(teamId: number) {
+    if (teamId) {
+      return this.teams.filter((team: Team) => team.id === teamId)[0];
+    } else {
+      return null;
+    }
   }
 
   onSelect(event) {
