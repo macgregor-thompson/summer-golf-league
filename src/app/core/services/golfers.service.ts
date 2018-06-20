@@ -9,7 +9,7 @@ export class GolfersService {
   golfers: Observable<Golfer[]>;
 
   constructor(public afs: AngularFirestore) {
-    this.golfersCollection = afs.collection<Golfer>('golfers');
+    this.golfersCollection = afs.collection<Golfer>('members');
 
   }
 

@@ -29,7 +29,7 @@ export class StatsDashboardComponent implements OnInit {
               public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.afs.collection<Golfer>('golfers').valueChanges()
+    this.afs.collection<Golfer>('members').valueChanges()
       .subscribe((data: Golfer[]) => this.golfers = data);
     this.afs.collection<Team>('teams').valueChanges()
       .subscribe((data: Team[]) => this.teams = data);

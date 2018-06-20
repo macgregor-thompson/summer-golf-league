@@ -25,7 +25,7 @@ export class HandicapModalComponent implements OnInit {
    }*/
 
   ngOnInit() {
-    this.golfersCollection = this.afs.collection<Golfer>('golfers', ref => ref.orderBy('firstName'));
+    this.golfersCollection = this.afs.collection<Golfer>('members', ref => ref.orderBy('firstName'));
     this.golfers = this.golfersCollection.valueChanges();
   }
 

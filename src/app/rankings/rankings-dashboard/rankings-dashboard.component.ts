@@ -5,7 +5,7 @@ import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { Team } from '../../models/interfaces/team';
 import { NgxObject } from '../../models/interfaces/ngx-object';
 import { ChartTypes } from '../../models/enums/chart-types.enum';
-import {Golfer} from '../../models/interfaces/golfer';
+import { Golfer } from '../../models/interfaces/golfer';
 
 @Component({
   selector: 'app-rankings-dashboard',
@@ -31,8 +31,8 @@ export class RankingsDashboardComponent implements OnInit {
   colorScheme = {
     domain: [
       //'#f44336', // MacGregor's team
-     // '#43a047', // Warbird's team
-     // '#2196f3', // GanMan's team
+      // '#43a047', // Warbird's team
+      // '#2196f3', // GanMan's team
     ]
   };
   displayedColumns = ['ranking', 'displayName', 'points', 'team'];
@@ -55,21 +55,31 @@ export class RankingsDashboardComponent implements OnInit {
         });
       }, e => console.log('Error fetching teams:', e));
 
-   /* this.afs.collection<Team>('teams', ref => ref.where('id', '<', 4)).valueChanges()
-      .subscribe((data: Team[]) => {
-        this.teams = data;
-        data.forEach((team: Team) => {
-          this.points.push({
-            name: team.name,
-            value: team.points
-          });
-        });
-      }, e => console.log('Error fetching teams:', e));*/
+    /* this.afs.collection<Team>('teams', ref => ref.where('id', '<', 4)).valueChanges()
+       .subscribe((data: Team[]) => {
+         this.teams = data;
+         data.forEach((team: Team) => {
+           this.points.push({
+             name: team.name,
+             value: team.points
+           });
+         });
+       }, e => console.log('Error fetching teams:', e));*/
 
-    this.afs.collection<Golfer>('golfers', ref => ref.orderBy('points', 'desc')).valueChanges()
+    this.afs.collection<Golfer>('members', ref => ref.orderBy('points', 'desc')).valueChanges()
       .subscribe((data: Golfer[]) => {
-        let members = data.filter(g => g.teamId < 4);
-        this.golfers = new MatTableDataSource<Golfer>(members);
+        //let members = data.filter(g => g.teamId < 4);
+        let ranked = data.map((golfer, i) => {
+          if (i > 0) {
+            let prev = data[i - 1];
+            golfer.rank = prev.points === golfer.points ? prev.rank : i + 1;
+          } else {
+            golfer.rank = 1;
+          }
+          return golfer;
+        });
+
+        this.golfers = new MatTableDataSource<Golfer>(ranked);
       });
 
 

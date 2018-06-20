@@ -16,4 +16,5 @@ export interface Golfer {
   teamId: number;
   points: number;
   leagueMember: boolean;
+  rank?: number;
 }

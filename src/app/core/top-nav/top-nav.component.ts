@@ -61,7 +61,7 @@ export class TopNavComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.golfers = this.afs.collection<Golfer>('golfers').valueChanges();
+    this.golfers = this.afs.collection<Golfer>('members').valueChanges();
   }
 
   gitHubLogin() {

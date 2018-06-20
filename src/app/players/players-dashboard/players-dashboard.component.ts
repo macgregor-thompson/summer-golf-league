@@ -17,8 +17,8 @@ import { Team } from '../../models/interfaces/team';
 export class PlayersDashboardComponent implements OnInit {
   teams: Team[];
   golfers: MatTableDataSource<Golfer>;
-  adminColumns = ['displayName', 'handicap', 'matches', 'team', 'edit'];
-  displayedColumns = ['displayName', 'handicap', 'matches', 'team'];
+  adminColumns = ['firstName', 'lastName', 'displayName', 'handicap', 'team', 'points', 'edit'];
+  displayedColumns = ['firstName', 'lastName', 'displayName', 'handicap', 'team', 'points'];
 
   constructor(public playerService: PlayerService,
               private afs: AngularFirestore,
@@ -28,7 +28,7 @@ export class PlayersDashboardComponent implements OnInit {
     this.afs.collection<Team>('teams').valueChanges()
       .subscribe((data: Team[]) => this.teams = data);
 
-    this.afs.collection<Golfer>('golfers', ref => ref.orderBy('displayName')).valueChanges()
+    this.afs.collection<Golfer>('members', ref => ref.orderBy('displayName')).valueChanges()
       .subscribe((data: Golfer[]) => {
       //data.sort((a: Golfer, b: Golfer) => Number(b.leagueMember) - Number(a.leagueMember));
       this.golfers = new MatTableDataSource<Golfer>(data);

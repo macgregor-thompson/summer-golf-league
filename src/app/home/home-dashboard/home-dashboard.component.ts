@@ -60,7 +60,7 @@ export class HomeDashboardComponent implements OnInit {
   }
 
   getGolfers() {
-    this.golfers = this.afs.collection<Golfer>('golfers').valueChanges();
+    this.golfers = this.afs.collection<Golfer>('members').valueChanges();
   }
 
   getAllScores() {

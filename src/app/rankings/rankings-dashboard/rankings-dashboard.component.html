@@ -70,7 +70,7 @@
   <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName">
     <ng-container matColumnDef="ranking">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Ranking</mat-header-cell>
-      <mat-cell *matCellDef="let golfer; let i = index;">{{i + 1}}</mat-cell>
+      <mat-cell *matCellDef="let golfer; let i = index;">{{golfer.rank}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="displayName">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Player</mat-header-cell>
