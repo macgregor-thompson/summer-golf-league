@@ -1,4 +1,3 @@
-import { SidePlayed } from '../enums/side-played.enum';
 import { Score } from './score';
 import { Team } from './team';
 import {Format} from '../enums/format.enum';
@@ -13,7 +12,6 @@ export interface Round {
   week: number;
   courseId: number;
   tees: string;
-  sidePlayed: SidePlayed;
   total: number;
   par: number;
   handicap: number; // remember this value will change every few weeks...

@@ -1,10 +1,12 @@
 <ngx-loading [show]="spinner"></ngx-loading>
 
+<!--
 <div class="alert alert-primary text-center">
   <h2>I'm working on it....This part has been a BIATCH!</h2>
 </div>
+-->
 
-<!--<div *ngIf="weeks?.length">
+<div *ngIf="weeks?.length">
   <h1 class="text-center">
     Week {{weekSelected?.number}}
     <small class="text-muted">({{weekSelected?.date | date: 'longDate'}})</small>
@@ -26,36 +28,50 @@
       <mat-form-field>
         <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
           <mat-option *ngFor="let week of weeks" [value]="week">
-            Week {{ week.number }} | <small>{{ week.date }}</small>
+            Week {{ week.number }} |
+            <small>{{ week.date }}</small>
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
-</div>-->
+</div>
 
 
-
-<!--<mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
-  <mat-expansion-panel *ngFor="let round of rounds let i = index; let first = first; let last = last"
+<mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
+  <mat-expansion-panel *ngFor="let match of matches let i = index; let first = first; let last = last"
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle="false">
     <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{golfer.displayName}}
-      </mat-panel-title>
+     <!--<mat-panel-title>
+      </mat-panel-title>-->
       <mat-panel-description>
-        Gross: {{weeklyTotals[golfer.id]}}
-        |
-        Net: {{weeklyNet[golfer.id]}}
-        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
+        <div>
+          <app-team-chip [team]="filterTeam(match.teamOne.teamId)" [short]="true"></app-team-chip>
+          <span [ngStyle]="{'color': teamColor[match.teamOne.teamId]}">
+            {{match.teamOne.playerA}} & {{match.teamOne.playerB}}
+          </span>
+        </div>
+        vs.
+        <div>
+          <app-team-chip [team]="filterTeam(match.teamTwo.teamId)" [short]="true"></app-team-chip>
+          <span [ngStyle]="{'color': teamColor[match.teamTwo.teamId]}">
+            {{match.teamTwo.playerA}} & {{match.teamTwo.playerB}}
+          </span>
+        </div>
+        <mat-chip-list>
+          <mat-chip>{{formatName[match.format]}}</mat-chip>
+        </mat-chip-list>
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <app-scorecard *ngIf="rounds" [round]="rounds | filterRound: golfer.id"></app-scorecard>
+    <app-scorecard *ngFor="let match of matches"
+                   [match]="match"
+                   [roundsCollection]="roundsCollection"
+                   [course]="course"></app-scorecard>
 
     <mat-action-row>
       <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
       <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
     </mat-action-row>
   </mat-expansion-panel>
-</mat-accordion>-->
+</mat-accordion>

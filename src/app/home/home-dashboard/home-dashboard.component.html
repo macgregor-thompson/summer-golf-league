@@ -34,7 +34,7 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-     <app-scorecard *ngIf="rounds" [round]="rounds | filterRound: golfer.id"></app-scorecard>
+    <!-- <app-scorecard *ngIf="rounds" [round]="rounds | filterRound: golfer.id"></app-scorecard>-->
 
     <mat-action-row>
       <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>

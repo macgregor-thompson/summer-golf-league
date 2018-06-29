@@ -4,7 +4,7 @@
 }
 
 .table-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -32,3 +32,7 @@ div.alert h2{
   background-color: #ff5438;
   color: #fff;
 }*/
+
+.panel-description span{
+  margin: auto 10px;
+}

@@ -1,3 +1,3 @@
 export enum Format {
-  TwoManFourBall, TwoManScramble, TwoManScotchie, FourManScramble
+  TwoManBetterBall = 1, TwoManScramble, TwoManAltShot, FourManScramble
 }

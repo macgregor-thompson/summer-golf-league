@@ -1,17 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Match } from '../../models/interfaces/match';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Course } from '../../models/interfaces/course';
 import { PlayerName } from '../../models/classes/player-name';
 import { TeamRound } from '../../models/interfaces/team-round';
 import { Team } from '../../models/interfaces/team';
 
 @Component({
-  selector: 'app-scorecard',
-  templateUrl: './scorecard.component.html',
-  styleUrls: ['./scorecard.component.scss']
+  selector: 'app-scorecard-better-ball',
+  templateUrl: './scorecard-better-ball.component.html',
+  styleUrls: ['./scorecard-better-ball.component.scss']
 })
-export class ScorecardComponent implements OnInit {
+export class ScorecardBetterBallComponent implements OnInit {
   @Input() match: Match;
   @Input() roundsCollection: AngularFirestoreCollection<TeamRound>;
   @Input() course: Course;
@@ -21,8 +21,8 @@ export class ScorecardComponent implements OnInit {
   teams: Team[];
   teamColor = {
     1: '#f44336', // MacGregor's team
-    2: '#2196f3', // Warbird's team
-    3: '#43a047' // GanMan's team
+    2: '#43a047', // Warbird's team
+    3: '#2196f3' // GanMan's team
   };
 
   constructor(private afs: AngularFirestore) {}
@@ -58,6 +58,11 @@ export class ScorecardComponent implements OnInit {
     }
   }
 
+/*
+  playerName(golferId) {
+    console.log('name:', PlayerName[golferId]);
+    return PlayerName[golferId];
+  }*/
 
   filterTeam(teamId: number) {
     if (teamId) {

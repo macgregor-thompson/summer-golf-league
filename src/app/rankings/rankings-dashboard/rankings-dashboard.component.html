@@ -70,7 +70,13 @@
   <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName">
     <ng-container matColumnDef="ranking">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Ranking</mat-header-cell>
-      <mat-cell *matCellDef="let golfer; let i = index;">{{golfer.rank}}</mat-cell>
+      <mat-cell *matCellDef="let golfer; let i = index; let first = first;">
+        {{golfer.rank}}
+        <i class="material-icons" *ngIf="i < 2"
+           [ngClass]="setStarColor(i)">
+          star
+        </i>
+      </mat-cell>
     </ng-container>
     <ng-container matColumnDef="displayName">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Player</mat-header-cell>

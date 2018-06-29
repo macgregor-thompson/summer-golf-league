@@ -17,6 +17,7 @@ export class RankingsDashboardComponent implements OnInit {
   points: NgxObject[] = [];
   teams: Team[];
   golfers: MatTableDataSource<Golfer>;
+  members: Golfer[];
   ChartTypes = ChartTypes;
   chartType = ChartTypes.NumberCard;
   // bar chart options
@@ -68,11 +69,16 @@ export class RankingsDashboardComponent implements OnInit {
 
     this.afs.collection<Golfer>('members', ref => ref.orderBy('points', 'desc')).valueChanges()
       .subscribe((data: Golfer[]) => {
-        //let members = data.filter(g => g.teamId < 4);
+        this.members = data;
         let ranked = data.map((golfer, i) => {
           if (i > 0) {
             let prev = data[i - 1];
-            golfer.rank = prev.points === golfer.points ? prev.rank : i + 1;
+            if (prev.points === golfer.points) {
+              golfer.rank = `T${prev.rank}`;
+              prev.rank = `T${prev.rank}`;
+            } else {
+              golfer.rank = i + 1;
+            }
           } else {
             golfer.rank = 1;
           }
@@ -83,6 +89,18 @@ export class RankingsDashboardComponent implements OnInit {
       });
 
 
+  }
+
+  setStarColor(i) {
+    if (i === 0) {
+      return 'gold-star';
+    } else {
+      if (this.members[0].points === this.members[i].points) {
+        return 'gold-star';
+      } else {
+        return 'silver-star';
+      }
+    }
   }
 
   filterTeam(teamId: number) {

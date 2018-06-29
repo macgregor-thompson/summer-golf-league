@@ -10,10 +10,14 @@ import { ScoresDashboardComponent } from './scores-dashboard/scores-dashboard.co
 import { ScoreEditorComponent } from './score-editor/score-editor.component';
 import { WeekModalComponent } from './week-modal/week-modal.component';
 import { FormsModule } from '@angular/forms';
+import { ScorecardComponent } from './scorecard/scorecard.component';
+import { ScorecardBetterBallComponent } from './scorecard-better-ball/scorecard-better-ball.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CoreModule,
     RouterModule,
     FormsModule,
 
@@ -28,7 +32,12 @@ import { FormsModule } from '@angular/forms';
       tertiaryColour: '#007bff'
     })
   ],
-  declarations: [ScoresDashboardComponent, ScoreEditorComponent, WeekModalComponent],
+  declarations: [
+    ScoresDashboardComponent,
+    ScoreEditorComponent,
+    ScorecardComponent,
+    WeekModalComponent,
+    ScorecardBetterBallComponent],
   exports: [],
   entryComponents: [WeekModalComponent]
 })

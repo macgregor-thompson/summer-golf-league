@@ -1,0 +1,21 @@
+{
+  "matches": [
+    {
+      "week": 1,
+      "teamOneRound": [
+        "golfers": [],
+        "net":
+      ],
+      "teamTwoRound": []
+    }
+  ]
+}
+
+golfers: Golfer[]; //maybe use display names so you don;'t have to look anything up
+week: number;
+net: number;
+stackStrokes: number;
+matchStrokes: number;
+format: Format;
+team: Team;
+scores: Score[];

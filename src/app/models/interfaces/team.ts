@@ -2,6 +2,7 @@ export interface Team {
   id: number;
   captain: number | null; // playerId
   name: string;
+  letter: string;
   color: string;
   points?: number;
   colorScheme?: string;

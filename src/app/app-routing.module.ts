@@ -9,7 +9,7 @@ import { LoginComponent } from './core/login/login.component';
 import { HomeDashboardComponent } from './home/home-dashboard/home-dashboard.component';
 import { ScoresDashboardComponent } from './scores/scores-dashboard/scores-dashboard.component';
 import { RankingsDashboardComponent } from './rankings/rankings-dashboard/rankings-dashboard.component';
-import { ScorecardComponent } from './shared/scorecard/scorecard.component';
+import { ScorecardComponent } from './scores/scorecard/scorecard.component';
 import { LeagueInfoComponent } from './info/league-info/league-info.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
