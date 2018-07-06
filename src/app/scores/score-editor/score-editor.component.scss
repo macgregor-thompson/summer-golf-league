@@ -127,10 +127,32 @@
   border-radius: 5%;
 }
 
-.stack-stroke {
+.s-strokes-div {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 3px;
+}
+
+.m-strokes-div {
+  position: absolute;
+  top: 0;
+  right: 3px;
+}
+
+.strokes-hint {
+  font-size: 1.5rem;
+}
+
+.s-stroke {
+}
+
+.m-stroke {
+  color: red;
+  margin-left: 3px;
+}
+
+.text-red {
+  color: red;
 }
 
 .half-width {
@@ -148,7 +170,18 @@
   justify-content: space-between;
 }
 
-
 .stepper-buttons {
   margin-top: 15px;
+}
+
+.display-name-no-wrap {
+  white-space: nowrap;
+}
+
+td {
+  vertical-align: middle;
+}
+
+input.mat-input-element {
+  margin-top: 0;
 }

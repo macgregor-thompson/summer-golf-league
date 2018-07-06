@@ -42,6 +42,10 @@ export class DataService {
     return this.afs.collection<Team>('teams', ref => ref.orderBy('id')).valueChanges();
   }
 
+  allTeams(): Observable<Team[]> {
+    return this.afs.collection<Team>('teams', ref => ref.orderBy('id')).valueChanges();
+  }
+
   weeks(): Observable<IWeek[]> {
     return this.afs.collection<IWeek>('weeks', ref => ref.orderBy('number')).valueChanges();
   }

@@ -1,4 +1,5 @@
 <h1>Score Editor</h1>
+<button mat-raised-button color="warn" (click)="logStuff()">Log Stuff</button>
 
 <mat-expansion-panel [disabled]="true" [expanded]="true">
   <!--  <mat-expansion-panel-header>
@@ -7,6 +8,8 @@
   <mat-panel-description>
 
   </mat-panel-description>
+
+  <!-- ////////////////////////// Match Stepper  //////////////////////////-->
 
   <mat-horizontal-stepper [linear]="true" #stepper *ngIf="!showScoreCard"
                           (selectionChange)="onStepperChange($event)">
@@ -17,7 +20,7 @@
         Add Week
       </button>
       <mat-form-field>
-        <mat-select [(ngModel)]="weekSelected">
+        <mat-select #week [(ngModel)]="weekSelected" (selectionChange)="onWeekChange(week)">
           <mat-option *ngFor="let week of weeks" [value]="week">
             Week {{ week.number }} |
             <small>{{ week.date }}</small>
@@ -31,7 +34,7 @@
     <mat-step>
       <ng-template matStepLabel>Format</ng-template>
       <mat-form-field>
-        <mat-select [(ngModel)]="formatSelected">
+        <mat-select #format [(ngModel)]="formatSelected" (selectionChange)="onFormatChange(format)">
           <mat-option [value]="Format.TwoManBetterBall">Two-Man Better Ball</mat-option>
           <mat-option [value]="Format.TwoManAltShot">Two-Man Alt Shot</mat-option>
           <mat-option [value]="Format.TwoManScramble">Two-Man Scramble</mat-option>
@@ -46,7 +49,7 @@
     <mat-step>
       <ng-template matStepLabel>Course</ng-template>
       <mat-form-field>
-        <mat-select [(ngModel)]="courseSelected">
+        <mat-select #course [(ngModel)]="courseSelected" (selectionChange)="onCourseChange(course)">
           <mat-option *ngFor="let course of courses" [value]="course">
             {{ course.name }}
           </mat-option>
@@ -72,46 +75,53 @@
         <div class="flex-between form-padding">
           <mat-form-field>
             <mat-select [(ngModel)]="match.teamOne.roundA.playerA" placeholder="A Player">
-              <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamA.id)" [value]="golfer">
-                {{ golfer.displayName }}
-              </mat-option>
-            </mat-select>
-            <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
-          </mat-form-field>
-          <mat-form-field *ngIf="formatSelected != Format.TwoManBetterBall">
-            <mat-select [(ngModel)]="match.teamOne.roundA.playerB" placeholder="B Player">
-              <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamA.id)" [value]="golfer">
-                {{ golfer.displayName }}
+              <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamA.id)" [value]="player">
+                {{ player.displayName }}
               </mat-option>
             </mat-select>
             <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
           </mat-form-field>
           <mat-form-field class="num-input">
             <input matInput type="number" min="0" placeholder="Stack Strokes"
+                   [value]="match.teamOne.roundA.strokesGetting"
                    (input)="setStrokes(true, 'teamOne', 'roundA', $event)">
           </mat-form-field>
           <mat-form-field class="num-input">
             <input matInput type="number" min="0" placeholder="Match Strokes"
+                   [value]="match.teamOne.roundA.matchStrokes"
                    (input)="setStrokes(false, 'teamOne', 'roundA', $event)">
           </mat-form-field>
         </div>
-        <div class="flex-between form-padding">
-          <mat-form-field *ngIf="formatSelected === Format.TwoManBetterBall">
+        <div class="form-padding">
+          <mat-form-field *ngIf="formatSelected != Format.TwoManBetterBall">
             <mat-select [(ngModel)]="match.teamOne.roundA.playerB" placeholder="B Player">
-              <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamA.id)" [value]="golfer">
-                {{ golfer.displayName }}
+              <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamA.id)" [value]="player">
+                {{ player.displayName }}
               </mat-option>
             </mat-select>
             <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
           </mat-form-field>
-          <mat-form-field class="num-input">
-            <input matInput type="number" min="0" placeholder="Stack Strokes"
-                   (input)="setStrokes(true, 'teamOne', 'roundB', $event)">
-          </mat-form-field>
-          <mat-form-field class="num-input">
-            <input matInput type="number" min="0" placeholder="Match Strokes"
-                   (input)="setStrokes(false, 'teamOne', 'roundB', $event)">
-          </mat-form-field>
+
+          <div *ngIf="formatSelected === Format.TwoManBetterBall" class="flex-between">
+            <mat-form-field>
+              <mat-select [(ngModel)]="match.teamOne.roundB.playerA" placeholder="B Player">
+                <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamA.id)" [value]="player">
+                  {{ player.displayName }}
+                </mat-option>
+              </mat-select>
+              <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
+            </mat-form-field>
+            <mat-form-field class="num-input">
+              <input matInput type="number" min="0" placeholder="Stack Strokes"
+                     [value]="match.teamOne.roundB.strokesGetting"
+                     (input)="setStrokes(true, 'teamOne', 'roundB', $event)">
+            </mat-form-field>
+            <mat-form-field class="num-input">
+              <input matInput type="number" min="0" placeholder="Match Strokes"
+                     [value]="match.teamOne.roundB.matchStrokes"
+                     (input)="setStrokes(false, 'teamOne', 'roundB', $event)">
+            </mat-form-field>
+          </div>
         </div>
       </div>
       <div class="stepper-buttons">
@@ -119,7 +129,6 @@
         <button mat-button color="primary" matStepperNext>Next</button>
       </div>
     </mat-step>
-
 
     <mat-step>
       <ng-template matStepLabel>Team B</ng-template>
@@ -131,50 +140,57 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+
       <div *ngIf="teamB">
         <div class="flex-between form-padding">
           <mat-form-field>
             <mat-select [(ngModel)]="match.teamTwo.roundA.playerA" placeholder="A Player">
-              <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamB.id)" [value]="golfer">
-                {{ golfer.displayName }}
-              </mat-option>
-            </mat-select>
-            <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
-          </mat-form-field>
-          <mat-form-field *ngIf="formatSelected != Format.TwoManBetterBall">
-            <mat-select [(ngModel)]="match.teamTwo.roundA.playerB" placeholder="B Player">
-              <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamB.id)" [value]="golfer">
-                {{ golfer.displayName }}
+              <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamB.id)" [value]="player">
+                {{ player.displayName }}
               </mat-option>
             </mat-select>
             <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
           </mat-form-field>
           <mat-form-field class="num-input">
             <input matInput type="number" min="0" placeholder="Stack Strokes"
+                   [value]="match.teamTwo.roundA.strokesGetting"
                    (input)="setStrokes(true, 'teamTwo', 'roundA', $event)">
           </mat-form-field>
           <mat-form-field class="num-input">
             <input matInput type="number" min="0" placeholder="Match Strokes"
+                   [value]="match.teamTwo.roundA.matchStrokes"
                    (input)="setStrokes(false, 'teamTwo', 'roundA', $event)">
           </mat-form-field>
         </div>
-        <div class="flex-between form-padding">
-          <mat-form-field *ngIf="formatSelected === Format.TwoManBetterBall">
-            <mat-select [(ngModel)]="match.teamTwo.roundB.playerA" placeholder="B Player">
-              <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamB.id)" [value]="golfer">
-                {{ golfer.displayName }}
+        <div class="form-padding">
+          <mat-form-field *ngIf="formatSelected != Format.TwoManBetterBall">
+            <mat-select [(ngModel)]="match.teamTwo.roundA.playerB" placeholder="B Player">
+              <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamB.id)" [value]="player">
+                {{ player.displayName }}
               </mat-option>
             </mat-select>
             <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
           </mat-form-field>
-          <mat-form-field class="num-input">
-            <input matInput type="number" min="0" placeholder="Stack Strokes"
-                   (input)="setStrokes(true, 'teamTwo', 'roundB', $event)">
-          </mat-form-field>
-          <mat-form-field class="num-input">
-            <input matInput type="number" min="0" placeholder="Match Strokes"
-                   (input)="setStrokes(false, 'teamTwo', 'roundB', $event)">
-          </mat-form-field>
+          <div *ngIf="formatSelected === Format.TwoManBetterBall" class="flex-between">
+            <mat-form-field>
+              <mat-select [(ngModel)]="match.teamTwo.roundB.playerA" placeholder="B Player">
+                <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamB.id)" [value]="player">
+                  {{ player.displayName }}
+                </mat-option>
+              </mat-select>
+              <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
+            </mat-form-field>
+            <mat-form-field class="num-input">
+              <input matInput type="number" min="0" placeholder="Stack Strokes"
+                     [value]="match.teamTwo.roundB.strokesGetting"
+                     (input)="setStrokes(true, 'teamTwo', 'roundB', $event)">
+            </mat-form-field>
+            <mat-form-field class="num-input">
+              <input matInput type="number" min="0" placeholder="Match Strokes"
+                     [value]="match.teamTwo.roundB.matchStrokes"
+                     (input)="setStrokes(false, 'teamTwo', 'roundB', $event)">
+            </mat-form-field>
+          </div>
         </div>
       </div>
       <div class="stepper-buttons">
@@ -184,6 +200,11 @@
     </mat-step>
   </mat-horizontal-stepper>
 
+  <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+  <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+  <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+  <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+  <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
   <div class="table-container mat-elevation-z8" *ngIf="showScoreCard">
     <div class="table-responsive">
@@ -194,10 +215,7 @@
             <small>Player</small>
           </th>
           <th class="text-muted">
-            <small>Stack Strokes</small>
-          </th>
-          <th class="text-muted">
-            <small>Match Strokes</small>
+            <small>Blows</small>
           </th>
           <th class="text-muted" *ngFor="let hole of match.course.holes">
             <small>{{hole.number}}</small>
@@ -206,157 +224,274 @@
             <small>Total</small>
           </th>
         </tr>
+        <tr>
+          <th class="text-muted" colspan="2">
+            <small>Handicap</small>
+          </th>
+          <th class="text-muted" *ngFor="let hole of match.course.holes">
+            <small>{{hole.handicap}}</small>
+          </th>
+          <th class="text-muted">
+          </th>
+        </tr>
         </thead>
         <tbody>
+        <!-------------------------------------- TEAM A ---------------------------------------------------------------------->
         <tr>
-          <td class="text-muted">
-            <mat-form-field *ngIf="golfers" class="golfer-select">
-              <mat-select [value]="match.teamOne?.roundA?.playerA"
-                          (change)="onSelectPlayer('teamOne', 'roundA', 'playerA', $event)"
-                          placeholder="A Player">
-                <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamA.id)" [value]="golfer">
-                  {{ golfer.displayName }}
-                </mat-option>
-              </mat-select>
-              <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
-            </mat-form-field>
-            <mat-form-field *ngIf="golfers && match.format != Format.TwoManBetterBall" class="golfer-select">
-              <mat-select [value]="match.teamOne?.roundA?.playerB"
-                          (change)="onSelectPlayer('teamOne', 'roundA', 'playerB', $event)"
-                          placeholder="B Player">
-                <mat-option *ngFor="let golfer of golfers" [value]="golfer">
-                  {{ golfer.displayName }}
-                </mat-option>
-              </mat-select>
-              <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
-            </mat-form-field>
+          <td>
+            <div class="d-flex">
+              <app-team-chip [short]="true" [team]="teamA"></app-team-chip>
+              &nbsp;
+              <span [ngStyle]="{'color': teamA.colorScheme}">
+                <span class="display-name-no-wrap">
+                  {{match.teamOne.roundA.playerA.displayName}}
+                </span>
+                <span *ngIf="match.format != Format.TwoManBetterBall">
+                  &
+                  <span class="display-name-no-wrap">
+                    {{match.teamOne.roundA.playerB.displayName}}
+                  </span>
+                </span>
+              </span>
+            </div>
           </td>
-          <td class="text-center">
+          <td class="text-center display-name-no-wrap">
             {{match.teamOne.roundA.strokesGetting}}
+            <span *ngIf="match.teamOne.roundA.matchStrokes != match.teamOne.roundA.strokesGetting">
+              |
+              <span class="text-red">
+                {{match.teamOne.roundA.matchStrokes}}
+              </span>
+            </span>
           </td>
-          <td class="text-center">
-            {{match.teamOne.roundA.matchStrokes}}
-          </td>
-          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9];" class="text-center">
+          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+            <div class="s-strokes-div" *ngIf="match.teamOne.roundA.strokesGetting">
+              <span *ngFor="let s of numStrokes(match.teamOne.roundA.strokesGetting, i)"
+                    class="s-stroke">*
+              </span>
+            </div>
+            <!--<div *ngIf="match.teamOne.roundB.matchStrokes != match.teamOne.roundB.strokesGetting"-->
+            <div class="m-strokes-div" *ngIf="match.teamOne.roundA.matchStrokes">
+              <span *ngFor="let s of numStrokes(match.teamOne.roundA.matchStrokes, i)"
+                    class="m-stroke">*</span>
+            </div>
             <mat-form-field class="num-input">
               <input matInput type="number" min="1" placeholder=""
                      (input)="addScorePlayer('teamOne', 'roundA', hole, $event)">
             </mat-form-field>
           </td>
           <td class="total-score-td">
-            <span class="total-score-div" [ngStyle]="{'background-color': teamColor[teamA.id]}">
+            <span class="total-score-div" [ngStyle]="{'color': teamColor[teamA.id]}">
               {{match.teamOne?.roundA?.total}}
             </span>
           </td>
         </tr>
         <tr *ngIf="match.format === Format.TwoManBetterBall">
-          <td class="text-muted">
-            <mat-form-field *ngIf="golfers" class="golfer-select">
-              <mat-select [value]="match.teamOne?.roundB?.playerA"
-                          (change)="onSelectPlayer('teamOne', 'roundB', 'playerA', $event)"
-                          placeholder="B Player">
-                <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamA.id)" [value]="golfer">
-                  {{ golfer.displayName }}
-                </mat-option>
-              </mat-select>
-              <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
-            </mat-form-field>
+          <td>
+            <div class="d-flex">
+              <app-team-chip [short]="true" [team]="teamA"></app-team-chip>
+              &nbsp;
+              <span [ngStyle]="{'color': teamA.colorScheme}" class="display-name-no-wrap">
+                {{match.teamOne.roundB.playerA.displayName}}
+              </span>
+            </div>
           </td>
-          <td class="text-center">
+          <td class="text-center display-name-no-wrap">
             {{match.teamOne.roundB.strokesGetting}}
+            <span *ngIf="match.teamOne.roundB.matchStrokes != match.teamOne.roundB.strokesGetting">
+              |
+              <span class="text-red">
+                {{match.teamOne.roundB.matchStrokes}}
+              </span>
+            </span>
           </td>
-          <td class="text-center">
-            {{match.teamOne.roundB.matchStrokes}}
-          </td>
-          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9];" class="text-center">
+          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+            <div class="s-strokes-div" *ngIf="match.teamOne.roundB.strokesGetting">
+              <span *ngFor="let s of numStrokes(match.teamOne.roundB.strokesGetting, i)"
+                    class="s-stroke">*
+              </span>
+            </div>
+            <!--<div *ngIf="match.teamOne.roundB.matchStrokes != match.teamOne.roundB.strokesGetting"-->
+            <div class="m-strokes-div" *ngIf="match.teamOne.roundB.matchStrokes">
+              <span *ngFor="let s of numStrokes(match.teamOne.roundB.matchStrokes, i)"
+                    class="m-stroke">*</span>
+            </div>
             <mat-form-field class="num-input">
               <input matInput type="number" min="1" placeholder=""
                      (input)="addScorePlayer('teamOne', 'roundB', hole, $event)">
             </mat-form-field>
           </td>
           <td class="total-score-td">
-            <span class="total-score-div" [ngStyle]="{'background-color': teamColor[teamA.id]}">
+            <span class="total-score-div" [ngStyle]="{'color': teamColor[teamA.id]}">
               {{match.teamOne?.roundB?.total}}
             </span>
           </td>
         </tr>
+        <tr>
+          <td colspan="2">
+            <app-team-chip [short]="true" [team]="teamA"></app-team-chip>
+            &nbsp;
+            <span [ngStyle]="{'color': teamA.colorScheme}">
+              <span class="display-name-no-wrap">
+                {{match.teamOne.roundA.playerA.displayName}}
+              </span>
+              &
+              <span class="display-name-no-wrap">
+                {{match.teamOne.roundA.playerB?.displayName}}
+                {{match.teamOne.roundB.playerA?.displayName}}
+              </span>
+            </span>
+          </td>
+          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
+            <div [ngClass]="scoreClass(match.teamOne.netScores[hole], i)">
+              {{match.teamOne.netScores[hole]}}
+            </div>
+          </td>
+          <td class="total-score-td">
+            <span class="total-score-div" [ngStyle]="{'background-color': teamColor[teamA.id]}">
+              {{match.teamOne.netTotal}}
+            </span>
+          </td>
+        </tr>
 
+        <!-------------------------------------- TEAM A ---------------------------------------------------------------------->
+        <!-- <tr>
+                  <td class="text-muted">
+                    <small>Match</small>
+                  </td>
+                  <td *ngFor="let score of teamOneRound.netScores; let i = index">
+                    <i class="material-icons" *ngIf="score < teamTwoRound.netScores[i]">
+                      arrow_upward
+                    </i>
+                    <i class="material-icons" *ngIf="score > teamTwoRound.netScores[i]">
+                      arrow_downward
+                    </i>
+                  </td>
+                  <td [innerHTML]="determineMatch()"></td>
+                </tr>-->
+        <!-------------------------------------- TEAM B ---------------------------------------------------------------------->
 
-        <tr *ngIf="golfers">
-          <td class="text-muted">
-            <mat-form-field class="golfer-select">
-              <mat-select [value]="match.teamTwo?.roundA?.playerA"
-                          (change)="onSelectPlayer('teamTwo', 'roundA', 'playerA', $event)"
-                          placeholder="A Player">
-                <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamB.id)" [value]="golfer">
-                  {{ golfer.displayName }}
-                </mat-option>
-              </mat-select>
-              <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
-            </mat-form-field>
-            <mat-form-field *ngIf="match.format != Format.TwoManBetterBall">
-              <mat-select [value]="match.teamTwo?.roundA?.playerB"
-                          (change)="onSelectPlayer('teamTwo', 'playerB', $event)"
-                          placeholder="B Player">
-                <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamB.id)" [value]="golfer">
-                  {{ golfer.displayName }}
-                </mat-option>
-              </mat-select>
-              <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
-            </mat-form-field>
+        <tr>
+          <td colspan="2">
+            <app-team-chip [short]="true" [team]="teamB"></app-team-chip>
+            &nbsp;
+            <span [ngStyle]="{'color': teamB.colorScheme}">
+              <span class="display-name-no-wrap">
+                {{match.teamTwo.roundA.playerA.displayName}}
+              </span>
+              &
+              <span class="display-name-no-wrap">
+                {{match.teamTwo.roundA.playerB?.displayName}}
+                {{match.teamTwo.roundB.playerA?.displayName}}
+              </span>
+            </span>
+          </td>
+          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
+            <div [ngClass]="scoreClass(match.teamTwo.netScores[hole], i)">
+              {{match.teamTwo.netScores[hole]}}
+            </div>
+          </td>
+          <td class="total-score-td">
+            <span class="total-score-div" [ngStyle]="{'background-color': teamColor[teamB.id]}">
+              {{match.teamTwo.netTotal}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex">
+              <app-team-chip [short]="true" [team]="teamB"></app-team-chip>
+              &nbsp;
+              <span [ngStyle]="{'color': teamB.colorScheme}">
+                <span class="display-name-no-wrap">
+                  {{match.teamTwo.roundA.playerA.displayName}}
+                </span>
+                <span *ngIf="match.format != Format.TwoManBetterBall">
+                  &
+                  <span class="display-name-no-wrap">
+                    {{match.teamTwo.roundA.playerB.displayName}}
+                  </span>
+                </span>
+              </span>
+            </div>
           </td>
           <td class="text-center">
             {{match.teamTwo.roundA.strokesGetting}}
+            <span *ngIf="match.teamTwo.roundA.matchStrokes != match.teamTwo.roundA.strokesGetting">
+              |
+              <span class="text-red">
+                {{match.teamTwo.roundA.matchStrokes}}
+              </span>
+            </span>
           </td>
-          <td class="text-center">
-            {{match.teamTwo.roundA.matchStrokes}}
-          </td>
-          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9];" class="text-center">
+          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+            <div class="s-strokes-div" *ngIf="match.teamTwo.roundA.strokesGetting">
+              <span *ngFor="let s of numStrokes(match.teamTwo.roundA.strokesGetting, i)"
+                    class="s-stroke">*
+              </span>
+            </div>
+            <!--<div *ngIf="match.teamOne.roundB.matchStrokes != match.teamOne.roundB.strokesGetting"-->
+            <div class="m-strokes-div" *ngIf="match.teamTwo.roundA.matchStrokes">
+              <span *ngFor="let s of numStrokes(match.teamTwo.roundA.matchStrokes, i)"
+                    class="m-stroke">*</span>
+            </div>
             <mat-form-field class="num-input">
               <input matInput type="number" min="1" placeholder=""
                      (input)="addScorePlayer('teamTwo', 'roundA', hole, $event)">
             </mat-form-field>
           </td>
           <td class="total-score-td">
-            <span class="total-score-div" [ngStyle]="{'background-color': teamColor[teamB.id]}">
+            <span class="total-score-div" [ngStyle]="{'color': teamColor[teamB.id]}">
               {{match.teamTwo?.roundA?.total}}
             </span>
           </td>
         </tr>
         <tr *ngIf="match.format === Format.TwoManBetterBall">
-          <td class="text-muted">
-            <mat-form-field *ngIf="golfers" class="golfer-select">
-              <mat-select [value]="match.teamOne?.roundA?.playerB"
-                          (change)="onSelectPlayer('teamTwo', 'roundB', 'playerA', $event)"
-                          placeholder="B Player">
-                <mat-option *ngFor="let golfer of (golfers | filterPlayersByTeam : teamB.id)" [value]="golfer">
-                  {{ golfer.displayName }}
-                </mat-option>
-              </mat-select>
-              <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
-            </mat-form-field>
+          <td>
+            <div class="d-flex">
+              <app-team-chip [short]="true" [team]="teamB"></app-team-chip>
+              &nbsp;
+              <span [ngStyle]="{'color': teamB.colorScheme}" class="display-name-no-wrap">
+                {{match.teamTwo.roundB.playerA.displayName}}
+              </span>
+            </div>
           </td>
           <td class="text-center">
             {{match.teamTwo.roundB.strokesGetting}}
+            <span *ngIf="match.teamTwo.roundB.matchStrokes != match.teamTwo.roundB.strokesGetting">
+              |
+              <span class="text-red">
+                {{match.teamTwo.roundB.matchStrokes}}
+              </span>
+            </span>
           </td>
-          <td class="text-center">
-            {{match.teamTwo.roundB.matchStrokes}}
-          </td>
-          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9];" class="text-center">
+          <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+            <div class="s-strokes-div" *ngIf="match.teamTwo.roundB.strokesGetting">
+              <span *ngFor="let s of numStrokes(match.teamTwo.roundB.strokesGetting, i)"
+                    class="s-stroke">*
+              </span>
+            </div>
+            <!--<div *ngIf="match.teamOne.roundB.matchStrokes != match.teamOne.roundB.strokesGetting"-->
+            <div class="m-strokes-div" *ngIf="match.teamTwo.roundB.matchStrokes">
+              <span *ngFor="let s of numStrokes(match.teamTwo.roundB.matchStrokes, i)"
+                    class="m-stroke">*</span>
+            </div>
             <mat-form-field class="num-input">
               <input matInput type="number" min="1" placeholder=""
                      (input)="addScorePlayer('teamTwo', 'roundB', 'playerA', hole, $event)">
             </mat-form-field>
           </td>
           <td class="total-score-td">
-            <span class="total-score-div" [ngStyle]="{'background-color': teamColor[teamB.id]}">
+            <span class="total-score-div" [ngStyle]="{'color': teamColor[teamB.id]}">
               {{match.teamTwo?.roundB?.total}}
             </span>
           </td>
         </tr>
+        <!-------------------------------------- TEAM B ---------------------------------------------------------------------->
         </tbody>
       </table>
     </div>
   </div>
 </mat-expansion-panel>
+<!-- ///////////////////////////////////////// END Score Card  ///////////////////////////////////////////////////-->
 
