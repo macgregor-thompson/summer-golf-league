@@ -5,7 +5,7 @@ import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { Team } from '../../models/interfaces/team';
 import { NgxObject } from '../../models/interfaces/ngx-object';
 import { ChartTypes } from '../../models/enums/chart-types.enum';
-import { Golfer } from '../../models/interfaces/golfer';
+import { IGolfer } from '../../models/interfaces/i-golfer';
 
 @Component({
   selector: 'app-rankings-dashboard',
@@ -16,8 +16,8 @@ export class RankingsDashboardComponent implements OnInit {
   spinner = false;
   points: NgxObject[] = [];
   teams: Team[];
-  golfers: MatTableDataSource<Golfer>;
-  members: Golfer[];
+  golfers: MatTableDataSource<IGolfer>;
+  members: IGolfer[];
   ChartTypes = ChartTypes;
   chartType = ChartTypes.NumberCard;
   // bar chart options
@@ -67,8 +67,8 @@ export class RankingsDashboardComponent implements OnInit {
          });
        }, e => console.log('Error fetching teams:', e));*/
 
-    this.afs.collection<Golfer>('members', ref => ref.orderBy('points', 'desc')).valueChanges()
-      .subscribe((data: Golfer[]) => {
+    this.afs.collection<IGolfer>('members', ref => ref.orderBy('points', 'desc')).valueChanges()
+      .subscribe((data: IGolfer[]) => {
         this.members = data;
         let ranked = data.map((golfer, i) => {
           if (i > 0) {
@@ -85,7 +85,7 @@ export class RankingsDashboardComponent implements OnInit {
           return golfer;
         });
 
-        this.golfers = new MatTableDataSource<Golfer>(ranked);
+        this.golfers = new MatTableDataSource<IGolfer>(ranked);
       });
 
 

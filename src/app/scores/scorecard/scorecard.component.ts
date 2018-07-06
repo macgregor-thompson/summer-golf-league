@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Match } from '../../models/interfaces/match';
+import { IMatch } from '../../models/interfaces/i-match';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { Course } from '../../models/interfaces/course';
+import { ICourse } from '../../models/interfaces/i-course';
 import { PlayerName } from '../../models/classes/player-name';
-import { TeamRound } from '../../models/interfaces/team-round';
 import { Team } from '../../models/interfaces/team';
+import { IRound } from '../../models/interfaces/i-round';
 
 @Component({
   selector: 'app-scorecard',
@@ -12,12 +12,12 @@ import { Team } from '../../models/interfaces/team';
   styleUrls: ['./scorecard.component.scss']
 })
 export class ScorecardComponent implements OnInit {
-  @Input() match: Match;
-  @Input() roundsCollection: AngularFirestoreCollection<TeamRound>;
-  @Input() course: Course;
+  @Input() match: IMatch;
+  @Input() roundsCollection: AngularFirestoreCollection<IRound>;
+  @Input() course: ICourse;
   playerName = PlayerName;
-  teamOneRound: TeamRound;
-  teamTwoRound: TeamRound;
+  teamOneRound: IRound;
+  teamTwoRound: IRound;
   teams: Team[];
   teamColor = {
     1: '#f44336', // MacGregor's team
@@ -28,15 +28,15 @@ export class ScorecardComponent implements OnInit {
   constructor(private afs: AngularFirestore) {}
 
   ngOnInit() {
-    this.roundsCollection.doc<TeamRound>(this.match.teamOneRoundId).valueChanges()
-      .subscribe((data: TeamRound) => this.teamOneRound = data);
-    this.roundsCollection.doc<TeamRound>(this.match.teamTwoRoundId).valueChanges()
-      .subscribe((data: TeamRound) => this.teamTwoRound = data);
+  /*  this.roundsCollection.doc<IRound>(this.match.teamOneRoundId).valueChanges()
+      .subscribe((data: IRound) => this.teamOneRound = data);
+    this.roundsCollection.doc<IRound>(this.match.teamTwoRoundId).valueChanges()
+      .subscribe((data: IRound) => this.teamTwoRound = data);
 
-    this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => this.teams = data);
+    this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => this.teams = data);*/
   }
 
-  determineMatch() {
+ /* determineMatch() {
     let a = 0, b = 0;
     this.teamOneRound.netScores.forEach((score, i) => {
       if (score < this.teamTwoRound.netScores[i]) {
@@ -56,7 +56,7 @@ export class ScorecardComponent implements OnInit {
       let playerB = this.playerName[this.teamTwoRound.bPlayerRound.golferId];
       return `${playerA} & ${playerB} <br> win ${b - a} up`;
     }
-  }
+  }*/
 
 
   filterTeam(teamId: number) {

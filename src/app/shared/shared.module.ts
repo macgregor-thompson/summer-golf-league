@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FilterRoundPipe } from './pipes/filter-round.pipe';
 import { TeamChipComponent } from './team-chip/team-chip.component';
 import { AppMaterialModule } from '../app-material/app-material.module';
+import { TeamPipe } from './pipes/team.pipe';
+import { FilterPlayersByTeamPipe } from './pipes/filter-players-by-team.pipe';
 
 
 @NgModule({
@@ -11,12 +12,14 @@ import { AppMaterialModule } from '../app-material/app-material.module';
     AppMaterialModule
   ],
   declarations: [
-    FilterRoundPipe,
-    TeamChipComponent
+    TeamChipComponent,
+    TeamPipe,
+    FilterPlayersByTeamPipe
   ],
   exports: [
-    FilterRoundPipe,
-    TeamChipComponent
+    TeamChipComponent,
+    TeamPipe,
+    FilterPlayersByTeamPipe
   ],
 })
 export class SharedModule { }

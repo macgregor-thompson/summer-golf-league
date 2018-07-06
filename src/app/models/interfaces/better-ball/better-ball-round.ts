@@ -1,5 +1,8 @@
+/*
+import { IGolfer } from '../golfer';
+
 export interface BetterBallRound {
-  golferId: number;
+  golfer: IGolfer;
   week: number;
   total: number;
   handicap: number;
@@ -8,3 +11,4 @@ export interface BetterBallRound {
   teamId: number;
   scores: number[];
 }
+*/

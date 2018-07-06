@@ -1,3 +1,13 @@
+::ng-deep {
+  .num-input .mat-input-infix.mat-form-field-infix {
+    width: 100%;
+  }
+
+  mat-form-field.golfer-select {
+    max-width: 150px;
+  }
+}
+
 .table-container {
   display: flex;
   flex-direction: column;
@@ -117,9 +127,28 @@
   border-radius: 5%;
 }
 
-
 .stack-stroke {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.form-padding {
+  mat-form-field {
+    margin: 10px;
+  }
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.stepper-buttons {
+  margin-top: 15px;
 }

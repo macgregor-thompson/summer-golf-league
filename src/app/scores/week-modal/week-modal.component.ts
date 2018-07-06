@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Week } from '../../models/interfaces/week';
+import { IWeek } from '../../models/interfaces/i-week';
 import { MatDialogRef } from '@angular/material';
-import { TemplateRef } from '@angular/core';
-
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
+import { DataService } from '../../core/services/data.service';
+import { Week } from '../../models/classes/week';
 
 @Component({
   selector: 'app-week-modal',
@@ -12,38 +10,43 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./week-modal.component.scss']
 })
 export class WeekModalComponent implements OnInit {
+  weeks: IWeek[];
   today = new Date();
-  newWeek: Week = {
-    number: null,
-    date: new Date().toLocaleDateString()
+  newWeek: IWeek = {
+    number: 1,
+    date: new Date().toLocaleDateString(),
+    completed: true,
+    frontNine: true,
+    courseId: 'IUbblBLeAMLOit5hfaVM'
   };
-  weeksCollection: AngularFirestoreCollection<Week>;
-  weeks: Week[];
 
   constructor(public dialogRef: MatDialogRef<WeekModalComponent>,
-              private afs: AngularFirestore) { }
+              private ds: DataService) { }
 
   ngOnInit() {
-    this.weeksCollection = this.afs.collection<Week>('mockWeeks');
-    this.weeksCollection.valueChanges().subscribe((data) => {
+    this.ds.weeks().subscribe((data: Week[]) => {
       this.weeks = data;
       this.newWeek.number = data.length + 1;
     });
   }
 
   addWeek() {
-    this.weeksCollection.add(this.newWeek).then(data => {
-      console.log('added new week:', data);
-    }, e => {
-      console.log('Error add=ing new week:', e);
-    });
+    if (this.weeks.filter(week => week.number === this.newWeek.number).length === 0) {
+      this.newWeek.courseId = this.newWeek.frontNine ? 'IUbblBLeAMLOit5hfaVM' : 'KVGfWzdfjgK1n3Pqqs5L';
+      console.log('adding new week:', this.newWeek);
+      this.ds.weeksCollection().add(this.newWeek).then(data => {
+        console.log('added new week:', data);
+      }, e => {
+        console.log('Error add=ing new week:', e);
+      });
+    } else {
+      console.log(`Week ${this.newWeek.number} already exists!`);
+    }
   }
 
   setDate(date) {
     this.newWeek.date = date;
-    console.log(date);
   }
-
 
   onNoClick(): void {
     this.dialogRef.close();

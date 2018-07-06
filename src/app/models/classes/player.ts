@@ -1,20 +1,24 @@
-import { Golfer } from '../interfaces/golfer';
-import { Match } from '../interfaces/match';
+import { IGolfer } from '../interfaces/i-golfer';
+import { IMatch } from '../interfaces/i-match';
 import { Team } from '../interfaces/team';
 import { Handicap } from '../interfaces/handicap';
 
-export class Player implements Golfer {
+export class Player implements IGolfer {
   id: string;
   firstName: string;
   lastName: string;
   displayName: string;
-  ghinNumber: number | null;
-  email: string;
-  team: Team | null;
-  teamId: number;
   handicap: number;
-  handicaps: Handicap[] | null;
-  matches: Match[] | null;
-  points: number;
-  leagueMember: boolean;
+  teamId: number;
+  points?: number;
+  rank?: number | string; // this gets generated on he front end
+
+  constructor() {
+    this.id = '';
+    this.firstName = '';
+    this.lastName = '';
+    this.displayName = '';
+    this.handicap = 0;
+    this.teamId = 0;
+  }
 }

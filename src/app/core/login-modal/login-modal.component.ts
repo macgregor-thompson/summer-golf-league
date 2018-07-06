@@ -1,5 +1,5 @@
 import {Component, OnInit, Inject} from '@angular/core';
-import {Golfer} from '../../models/interfaces/golfer';
+import {IGolfer} from '../../models/interfaces/i-golfer';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import { PlayerService } from '../services/player.service';
 
@@ -9,7 +9,7 @@ import { PlayerService } from '../services/player.service';
   styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent implements OnInit {
-  currentGolfer: Golfer;
+  currentGolfer: IGolfer;
 
   constructor(public playerService: PlayerService,
               public dialogRef: MatDialogRef<LoginModalComponent>,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Golfer } from '../../models/interfaces/golfer';
+import { IGolfer } from '../../models/interfaces/i-golfer';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Team } from '../../models/interfaces/team';
 import { Observable } from 'rxjs/Observable';
@@ -11,7 +11,7 @@ import { Player } from '../../models/classes/player';
   styleUrls: ['./player-editor.component.scss']
 })
 export class PlayerEditorComponent implements OnInit {
-  @Input() golfer: Golfer;
+  @Input() golfer: IGolfer;
   teams: Team[];
 
   constructor(private afs: AngularFirestore) {}

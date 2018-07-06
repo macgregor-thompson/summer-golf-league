@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Golfer } from '../../models/interfaces/golfer';
-import { Round } from '../../models/interfaces/round';
-import { Week } from '../../models/interfaces/week';
+import { IGolfer } from '../../models/interfaces/i-golfer';
+import { IRound } from '../../models/interfaces/i-round';
+import { IWeek } from '../../models/interfaces/i-week';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { PlayerService } from '../../core/services/player.service';
 import { MatDialog } from '@angular/material';
 import { WeekModalComponent } from '../week-modal/week-modal.component';
 import { Team } from '../../models/interfaces/team';
-import { Match } from '../../models/interfaces/match';
-import { Course } from '../../models/interfaces/course';
+import { IMatch } from '../../models/interfaces/i-match';
+import { ICourse } from '../../models/interfaces/i-course';
 import { PlayerName } from '../../models/classes/player-name';
 import { FormatName } from '../../models/classes/format-name';
+import { Week } from '../../models/classes/week';
 
 @Component({
   selector: 'app-scores-dashboard',
@@ -19,17 +20,17 @@ import { FormatName } from '../../models/classes/format-name';
 })
 export class ScoresDashboardComponent implements OnInit {
 
-  roundsCollection: AngularFirestoreCollection<Round>;
+  roundsCollection: AngularFirestoreCollection<IRound>;
   //playerName = PlayerName;
   formatName = FormatName;
-  course: Course;
-  golfers: Golfer[];
-  matches: Match[];
-  rounds: Round[];
+  course: ICourse;
+  golfers: IGolfer[];
+  matches: IMatch[];
+  rounds: IRound[];
   teams: Team[];
   step = 0;
-  weekSelected: Week;
-  weeks: Week[];
+  weekSelected: IWeek;
+  weeks: IWeek[];
   spinner = false;
   teamColor = {
     1: '#f44336', // MacGregor's team
@@ -46,35 +47,35 @@ export class ScoresDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getWeeks();
-    this.afs.collection<Golfer>('members').valueChanges().subscribe((data: Golfer[]) => this.golfers = data);
-    this.roundsCollection = this.afs.collection<Round>('rounds'); // This gets passed down to the scorecards to use
+    this.afs.collection<IGolfer>('members').valueChanges().subscribe((data: IGolfer[]) => this.golfers = data);
+    this.roundsCollection = this.afs.collection<IRound>('rounds'); // This gets passed down to the scorecards to use
     this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => this.teams = data);
   }
 
   getWeeks() {
-    this.afs.collection<Week>('weeks', ref => ref.orderBy('number')).valueChanges()
-      .subscribe((data: Week[]) => {
+    this.afs.collection<IWeek>('weeks', ref => ref.orderBy('number')).valueChanges()
+      .subscribe((data: IWeek[]) => {
         this.weeks = data;
-        this.setWeek(data.filter((week: Week) => week.number === data.length)[0]);
+        this.setWeek(data.filter((week: IWeek) => week.number === data.length)[0]);
       });
   }
 
-  setWeek(week: Week) {
+  setWeek(week: IWeek) {
     this.weekSelected = week;
     this.getCourseByWeek(week);
     this.getMatchesByWeek(week);
   }
 
-  getMatchesByWeek(week: Week) {
-    this.afs.collection<Match>('matches', ref => ref.where('week', '==', week.number)).valueChanges()
-      .subscribe((data: Match[]) => {
+  getMatchesByWeek(week: IWeek) {
+    this.afs.collection<IMatch>('matches', ref => ref.where('week', '==', week.number)).valueChanges()
+      .subscribe((data: IMatch[]) => {
         this.matches = data;
       });
   }
 
-  getCourseByWeek(week: Week) {
-    this.afs.collection<Course>('courses').doc<Course>(week.courseId).valueChanges()
-      .subscribe((data: Course) => this.course = data);
+  getCourseByWeek(week: IWeek) {
+    this.afs.collection<ICourse>('courses').doc<ICourse>(week.courseId).valueChanges()
+      .subscribe((data: ICourse) => this.course = data);
   }
 
   filterTeam(teamId: number) {

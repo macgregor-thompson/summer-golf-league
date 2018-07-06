@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Nav} from '../../models/interfaces/nav';
 import {MatDialog} from '@angular/material';
 import {LoginModalComponent} from '../login-modal/login-modal.component';
-import {Golfer} from '../../models/interfaces/golfer';
+import {IGolfer} from '../../models/interfaces/i-golfer';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import { PlayerService } from '../services/player.service';
@@ -14,8 +14,8 @@ import { PlayerService } from '../services/player.service';
   styleUrls: ['./top-nav.component.scss']
 })
 export class TopNavComponent implements OnInit {
-  golfers: Observable<Golfer[]>;
-  currentGolfer: Golfer;
+  golfers: Observable<IGolfer[]>;
+  currentGolfer: IGolfer;
   routes: Nav[] = [
     {
       path: '/',
@@ -61,7 +61,7 @@ export class TopNavComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.golfers = this.afs.collection<Golfer>('members').valueChanges();
+    this.golfers = this.afs.collection<IGolfer>('members').valueChanges();
   }
 
   gitHubLogin() {

@@ -11,7 +11,6 @@ import { ScoreEditorComponent } from './score-editor/score-editor.component';
 import { WeekModalComponent } from './week-modal/week-modal.component';
 import { FormsModule } from '@angular/forms';
 import { ScorecardComponent } from './scorecard/scorecard.component';
-import { ScorecardBetterBallComponent } from './scorecard-better-ball/scorecard-better-ball.component';
 import { CoreModule } from '../core/core.module';
 
 @NgModule({
@@ -37,7 +36,7 @@ import { CoreModule } from '../core/core.module';
     ScoreEditorComponent,
     ScorecardComponent,
     WeekModalComponent,
-    ScorecardBetterBallComponent],
+  ],
   exports: [],
   entryComponents: [WeekModalComponent]
 })

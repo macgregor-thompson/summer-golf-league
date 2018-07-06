@@ -4,8 +4,8 @@ import {MatDialog} from '@angular/material';
 import {AngularFirestore} from 'angularfire2/firestore';
 
 import {MockDataService} from '../../core/services/mock-data.service';
-import {Golfer} from '../../models/interfaces/golfer';
-import {Round} from '../../models/interfaces/round';
+import {IGolfer} from '../../models/interfaces/i-golfer';
+import {IRound} from '../../models/interfaces/i-round';
 import {UserService} from '../../core/services/user.service';
 import { Team } from '../../models/interfaces/team';
 
@@ -16,10 +16,10 @@ import { Team } from '../../models/interfaces/team';
   styleUrls: ['./stats-dashboard.component.scss']
 })
 export class StatsDashboardComponent implements OnInit {
-  golfers: Golfer[];
-  currentGolfer: Golfer;
+  golfers: IGolfer[];
+  currentGolfer: IGolfer;
   teams: Team[];
-  rounds: Round[];
+  rounds: IRound[];
   spinner = false;
   step = -1;
 
@@ -29,8 +29,8 @@ export class StatsDashboardComponent implements OnInit {
               public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.afs.collection<Golfer>('members').valueChanges()
-      .subscribe((data: Golfer[]) => this.golfers = data);
+    this.afs.collection<IGolfer>('members').valueChanges()
+      .subscribe((data: IGolfer[]) => this.golfers = data);
     this.afs.collection<Team>('teams').valueChanges()
       .subscribe((data: Team[]) => this.teams = data);
 
@@ -40,15 +40,17 @@ export class StatsDashboardComponent implements OnInit {
   getAllScores() {
     this.spinner = true;
     this.mockDataService.getAllScores()
-      .subscribe((data: Round[]) => {
+      .subscribe((data: IRound[]) => {
         this.rounds = data;
         this.spinner = false;
       }, () => this.spinner = false);
   }
+/*
 
   filterRounds(golferId: number) {
-    return this.rounds.filter((round: Round) => round.golferId === golferId);
+    return this.rounds.filter((round: IRound) => round.golferId === golferId);
   }
+*/
 
   filterTeam(teamId: number) {
     if (teamId) {
@@ -58,14 +60,14 @@ export class StatsDashboardComponent implements OnInit {
     }
   }
 
-  calculateAverage(golferId: number) {
+/*  calculateAverage(golferId: number) {
     let totals = 0;
     const rounds = this.filterRounds(golferId);
-    rounds.forEach((round: Round) => {
+    rounds.forEach((round: IRound) => {
       totals = totals + round.total;
     });
     return totals / rounds.length;
-  }
+  }*/
 
 
   setStep(index: number) {

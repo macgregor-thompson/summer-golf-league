@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { Golfer } from '../../models/interfaces/golfer';
-import { Round } from '../../models/interfaces/round';
+import { IGolfer } from '../../models/interfaces/i-golfer';
+import { IRound } from '../../models/interfaces/i-round';
 import { Score } from '../../models/interfaces/score';
 import { ChartTypes } from '../../models/enums/chart-types.enum';
 
@@ -13,8 +13,8 @@ import { ChartTypes } from '../../models/enums/chart-types.enum';
   styleUrls: ['./player-stats.component.scss']
 })
 export class PlayerStatsComponent implements OnInit {
-  @Input() player: Golfer;
-  @Input() rounds: Round[];
+  @Input() player: IGolfer;
+  @Input() rounds: IRound[];
   //@Output() passUpAverage: EventEmitter<number> = new EventEmitter<number>();
 
   spinner = false;
@@ -57,14 +57,14 @@ export class PlayerStatsComponent implements OnInit {
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.analyzeScores();
+    //this.analyzeScores();
     //this.getScores();
   }
 
   /*getScores() {
     this.spinner = true;
     this.mockDataService.getPlayerScores(this.player.id)
-      .subscribe((data: Round[]) => {
+      .subscribe((data: IRound[]) => {
         this.rounds = data;
         this.analyzeScores();
         this.calculateAverage();
@@ -72,7 +72,7 @@ export class PlayerStatsComponent implements OnInit {
       }, () => this.spinner = false);
   }*/
 
-  analyzeScores() {
+ /* analyzeScores() {
     this.spinner = true;
     this.analyzeGrossScores();
     this.analyzeNetScores();
@@ -82,7 +82,7 @@ export class PlayerStatsComponent implements OnInit {
   }
 
   analyzeNetScores() {
-    this.rounds.forEach((round: Round) => {
+    this.rounds.forEach((round: IRound) => {
       round.scores.map((score: Score) => {
         const netScore = score.handicap <= round.courseHandicap * 2 ? score.score - 1 : score.score;
         if (netScore === score.par) {
@@ -113,7 +113,7 @@ export class PlayerStatsComponent implements OnInit {
 
 
   analyzeGrossScores() {
-    this.rounds.forEach((round: Round) => {
+    this.rounds.forEach((round: IRound) => {
       round.scores.map((score: Score) => {
         if (score.score === score.par) {
           this.gross.pars++;
@@ -141,13 +141,13 @@ export class PlayerStatsComponent implements OnInit {
     ];
   }
 
-  /* calculateAverage() {
+  /!* calculateAverage() {
      let totals = 0;
-     this.rounds.forEach((round: Round) => {
+     this.rounds.forEach((round: IRound) => {
        totals = totals + round.total;
      });
      this.passUpAverage.emit(totals / this.rounds.length);
-   }*/
+   }*!/
 
   onSelect(event) {
     console.log('event:', event);
@@ -206,7 +206,7 @@ export class PlayerStatsComponent implements OnInit {
       duration: 3000,
     });
   }
-
+*/
 }
 
 

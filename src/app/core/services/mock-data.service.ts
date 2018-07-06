@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { Round } from '../../models/interfaces/round';
-import { Week } from '../../models/interfaces/week';
+import { IRound } from '../../models/interfaces/i-round';
+import { IWeek } from '../../models/interfaces/i-week';
 
 @Injectable()
 export class MockDataService {
@@ -49,14 +49,14 @@ export class MockDataService {
       .map((data: object) => data['scores'].filter(score => score.id == scoreId));
   }
 
-  getScoresByWeek(weekNum: number): Observable<Round[]> {
+  getScoresByWeek(weekNum: number): Observable<IRound[]> {
     console.log('getting scores from week :', weekNum);
     return this.http
       .get('assets/mock-data/scores.json')
-      .map((data: object) => data['scores'].filter((round: Round) => round.week === weekNum));
+      .map((data: object) => data['scores'].filter((round: IRound) => round.week === weekNum));
   }
 
-  getWeeks(): Observable<Week[]> {
+  getWeeks(): Observable<IWeek[]> {
     return this.http
       .get('assets/mock-data/weeks.json')
       .map((data: object) => data['weeks']);

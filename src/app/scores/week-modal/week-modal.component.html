@@ -1,13 +1,23 @@
-<h2 mat-dialog-title>Week {{weeks?.length + 1}}</h2>
-<mat-divider></mat-divider>
+<h3 mat-dialog-title>New League Week</h3>
 <mat-dialog-content>
-  <mat-form-field>
-    <input #date matInput [matDatepicker]="picker" [value]="today"
-           placeholder="Choose a date" (dateChange)="setDate(date.value)">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker [startAt]="newWeek.date"></mat-datepicker>
-  </mat-form-field>
-  <button (click)="setDate(date.value)">Log Out Date</button>
+  <div class="flex-between">
+    <mat-form-field class="num-input">
+      <input matInput type="number" placeholder="Week number" [(ngModel)]="newWeek.number">
+    </mat-form-field>
+    <mat-form-field>
+      <input #date matInput [matDatepicker]="picker"
+             placeholder="Choose a date" (dateChange)="setDate(date.value)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker [startAt]="today"></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="flex-between">
+    <mat-radio-group [(ngModel)]="newWeek.frontNine">
+      <mat-radio-button class="example-margin" [value]="true">Front 9</mat-radio-button>
+      <mat-radio-button class="example-margin" [value]="false">Back 9</mat-radio-button>
+    </mat-radio-group>
+    <mat-checkbox class="example-margin" [(ngModel)]="newWeek.completed">Completed Matches</mat-checkbox>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="button-row text-right">

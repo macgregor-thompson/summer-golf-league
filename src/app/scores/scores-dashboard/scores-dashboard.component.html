@@ -1,12 +1,8 @@
-<ngx-loading [show]="spinner"></ngx-loading>
+<ng-template #loading>
+  <ngx-loading [show]="true"></ngx-loading>
+</ng-template>
 
-<!--
-<div class="alert alert-primary text-center">
-  <h2>I'm working on it....This part has been a BIATCH!</h2>
-</div>
--->
-
-<div *ngIf="weeks?.length">
+<div *ngIf="weeks?.length; else loading">
   <h1 class="text-center">
     Week {{weekSelected?.number}}
     <small class="text-muted">({{weekSelected?.date | date: 'longDate'}})</small>
@@ -16,11 +12,7 @@
     <div class="button-row" *ngIf="playerService.afAuth.authState | async">
       <button mat-raised-button color="warn" routerLink="/score-editor">
         <mat-icon>add</mat-icon>
-        <span>Add Scores</span>
-      </button>
-      <button mat-raised-button color="primary" (click)="openWeekModal()">
-        <mat-icon>add</mat-icon>
-        Add Week
+        <span>Add Match</span>
       </button>
     </div>
     <div></div>
@@ -39,7 +31,7 @@
 
 
 <mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
-  <mat-expansion-panel *ngFor="let match of matches let i = index; let first = first; let last = last"
+  <mat-expansion-panel *ngFor="let match of matches; let i = index; let first = first; let last = last"
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle="false">
     <mat-expansion-panel-header>
      <!--<mat-panel-title>

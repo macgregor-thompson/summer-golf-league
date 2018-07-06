@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import {MockDataService} from '../../core/services/mock-data.service';
-import {Course} from '../../models/interfaces/course';
-import {Golfer} from '../../models/interfaces/golfer';
-import {Round} from '../../models/interfaces/round';
-import {Week} from '../../models/interfaces/week';
+import {ICourse} from '../../models/interfaces/i-course';
+import {IGolfer} from '../../models/interfaces/i-golfer';
+import {IRound} from '../../models/interfaces/i-round';
+import {IWeek} from '../../models/interfaces/i-week';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 
@@ -14,16 +14,16 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['./home-dashboard.component.scss']
 })
 export class HomeDashboardComponent implements OnInit {
-  courses: Course[];
-  golfers: Observable<Golfer[]>;
-  rounds: Round[];
-  members: Golfer[];
-  substitutes: Golfer[];
+  courses: ICourse[];
+  golfers: Observable<IGolfer[]>;
+  rounds: IRound[];
+  members: IGolfer[];
+  substitutes: IGolfer[];
   step = 0;
-  weekSelected: Week;
+  weekSelected: IWeek;
   weeklyTotals = {};
   weeklyNet = [];
-  weeks: Week[];
+  weeks: IWeek[];
   spinner = false;
 
 
@@ -34,40 +34,40 @@ export class HomeDashboardComponent implements OnInit {
   icon = false;
 
   ngOnInit() {
-    this.getWeeks();
+   /* this.getWeeks();
     this.getCourses();
     this.getGolfers();
     //this.getAllScores();
-    this.getScoresByWeek(2);
+    this.getScoresByWeek(2);*/
   }
 
-  toggleIndicator() {
+ /* toggleIndicator() {
     this.icon = !this.icon;
   }
 
   getWeeks() {
     this.mockDataService.getWeeks()
-      .subscribe((data: Week[]) => {
+      .subscribe((data: IWeek[]) => {
         this.weeks = data;
-        this.weekSelected = data.filter((week: Week) => week.number === data.length)[0];
+        this.weekSelected = data.filter((week: IWeek) => week.number === data.length)[0];
         console.log('weekSelected:', this.weekSelected);
       });
   }
 
   getCourses() {
     this.mockDataService.getCourses()
-      .subscribe((data: Course[]) => this.courses = data);
+      .subscribe((data: ICourse[]) => this.courses = data);
   }
 
   getGolfers() {
-    this.golfers = this.afs.collection<Golfer>('members').valueChanges();
+    this.golfers = this.afs.collection<IGolfer>('members').valueChanges();
   }
 
   getAllScores() {
     this.mockDataService.getAllScores()
-      .subscribe((data: Round[]) => {
+      .subscribe((data: IRound[]) => {
         this.rounds = data;
-        data.forEach((round: Round) => {
+        data.forEach((round: IRound) => {
           this.weeklyTotals[round.golferId] = round.total;
         });
       });
@@ -76,11 +76,11 @@ export class HomeDashboardComponent implements OnInit {
   getScoresByWeek(weekNum: number) {
     this.spinner = true;
     this.mockDataService.getScoresByWeek(weekNum)
-      .subscribe((data: Round[]) => {
+      .subscribe((data: IRound[]) => {
         this.rounds = data;
         console.log('data2:', data);
-        console.log(`Week ${weekNum} rounds: ${this.rounds}`);
-        data.forEach((round: Round) => {
+        console.log(`IWeek ${weekNum} rounds: ${this.rounds}`);
+        data.forEach((round: IRound) => {
           this.weeklyTotals[round.golferId] = round.total;
           this.weeklyNet[round.golferId] = round.total - round.courseHandicap;
         });
@@ -88,7 +88,7 @@ export class HomeDashboardComponent implements OnInit {
       }, err => this.spinner = false);
   }
 
-  filterRound(golfer): Round {
+  filterRound(golfer): IRound {
     return this.rounds.filter(round => round.golferId === golfer.id)[0];
   }
 
@@ -111,6 +111,6 @@ export class HomeDashboardComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-
+*/
 
 }
