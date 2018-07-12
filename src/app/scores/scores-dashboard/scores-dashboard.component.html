@@ -2,7 +2,7 @@
   <ngx-loading [show]="true"></ngx-loading>
 </ng-template>
 
-<div *ngIf="weeks?.length; else loading">
+<div *ngIf="weeks">
   <h1 class="text-center">
     Week {{weekSelected?.number}}
     <small class="text-muted">({{weekSelected?.date | date: 'longDate'}})</small>
@@ -14,6 +14,8 @@
         <mat-icon>add</mat-icon>
         <span>Add Match</span>
       </button>
+      <button mat-raised-button color="primary" (click)="logStuff()">Log Stuff</button>
+
     </div>
     <div></div>
     <div class="text-right">
@@ -30,24 +32,30 @@
 </div>
 
 
-<mat-accordion class="table-headers-align" [multi]="false" dynamicHeight>
+<mat-accordion class="table-headers-align" [multi]="false" dynamicHeight *ngIf="matches; else loading">
   <mat-expansion-panel *ngFor="let match of matches; let i = index; let first = first; let last = last"
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle="false">
     <mat-expansion-panel-header>
-     <!--<mat-panel-title>
-      </mat-panel-title>-->
+      <!--<mat-panel-title>
+       </mat-panel-title>-->
       <mat-panel-description>
         <div>
-          <app-team-chip [team]="filterTeam(match.teamOne.teamId)" [short]="true"></app-team-chip>
-          <span [ngStyle]="{'color': teamColor[match.teamOne.teamId]}">
-            {{match.teamOne.playerA}} & {{match.teamOne.playerB}}
+          <app-team-chip [team]="match.teamOne.team" [short]="true"></app-team-chip>
+          <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.roundA.playerA.displayName}}
+            &
+            {{match.teamOne.roundA.playerB?.displayName}}
+            {{match.teamOne.roundB.playerA?.displayName}}
           </span>
         </div>
         vs.
         <div>
-          <app-team-chip [team]="filterTeam(match.teamTwo.teamId)" [short]="true"></app-team-chip>
-          <span [ngStyle]="{'color': teamColor[match.teamTwo.teamId]}">
-            {{match.teamTwo.playerA}} & {{match.teamTwo.playerB}}
+          <app-team-chip [team]="match.teamTwo.team" [short]="true"></app-team-chip>
+          <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.roundA.playerA.displayName}}
+            &
+            {{match.teamTwo.roundA.playerB?.displayName}}
+            {{match.teamTwo.roundB.playerA?.displayName}}
           </span>
         </div>
         <mat-chip-list>
@@ -56,10 +64,7 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <app-scorecard *ngFor="let match of matches"
-                   [match]="match"
-                   [roundsCollection]="roundsCollection"
-                   [course]="course"></app-scorecard>
+    <app-scorecard [match]="match"></app-scorecard>
 
     <mat-action-row>
       <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>

@@ -1,10 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IMatch } from '../../models/interfaces/i-match';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { ICourse } from '../../models/interfaces/i-course';
-import { PlayerName } from '../../models/classes/player-name';
 import { Team } from '../../models/interfaces/team';
-import { IRound } from '../../models/interfaces/i-round';
+import { Format } from '../../models/enums/format.enum';
 
 @Component({
   selector: 'app-scorecard',
@@ -13,62 +10,78 @@ import { IRound } from '../../models/interfaces/i-round';
 })
 export class ScorecardComponent implements OnInit {
   @Input() match: IMatch;
-  @Input() roundsCollection: AngularFirestoreCollection<IRound>;
-  @Input() course: ICourse;
-  playerName = PlayerName;
-  teamOneRound: IRound;
-  teamTwoRound: IRound;
+  Format = Format;
   teams: Team[];
-  teamColor = {
-    1: '#f44336', // MacGregor's team
-    2: '#2196f3', // Warbird's team
-    3: '#43a047' // GanMan's team
-  };
+  matchStrokesDifferent = false;
 
-  constructor(private afs: AngularFirestore) {}
+  constructor() {}
 
   ngOnInit() {
-  /*  this.roundsCollection.doc<IRound>(this.match.teamOneRoundId).valueChanges()
-      .subscribe((data: IRound) => this.teamOneRound = data);
-    this.roundsCollection.doc<IRound>(this.match.teamTwoRoundId).valueChanges()
-      .subscribe((data: IRound) => this.teamTwoRound = data);
-
-    this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => this.teams = data);*/
+    this.matchStrokesDifferent = this.match.teamOne.roundA.matchStrokes !== this.match.teamOne.roundA.strokesGetting;
   }
 
- /* determineMatch() {
+
+
+  numStrokes(strokes, i) {
+    if (strokes > 0) {
+      if (strokes > 9) {
+        let unFuckingBelievable = strokes - 9;
+        return unFuckingBelievable >= this.match.course.holes[i].stroke ? [1, 2] : [1];
+      } else {
+        return strokes >= this.match.course.holes[i].stroke ? [1] : [];
+      }
+    }
+  }
+
+
+  addNetScore(team, hole, event) {
+    let score = parseInt(event.target.value, 10);
+    this.match[team].netScores[hole] = score;
+    this.match[team].netTotal = Object.values(this.match[team].netScores).reduce((a, b) => a + b);
+    if (this.match[team].roundA.matchStrokes === this.match[team].roundA.strokesGetting) {
+      this._addMatchScore(team, hole, score);
+    }
+  }
+
+  _addMatchScore(team, hole, score) {
+    this.match[team].matchScores[hole] = score;
+    this.match[team].matchTotal = Object.values(this.match[team].matchScores).reduce((a, b) => a + b);
+  }
+
+  addMatchScore(team, hole, event) {
+    this.match[team].matchScores[hole] = parseInt(event.target.value, 10);
+    this.match[team].matchTotal = Object.values(this.match[team].matchScores).reduce((a, b) => a + b);
+  }
+
+  determineMatch() {
     let a = 0, b = 0;
-    this.teamOneRound.netScores.forEach((score, i) => {
-      if (score < this.teamTwoRound.netScores[i]) {
+    for (let i = 1; i <= 9; i++) {
+      let scoreA = this.match.teamOne.matchScores[i];
+      let scoreB = this.match.teamTwo.matchScores[i];
+      if (scoreA < scoreB) {
         a++;
-      } else if (score > this.teamTwoRound.netScores[i]) {
+      } else if (scoreA > scoreB) {
         b++;
       }
-    });
+    }
+
     if (a === b) {
       return 'Tie';
     } else if (a > b) {
-      let playerA = this.playerName[this.teamOneRound.aPlayerRound.golferId];
-      let playerB = this.playerName[this.teamOneRound.bPlayerRound.golferId];
+      let playerA = this.match.teamOne.roundA.playerA.displayName;
+      let playerB = this.match.teamOne.roundB ? this.match.teamOne.roundB.playerA.displayName
+        : this.match.teamOne.roundA.playerB.displayName;
       return `${playerA} & ${playerB} <br> win ${a - b} up`;
     } else if (a < b) {
-      let playerA = this.playerName[this.teamTwoRound.aPlayerRound.golferId];
-      let playerB = this.playerName[this.teamTwoRound.bPlayerRound.golferId];
+      let playerA = this.match.teamTwo.roundA.playerA.displayName;
+      let playerB = this.match.teamTwo.roundB ? this.match.teamTwo.roundB.playerA.displayName
+        : this.match.teamTwo.roundA.playerB.displayName;
       return `${playerA} & ${playerB} <br> win ${b - a} up`;
-    }
-  }*/
-
-
-  filterTeam(teamId: number) {
-    if (teamId) {
-      return this.teams.filter((team: Team) => team.id === teamId)[0];
-    } else {
-      return null;
     }
   }
 
   scoreClass(score: number, i) {
-    const par = this.course.holes[i].par;
+    const par = this.match.course.holes[i].par;
     if (score === par) {
       return 'par';
     } else if (score === par + 1) {
@@ -86,16 +99,5 @@ export class ScorecardComponent implements OnInit {
     }
   }
 
-  numStrokes(strokes, i) {
-    console.log('strokes:', strokes, this.course.holes[i].stroke);
-    if (strokes > 0) {
-      if (strokes > 9) {
-        let unFuckingBelievable = strokes - 9;
-        return unFuckingBelievable >= this.course.holes[i].stroke ? [1, 2] : [1];
-      } else {
-        return strokes >= this.course.holes[i].stroke ? [1] : [];
-      }
-    }
-  }
 
 }

@@ -1,6 +1,7 @@
 import { Round } from './round';
 import { Scores } from './scores';
 import { ITeamRound } from '../interfaces/i-team-round';
+import { Team } from '../interfaces/team';
 
 export class TeamRound implements ITeamRound {
   teamId = 0;
@@ -10,6 +11,7 @@ export class TeamRound implements ITeamRound {
   roundB?: Round;
   netScores: Scores;
   matchScores: Scores;
+  team: Team;
 
 
   constructor(TwoManBetterBall: boolean) {

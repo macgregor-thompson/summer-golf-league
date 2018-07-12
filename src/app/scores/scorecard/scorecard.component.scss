@@ -1,3 +1,13 @@
+::ng-deep {
+  .num-input .mat-input-infix.mat-form-field-infix {
+    width: 100%;
+  }
+
+  mat-form-field.golfer-select {
+    max-width: 150px;
+  }
+}
+
 .table-container {
   display: flex;
   flex-direction: column;
@@ -117,9 +127,76 @@
   border-radius: 5%;
 }
 
-
-.stack-stroke {
+.s-strokes-div {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 3px;
+}
+
+.m-strokes-div {
+  position: absolute;
+  top: 0;
+  right: 3px;
+}
+
+.strokes-hint {
+  font-size: 1.5rem;
+}
+
+.s-stroke {
+}
+
+.m-stroke {
+  color: red;
+  margin-left: 3px;
+}
+
+.text-red {
+  color: red;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.form-padding {
+  mat-form-field {
+    margin: 10px;
+  }
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stepper-buttons {
+  margin-top: 15px;
+}
+
+.display-name-no-wrap {
+  white-space: nowrap;
+}
+
+td {
+  vertical-align: middle;
+}
+
+input.mat-input-element {
+  margin-top: 0;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.player-strokes {
+  float: right!important;
+}
+
+.stroke-chips {
+  display: inline-block;
+  mat-chip {
+    padding: 2px 7px;
+  }
 }

@@ -13,6 +13,7 @@ import { WeekModalComponent } from '../week-modal/week-modal.component';
 import { MatDialog } from '@angular/material';
 import { PlayerId } from '../../models/classes/player-id';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-score-editor',
@@ -43,9 +44,11 @@ export class ScoreEditorComponent implements OnInit {
   // TODO: Remove this
   havePlayers = false;
   haveTeams = false;
+  matchCopy = {};
 
 
   constructor(private afs: AngularFirestore,
+              private router: Router,
               private ds: DataService,
               public dialog: MatDialog) {}
 
@@ -53,14 +56,14 @@ export class ScoreEditorComponent implements OnInit {
     this.ds.allPlayers().subscribe((data: Player[]) => {
       this.players = data;
       // TODO: Remove this
-      this.havePlayers = true;
-      this.mockMatch();
+      //this.havePlayers = true;
+      //this.mockMatch();
     });
     this.ds.teams().subscribe((data: Team[]) => {
       this.teams = data.filter((team: Team) => team.id < 4);
       // TODO: Remove this
-      this.haveTeams = true;
-      this.mockMatch();
+     // this.haveTeams = true;
+     // this.mockMatch();
     });
     this.ds.courses().subscribe((data: Course[]) => {
       this.courses = data;
@@ -75,8 +78,10 @@ export class ScoreEditorComponent implements OnInit {
 
 
   saveScores() {
-    this.ds.matchesCollection().add(this.match).then(data => {
+    let fuckedUpStepBecauseYouCantAddAClassToFireStore = JSON.parse(JSON.stringify(this.match));
+    this.ds.matchesCollection().add(fuckedUpStepBecauseYouCantAddAClassToFireStore).then(data => {
       console.log('added new match:', data);
+      this.router.navigate(['']);
     }, e => {
       console.log('Error adding new match:', e);
     });
@@ -84,6 +89,8 @@ export class ScoreEditorComponent implements OnInit {
 
   logStuff() {
     console.log('match:', this.match);
+    let fuckedUpStepBecauseYouCantAddAClassToFireStore = JSON.parse(JSON.stringify(this.match));
+    console.log('ridiculousness:', fuckedUpStepBecauseYouCantAddAClassToFireStore);
   }
 
   mockMatch() {

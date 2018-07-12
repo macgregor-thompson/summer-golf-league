@@ -1,4 +1,4 @@
-<div class="table-container mat-elevation-z8" *ngIf="teamOneRound && teamTwoRound">
+<div class="table-container mat-elevation-z8">
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
@@ -6,7 +6,7 @@
         <th class="text-muted">
           <small>Hole</small>
         </th>
-        <th class="text-muted" *ngFor="let hole of course.holes">
+        <th class="text-muted" *ngFor="let hole of match.course.holes">
           <small>{{hole.number}}</small>
         </th>
         <th class="text-muted">
@@ -17,139 +17,284 @@
         <th class="text-muted">
           <small>Handicap</small>
         </th>
-        <th class="text-muted" *ngFor="let hole of course.holes">
+        <th class="text-muted" *ngFor="let hole of match.course.holes">
           <small>{{hole.handicap}}</small>
         </th>
         <th class="text-muted">
         </th>
       </tr>
-      </thead>
-      <tbody>
-      <!-- <tr>
-         <td class="text-muted">
-           <small>{{playerName(teamOneRound.aPlayerRound.golferId)}}</small>
-         </td>
-         <td *ngFor="let score of teamOneRound.aPlayerRound.scores; let i = index" class="text-center">
-           <div [ngClass]="scoreClass(score, i)">
-             {{score}}
-           </div>
-         </td>
-         <td class="total-score-td">
-           <strong>{{teamOneRound.aPlayerRound.total}}</strong>
-         </td>
-       </tr>
-       <tr>
-         <td class="text-muted">
-           <small>{{playerName(teamOneRound.bPlayerRound.golferId)}}</small>
-         </td>
-         <td *ngFor="let score of teamOneRound.bPlayerRound.scores; let i = index" class="text-center">
-           <span *ngIf="teamOneRound.bPlayerRound.strokesGetting">
-             <span *ngFor="let s of numStrokes(teamOneRound.bPlayerRound.strokesGetting, i)"
-                   class="stack-stroke">*</span>
-           </span>
-           <span [ngClass]="scoreClass(score, i)">
-             {{score}}
-           </span>
-           <span *ngIf="teamOneRound.bPlayerRound.matchStrokes < teamOneRound.bPlayerRound.strokesGetting">
-             <span *ngFor="let s of numStrokes(teamOneRound.bPlayerRound.matchStrokes, i)"
-                   class="match-stroke">*</span>
-           </span>
-         </td>
-         <td class="total-score-td">
-           <strong>{{teamOneRound.bPlayerRound.total}}</strong>
-         </td>
-       </tr>-->
-
       <tr>
         <th class="text-muted">
           <small>Par</small>
         </th>
-        <th class="text-muted" *ngFor="let hole of course.holes">
-          <small>
-            {{hole.par}} <!--{{hole.handicap <= round.courseHandicap * 2 ? '*' : ''}}-->
-          </small>
+        <th class="text-muted" *ngFor="let hole of match.course.holes">
+          <small>{{hole.par}}</small>
         </th>
         <th class="text-muted">
-          <small>{{course.par}}</small>
+          <small>{{match.course.par}}</small>
         </th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-------------------------------------- TEAM A ---------------------------------------------------------------------->
+      <!--<tr *ngIf="match.teamTwo.roundA.matchStrokes != match.teamTwo.roundA.strokesGetting">-->
+      <tr>
+        <td class="text-center display-name-no-wrap">
+          <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
+            <span class="display-name-no-wrap">
+              {{match.teamOne.roundA.playerA.displayName}}
+            </span>
+            <span *ngIf="match.format != Format.TwoManBetterBall">
+              &
+              <span class="display-name-no-wrap">
+                {{match.teamOne.roundA.playerB.displayName}}
+              </span>
+            </span>
+          </span>
+          <mat-chip-list class="stroke-chips">
+            <mat-chip>
+              {{match.teamOne.roundA.strokesGetting}}
+              <span *ngIf="matchStrokesDifferent">
+                |
+                <span class="text-red">
+                  {{match.teamOne.roundA.matchStrokes}}
+                </span>
+              </span>
+            </mat-chip>
+          </mat-chip-list>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+          <div class="s-strokes-div" *ngIf="match.teamOne.roundA.strokesGetting">
+            <span *ngFor="let s of numStrokes(match.teamOne.roundA.strokesGetting, i)"
+                  class="s-stroke">*
+            </span>
+          </div>
+          <div class="m-strokes-div" *ngIf="matchStrokesDifferent">
+            <span *ngFor="let s of numStrokes(match.teamOne.roundA.matchStrokes, i)"
+                  class="m-stroke">*</span>
+          </div>
+          {{match.teamOne.roundA.scores[hole]}}
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.roundA.total}}
+          </span>
+        </td>
+      </tr>
+      <tr *ngIf="match.format === Format.TwoManBetterBall">
+        <td class="text-center display-name-no-wrap">
+          <span [ngStyle]="{'color': match.teamOne.team.colorScheme}" class="display-name-no-wrap">
+            {{match.teamOne.roundB.playerA.displayName}}
+          </span>
+          <mat-chip-list class="stroke-chips">
+            <mat-chip>
+              {{match.teamOne.roundB.strokesGetting}}
+              <span *ngIf="matchStrokesDifferent">
+                |
+                <span class="text-red">
+                  {{match.teamOne.roundB.matchStrokes}}
+                </span>
+              </span>
+            </mat-chip>
+          </mat-chip-list>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+          <div class="s-strokes-div" *ngIf="match.teamOne.roundB.strokesGetting">
+            <span *ngFor="let s of numStrokes(match.teamOne.roundB.strokesGetting, i)"
+                  class="s-stroke">*
+            </span>
+          </div>
+          <div class="m-strokes-div" *ngIf="matchStrokesDifferent">
+            <span *ngFor="let s of numStrokes(match.teamOne.roundB.matchStrokes, i)"
+                  class="m-stroke">*</span>
+          </div>
+          {{match.teamOne.roundB.scores[hole]}}
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.roundB.total}}
+          </span>
+        </td>
       </tr>
       <tr>
         <td>
-          <app-team-chip [team]="filterTeam(match.teamOne.teamId)" [short]="true"></app-team-chip>
-          <span [ngStyle]="{'color': teamColor[teamOneRound.teamId]}">
-            {{playerName[teamOneRound.aPlayerRound.golferId]}} & {{playerName[teamOneRound.bPlayerRound.golferId]}}
+          <app-team-chip [short]="true" [team]="match.teamOne.team"></app-team-chip>
+          &nbsp;
+          <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
+            <span class="display-name-no-wrap">
+              {{match.teamOne.roundA.playerA.displayName}}
+            </span>
+            &
+            <span class="display-name-no-wrap">
+              {{match.teamOne.roundA.playerB?.displayName}}
+              {{match.teamOne.roundB.playerA?.displayName}}
+            </span>
           </span>
         </td>
-        <td *ngFor="let score of teamOneRound.netScores; let i = index">
-          <div [ngClass]="scoreClass(score, i)">
-            {{score}}
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
+          <div [ngClass]="scoreClass(match.teamOne.netScores[hole], i)">
+            {{match.teamOne.netScores[hole]}}
           </div>
         </td>
         <td class="total-score-td">
-          <span class="total-score-div" [ngStyle]="{'background-color': teamColor[teamOneRound.teamId]}">
-            {{teamOneRound.teamNetTotal}}
+          <span class="total-score-div" [ngStyle]="{'background-color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.netTotal}}
           </span>
         </td>
       </tr>
-      <tr>
-        <td class="text-muted">
-          <small>Match</small>
+      <tr *ngIf="matchStrokesDifferent">
+        <td>
+          <app-team-chip [team]="match.teamOne.team"></app-team-chip>
         </td>
-        <td *ngFor="let score of teamOneRound.netScores; let i = index">
-          <i class="material-icons" *ngIf="score < teamTwoRound.netScores[i]">
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
+          <div [ngClass]="scoreClass(match.teamOne.matchScores[hole], i)">
+            {{match.teamOne.netScores[hole]}}
+          </div>
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'background-color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.matchTotal}}
+          </span>
+        </td>
+      </tr>
+
+      <!-------------------------------------- TEAM A ---------------------------------------------------------------------->
+
+      <tr>
+        <td>
+         Match
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9];">
+          <i class="material-icons" *ngIf="match.teamOne.matchScores[hole] < match.teamTwo.matchScores[hole]">
             arrow_upward
           </i>
-          <i class="material-icons" *ngIf="score > teamTwoRound.netScores[i]">
+          <i class="material-icons" *ngIf="match.teamOne.matchScores[hole] > match.teamTwo.matchScores[hole]">
             arrow_downward
           </i>
         </td>
         <td [innerHTML]="determineMatch()"></td>
       </tr>
+
+      <!-------------------------------------- TEAM B ---------------------------------------------------------------------->
+
+      <tr *ngIf="matchStrokesDifferent">
+        <td>
+          <app-team-chip [team]="match.teamTwo.team"></app-team-chip>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
+          <div [ngClass]="scoreClass(match.teamTwo.matchScores[hole], i)">
+            {{match.teamOne.netScores[hole]}}
+          </div>
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'background-color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.matchTotal}}
+          </span>
+        </td>
+      </tr>
       <tr>
         <td>
-          <app-team-chip [team]="filterTeam(match.teamTwo.teamId)" [short]="true"></app-team-chip>
-          <span [ngStyle]="{'color': teamColor[teamTwoRound.teamId]}">
-            {{playerName[teamTwoRound.aPlayerRound.golferId]}} & {{playerName[teamTwoRound.bPlayerRound.golferId]}}
+          <app-team-chip [short]="true" [team]="match.teamTwo.team"></app-team-chip>
+          &nbsp;
+          <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
+            <span class="display-name-no-wrap">
+              {{match.teamTwo.roundA.playerA.displayName}}
+            </span>
+            &
+            <span class="display-name-no-wrap">
+              {{match.teamTwo.roundA.playerB?.displayName}}
+              {{match.teamTwo.roundB.playerA?.displayName}}
+            </span>
           </span>
         </td>
-        <td *ngFor="let score of teamTwoRound.netScores; let i = index" class="text-center">
-          <div [ngClass]="scoreClass(score, i)">
-            {{score}}
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
+          <div [ngClass]="scoreClass(match.teamTwo.netScores[hole], i)">
+            {{match.teamTwo.netScores[hole]}}
           </div>
         </td>
         <td class="total-score-td">
-          <span class="total-score-div" [ngStyle]="{'background-color': teamColor[teamTwoRound.teamId]}">
-            {{teamTwoRound.teamNetTotal}}
+          <span class="total-score-div" [ngStyle]="{'background-color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.netTotal}}
           </span>
-        </td>
-      </tr>
-      <!--<tr>
-        <td class="text-muted">
-          <small>{{playerName(teamTwoRound.aPlayerRound.golferId)}}</small>
-        </td>
-        <td *ngFor="let score of teamTwoRound.aPlayerRound.scores; let i = index" class="text-center">
-          <div [ngClass]="scoreClass(score, i)">
-            {{score}}
-          </div>
-        </td>
-        <td class="total-score-td">
-          <strong>{{teamTwoRound.aPlayerRound.total}}</strong>
         </td>
       </tr>
       <tr>
-        <td class="text-muted">
-          <small>{{playerName(teamTwoRound.bPlayerRound.golferId)}}</small>
+        <td class="text-center display-name-no-wrap">
+          <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
+            <span class="display-name-no-wrap">
+              {{match.teamTwo.roundA.playerA.displayName}}
+            </span>
+            <span *ngIf="match.format != Format.TwoManBetterBall">
+              &
+              <span class="display-name-no-wrap">
+                {{match.teamTwo.roundA.playerB.displayName}}
+              </span>
+            </span>
+          </span>
+          <mat-chip-list class="stroke-chips">
+            <mat-chip>
+              {{match.teamTwo.roundA.strokesGetting}}
+              <span *ngIf="matchStrokesDifferent">
+                |
+                <span class="text-red">
+                  {{match.teamTwo.roundA.matchStrokes}}
+                </span>
+              </span>
+            </mat-chip>
+          </mat-chip-list>
         </td>
-        <td *ngFor="let score of teamTwoRound.bPlayerRound.scores; let i = index" class="text-center">
-          <div [ngClass]="scoreClass(score, i)">
-            {{score}}
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+          <div class="s-strokes-div" *ngIf="match.teamTwo.roundA.strokesGetting">
+            <span *ngFor="let s of numStrokes(match.teamTwo.roundA.strokesGetting, i)"
+                  class="s-stroke">*
+            </span>
           </div>
+          <div class="m-strokes-div" *ngIf="matchStrokesDifferent">
+            <span *ngFor="let s of numStrokes(match.teamTwo.roundA.matchStrokes, i)"
+                  class="m-stroke">*</span>
+          </div>
+          {{match.teamTwo.roundA.scores[hole]}}
         </td>
         <td class="total-score-td">
-          <strong>{{teamTwoRound.bPlayerRound.total}}</strong>
+          <span class="total-score-div" [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.roundA.total}}
+          </span>
         </td>
-      </tr>-->
-
+      </tr>
+      <tr *ngIf="match.format === Format.TwoManBetterBall">
+        <td class="text-center display-name-no-wrap">
+          <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}" class="display-name-no-wrap">
+            {{match.teamTwo.roundB.playerA.displayName}}
+          </span>
+          <mat-chip-list class="stroke-chips">
+            <mat-chip>
+              {{match.teamTwo.roundB.strokesGetting}}
+            </mat-chip>
+            <mat-chip *ngIf="matchStrokesDifferent" color="warn" selected>
+                  {{match.teamTwo.roundB.matchStrokes}}
+            </mat-chip>
+          </mat-chip-list>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+          <div class="s-strokes-div" *ngIf="match.teamTwo.roundB.strokesGetting">
+            <span *ngFor="let s of numStrokes(match.teamTwo.roundB.strokesGetting, i)"
+                  class="s-stroke">*
+            </span>
+          </div>
+          <!--<div *ngIf="match.teamOne.roundB.matchStrokes != match.teamOne.roundB.strokesGetting"-->
+          <div class="m-strokes-div" *ngIf="matchStrokesDifferent">
+            <span *ngFor="let s of numStrokes(match.teamTwo.roundB.matchStrokes, i)"
+                  class="m-stroke">*</span>
+          </div>
+          {{match.teamTwo.roundB.scores[hole]}}
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.roundB.total}}
+          </span>
+        </td>
+      </tr>
+      <!-------------------------------------- TEAM B ---------------------------------------------------------------------->
       </tbody>
     </table>
   </div>

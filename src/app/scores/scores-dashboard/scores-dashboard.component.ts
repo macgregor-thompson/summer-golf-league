@@ -52,6 +52,11 @@ export class ScoresDashboardComponent implements OnInit {
     this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => this.teams = data);
   }
 
+  logStuff() {
+    console.log('matches:', this.matches);
+  }
+
+
   getWeeks() {
     this.afs.collection<IWeek>('weeks', ref => ref.orderBy('number')).valueChanges()
       .subscribe((data: IWeek[]) => {
