@@ -7,4 +7,6 @@ export class ITeamRound {
   roundB?: IRound;
   netScores: IScores;
   netTotal: number;
+  matchScores?: IScores;
+  matchTotal: number;
 }

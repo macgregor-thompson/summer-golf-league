@@ -33,6 +33,7 @@ export class ScoreEditorComponent implements OnInit {
   teamB: Team;
   formatSelected: Format = Format.TwoManBetterBall;
   showScoreCard = false;
+  showMatchScoreInputs = false;
   teamColor = {
     1: '#f44336', // MacGregor's team
     2: '#2196f3', // Warbird's team
@@ -72,6 +73,15 @@ export class ScoreEditorComponent implements OnInit {
     });
   }
 
+
+  saveScores() {
+    this.ds.matchesCollection().add(this.match).then(data => {
+      console.log('added new match:', data);
+    }, e => {
+      console.log('Error adding new match:', e);
+    });
+  }
+
   logStuff() {
     console.log('match:', this.match);
   }
@@ -81,8 +91,8 @@ export class ScoreEditorComponent implements OnInit {
       this.match = new Match(5, 1, false);
 
       this.match.teamOne.roundA.playerA = this.players.filter(p => p.id === PlayerId.GanMan)[0];
-      this.match.teamOne.roundA.strokesGetting = 12;
-      this.match.teamOne.roundA.matchStrokes = 10;
+      this.match.teamOne.roundA.strokesGetting = 3;
+      this.match.teamOne.roundA.matchStrokes = 3;
 
       this.match.teamOne.roundB.playerA = this.players.filter(p => p.id === PlayerId.Allen)[0];
       this.match.teamOne.roundB.strokesGetting = 8;
@@ -98,7 +108,7 @@ export class ScoreEditorComponent implements OnInit {
 
       this.teamA = this.teams.filter(t => t.id === 3)[0];
       this.teamB = this.teams.filter(t => t.id === 1)[0];
-      this.showScoreCard = true;
+      this.goToScoreCard();
     }
   }
 
@@ -113,6 +123,13 @@ export class ScoreEditorComponent implements OnInit {
     console.log('match:', this.match);
   }
 
+  goToScoreCard() {
+    this.showScoreCard = true;
+    if (this.match.teamOne.roundA.matchStrokes !== this.match.teamOne.roundA.strokesGetting) {
+      this.showMatchScoreInputs = true;
+    }
+  }
+
   onStepperChange(event) {
     if (event.selectedIndex === 3 && !this.match) {
       this.newMatch();
@@ -120,7 +137,6 @@ export class ScoreEditorComponent implements OnInit {
   }
 
   setStrokes(stackStrokes: boolean, team, round, event) {
-    console.log(stackStrokes, team, round, event);
     if (stackStrokes) {
       this.match[team][round].strokesGetting = parseInt(event.target.value, 10);
     } else {
@@ -158,11 +174,58 @@ export class ScoreEditorComponent implements OnInit {
   addScorePlayer(team, round, hole, event) {
     this.match[team][round].scores[hole] = parseInt(event.target.value, 10);
     this.match[team][round].total = Object.values(this.match[team][round].scores).reduce((a, b) => a + b);
+    //this.determineNetScore(team, hole);
   }
 
   addNetScore(team, hole, event) {
-    this.match[team].netScores[hole] = parseInt(event.target.value, 10);
+    let score = parseInt(event.target.value, 10);
+    this.match[team].netScores[hole] = score;
     this.match[team].netTotal = Object.values(this.match[team].netScores).reduce((a, b) => a + b);
+    if (this.match[team].roundA.matchStrokes === this.match[team].roundA.strokesGetting) {
+      this._addMatchScore(team, hole, score);
+    }
+  }
+
+  addMatchScore(team, hole, event) {
+    this.match[team].matchScores[hole] = parseInt(event.target.value, 10);
+    this.match[team].matchTotal = Object.values(this.match[team].matchScores).reduce((a, b) => a + b);
+  }
+
+  determineMatchScore(team, round, hole) {
+    if (this.match[team][round].matchStrokes !== this.match[team][round].strokesGetting) {
+      let strokes = this.getMatchStrokes(this.match[team][round].matchStrokes, hole);
+      this._addMatchScore(team, round, this.match[team][round].netScores[hole] - strokes);
+    } else {
+      this._addMatchScore(team, round, this.match[team][round].netScores[hole]);
+    }
+  }
+
+
+  _addMatchScore(team, hole, score) {
+    this.match[team].matchScores[hole] = score;
+    this.match[team].matchTotal = Object.values(this.match[team].matchScores).reduce((a, b) => a + b);
+  }
+
+  numStrokes(strokes, i) {
+    if (strokes > 0) {
+      if (strokes > 9) {
+        let unFuckingBelievable = strokes - 9;
+        return unFuckingBelievable >= this.match.course.holes[i].stroke ? [1, 2] : [1];
+      } else {
+        return strokes >= this.match.course.holes[i].stroke ? [1] : [];
+      }
+    }
+  }
+
+  getMatchStrokes(strokes, hole): number {
+    if (strokes > 0) {
+      if (strokes > 9) {
+        let unFuckingBelievable = strokes - 9;
+        return unFuckingBelievable >= this.match.course.holes[hole].stroke ? 2 : 1;
+      } else {
+        return strokes >= this.match.course.holes[hole].stroke ? 1 : 0;
+      }
+    }
   }
 
 
@@ -185,43 +248,40 @@ export class ScoreEditorComponent implements OnInit {
     }
   }
 
-  numStrokes(strokes, i) {
-    if (strokes > 0) {
-      if (strokes > 9) {
-        let unFuckingBelievable = strokes - 9;
-        return unFuckingBelievable >= this.match.course.holes[i].stroke ? [1, 2] : [1];
-      } else {
-        return strokes >= this.match.course.holes[i].stroke ? [1] : [];
+  determineMatch() {
+    let a = 0, b = 0;
+    for (let i = 1; i <= 9; i++) {
+      let scoreA = this.match.teamOne.matchScores[i];
+      let scoreB = this.match.teamTwo.matchScores[i];
+      if (scoreA < scoreB) {
+        a++;
+      } else if (scoreA > scoreB) {
+        b++;
       }
     }
+
+    if (a === b) {
+      return 'Tie';
+    } else if (a > b) {
+      let playerA = this.match.teamOne.roundA.playerA.displayName;
+      let playerB = this.match.teamOne.roundB ? this.match.teamOne.roundB.playerA.displayName
+        : this.match.teamOne.roundA.playerB.displayName;
+      return `${playerA} & ${playerB} <br> win ${a - b} up`;
+    } else if (a < b) {
+      let playerA = this.match.teamTwo.roundA.playerA.displayName;
+      let playerB = this.match.teamTwo.roundB ? this.match.teamTwo.roundB.playerA.displayName
+        : this.match.teamTwo.roundA.playerB.displayName;
+      return `${playerA} & ${playerB} <br> win ${b - a} up`;
+    }
   }
+
 
   /////////////// Score Card //////////////////////
 
   ////////////////////////////////////////////////////////////////////////////
 
 
-  /* determineMatch() {
-      let a = 0, b = 0;
-      this.teamOneRound.netScores.forEach((score, i) => {
-        if (score < this.teamTwoRound.netScores[i]) {
-          a++;
-        } else if (score > this.teamTwoRound.netScores[i]) {
-          b++;
-        }
-      });
-      if (a === b) {
-        return 'Tie';
-      } else if (a > b) {
-        let playerA = this.playerName[this.teamOneRound.aPlayerRound.golferId];
-        let playerB = this.playerName[this.teamOneRound.bPlayerRound.golferId];
-        return `${playerA} & ${playerB} <br> win ${a - b} up`;
-      } else if (a < b) {
-        let playerA = this.playerName[this.teamTwoRound.aPlayerRound.golferId];
-        let playerB = this.playerName[this.teamTwoRound.bPlayerRound.golferId];
-        return `${playerA} & ${playerB} <br> win ${b - a} up`;
-      }
-    }
+  /*
 
 
   scoreClass(score: number, i) {

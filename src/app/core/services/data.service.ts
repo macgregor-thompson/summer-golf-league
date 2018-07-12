@@ -51,7 +51,7 @@ export class DataService {
   }
 
   weeksCollection(): AngularFirestoreCollection<IWeek> {
-    return this.afs.collection<Week>('weeks');
+    return this.afs.collection<IWeek>('weeks');
   }
 
   courses(): Observable<Course[]> {
@@ -60,6 +60,10 @@ export class DataService {
 
   getMatch(id: string): Observable<IMatch> {
     return this.afs.collection<IMatch>('matches').doc<IMatch>(id).valueChanges();
+  }
+
+  matchesCollection(): AngularFirestoreCollection<IMatch> {
+    return this.afs.collection<IMatch>('matches');
   }
 
 
