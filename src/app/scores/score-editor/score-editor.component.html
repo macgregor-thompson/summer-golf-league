@@ -67,14 +67,25 @@
     </mat-form-field>
 
     <div *ngIf="teamA">
+      <div>
+        <mat-checkbox [(ngModel)]="teamAPlayerASub">Player A Sub</mat-checkbox>
+      </div>
       <div class="flex-between form-padding">
-        <mat-form-field>
+        <mat-form-field *ngIf="!teamAPlayerASub">
           <mat-select [(ngModel)]="match.teamOne.roundA.playerA" placeholder="A Player">
             <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamA.id)" [value]="player">
               {{ player.displayName }}
             </mat-option>
           </mat-select>
           <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="teamAPlayerASub">
+          <mat-select [(ngModel)]="match.teamOne.roundA.playerA" placeholder="A Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Sub</mat-hint>
         </mat-form-field>
         <mat-form-field class="num-input">
           <input matInput type="number" min="0" placeholder="Stack Strokes"
@@ -87,24 +98,44 @@
                  (input)="setStrokes(false, 'teamOne', 'roundA', $event)">
         </mat-form-field>
       </div>
+      <div>
+        <mat-checkbox [(ngModel)]="teamAPlayerBSub">Player B Sub</mat-checkbox>
+      </div>
       <div class="form-padding">
-        <mat-form-field *ngIf="formatSelected != Format.TwoManBetterBall">
-          <mat-select [(ngModel)]="match.teamOne.roundA.playerB" placeholder="B Player">
-            <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamA.id)" [value]="player">
-              {{ player.displayName }}
-            </mat-option>
-          </mat-select>
-          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
-        </mat-form-field>
-
+        <div *ngIf="formatSelected != Format.TwoManBetterBall">
+          <mat-form-field *ngIf="!teamAPlayerBSub">
+            <mat-select [(ngModel)]="match.teamOne.roundA.playerB" placeholder="B Player">
+              <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamA.id)" [value]="player">
+                {{ player.displayName }}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
+          </mat-form-field>
+          <mat-form-field *ngIf="teamAPlayerBSub">
+            <mat-select [(ngModel)]="match.teamOne.roundA.playerB" placeholder="B Player">
+              <mat-option *ngFor="let player of subs" [value]="player">
+                {{ player.displayName }}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Sub</mat-hint>
+          </mat-form-field>
+        </div>
         <div *ngIf="formatSelected === Format.TwoManBetterBall" class="flex-between">
-          <mat-form-field>
+          <mat-form-field *ngIf="!teamAPlayerBSub">
             <mat-select [(ngModel)]="match.teamOne.roundB.playerA" placeholder="B Player">
               <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamA.id)" [value]="player">
                 {{ player.displayName }}
               </mat-option>
             </mat-select>
             <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
+          </mat-form-field>
+          <mat-form-field *ngIf="teamAPlayerBSub">
+            <mat-select [(ngModel)]="match.teamOne.roundB.playerA" placeholder="B Player">
+              <mat-option *ngFor="let player of subs" [value]="player">
+                {{ player.displayName }}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Sub</mat-hint>
           </mat-form-field>
           <mat-form-field class="num-input">
             <input matInput type="number" min="0" placeholder="Stack Strokes"
@@ -137,15 +168,30 @@
     </mat-form-field>
 
     <div *ngIf="teamB">
+      <div>
+        <mat-checkbox [(ngModel)]="teamBPlayerASub">Player A Sub</mat-checkbox>
+      </div>
       <div class="flex-between form-padding">
-        <mat-form-field>
+        <mat-form-field *ngIf="!teamBPlayerASub">
           <mat-select [(ngModel)]="match.teamTwo.roundA.playerA" placeholder="A Player">
-            <mat-option *ngFor="let player of (players | filterPlayersByTeam : match.teamTwo.team.id)" [value]="player">
+            <mat-option *ngFor="let player of (players | filterPlayersByTeam : match.teamTwo.team.id)"
+                        [value]="player">
               {{ player.displayName }}
             </mat-option>
           </mat-select>
-          <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamTwo.team.id]}">Team {{match.teamTwo.team.name}}</mat-hint>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamTwo.team.id]}">Team
+            {{match.teamTwo.team.name}}
+          </mat-hint>
         </mat-form-field>
+        <mat-form-field *ngIf="teamBPlayerASub">
+          <mat-select [(ngModel)]="match.teamTwo.roundA.playerA" placeholder="A Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamTwo.team.id]}">Sub</mat-hint>
+        </mat-form-field>
+
         <mat-form-field class="num-input">
           <input matInput type="number" min="0" placeholder="Stack Strokes"
                  [value]="match.teamTwo.roundA.strokesGetting"
@@ -157,23 +203,48 @@
                  (input)="setStrokes(false, 'teamTwo', 'roundA', $event)">
         </mat-form-field>
       </div>
+      <div>
+        <mat-checkbox [(ngModel)]="teamBPlayerBSub">Player B Sub</mat-checkbox>
+      </div>
       <div class="form-padding">
-        <mat-form-field *ngIf="formatSelected != Format.TwoManBetterBall">
-          <mat-select [(ngModel)]="match.teamTwo.roundA.playerB" placeholder="B Player">
-            <mat-option *ngFor="let player of (players | filterPlayersByTeam : match.teamTwo.team.id)" [value]="player">
-              {{ player.displayName }}
-            </mat-option>
-          </mat-select>
-          <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamTwo.team.id]}">Team {{match.teamTwo.team.name}}</mat-hint>
-        </mat-form-field>
-        <div *ngIf="formatSelected === Format.TwoManBetterBall" class="flex-between">
-          <mat-form-field>
-            <mat-select [(ngModel)]="match.teamTwo.roundB.playerA" placeholder="B Player">
-              <mat-option *ngFor="let player of (players | filterPlayersByTeam : match.teamTwo.team.id)" [value]="player">
+        <div *ngIf="formatSelected != Format.TwoManBetterBall">
+          <mat-form-field *ngIf="!teamBPlayerBSub">
+            <mat-select [(ngModel)]="match.teamTwo.roundA.playerB" placeholder="B Player">
+              <mat-option *ngFor="let player of (players | filterPlayersByTeam : match.teamTwo.team.id)"
+                          [value]="player">
                 {{ player.displayName }}
               </mat-option>
             </mat-select>
-            <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamTwo.team.id]}">Team {{match.teamTwo.team.name}}</mat-hint>
+            <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
+          </mat-form-field>
+          <mat-form-field *ngIf="teamBPlayerBSub">
+            <mat-select [(ngModel)]="match.teamTwo.roundA.playerB" placeholder="B Player">
+              <mat-option *ngFor="let player of subs" [value]="player">
+                {{ player.displayName }}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamTwo.team.id]}">Sub</mat-hint>
+          </mat-form-field>
+        </div>
+        <div *ngIf="formatSelected === Format.TwoManBetterBall" class="flex-between">
+          <mat-form-field *ngIf="!teamBPlayerBSub">
+            <mat-select [(ngModel)]="match.teamTwo.roundB.playerA" placeholder="B Player">
+              <mat-option *ngFor="let player of (players | filterPlayersByTeam : match.teamTwo.team.id)"
+                          [value]="player">
+                {{ player.displayName }}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamTwo.team.id]}">Team
+              {{match.teamTwo.team.name}}
+            </mat-hint>
+          </mat-form-field>
+          <mat-form-field *ngIf="teamBPlayerBSub">
+            <mat-select [(ngModel)]="match.teamTwo.roundB.playerA" placeholder="B Player">
+              <mat-option *ngFor="let player of subs" [value]="player">
+                {{ player.displayName }}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamTwo.team.id]}">Sub</mat-hint>
           </mat-form-field>
           <mat-form-field class="num-input">
             <input matInput type="number" min="0" placeholder="Stack Strokes"

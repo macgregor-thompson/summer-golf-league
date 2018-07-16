@@ -10,9 +10,12 @@ import { Format } from '../../models/enums/format.enum';
 })
 export class ScorecardComponent implements OnInit {
   @Input() match: IMatch;
+  @Input() individualScores: boolean;
   Format = Format;
   teams: Team[];
   matchStrokesDifferent = false;
+  teamAIndividual = false;
+  teamBIndividual = false;
 
   constructor() {}
 
@@ -31,6 +34,14 @@ export class ScorecardComponent implements OnInit {
         return strokes >= this.match.course.holes[i].stroke ? [1] : [];
       }
     }
+  }
+
+  toggleTeamA() {
+    this.teamAIndividual = !this.teamAIndividual;
+  }
+
+  toggleTeamB() {
+    this.teamBIndividual = !this.teamBIndividual;
   }
 
 

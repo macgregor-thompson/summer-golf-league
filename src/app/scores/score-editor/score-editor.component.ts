@@ -24,6 +24,7 @@ export class ScoreEditorComponent implements OnInit {
   @Input() matchId?: string;
   match: Match;
   players: IGolfer[];
+  subs: IGolfer[];
   Format = Format;
   weekSelected: IWeek;
   weeks: IWeek[];
@@ -40,6 +41,10 @@ export class ScoreEditorComponent implements OnInit {
     2: '#2196f3', // Warbird's team
     3: '#43a047' // GanMan's team
   };
+  teamAPlayerASub = false;
+  teamAPlayerBSub = false;
+  teamBPlayerASub = false;
+  teamBPlayerBSub = false;
 
   // TODO: Remove this
   havePlayers = false;
@@ -53,7 +58,7 @@ export class ScoreEditorComponent implements OnInit {
               public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.ds.allPlayers().subscribe((data: Player[]) => {
+    this.ds.members().subscribe((data: IGolfer[]) => {
       this.players = data;
       // TODO: Remove this
       //this.havePlayers = true;
@@ -74,6 +79,7 @@ export class ScoreEditorComponent implements OnInit {
       this.weeks = data;
       this.weekSelected = data.filter((week: IWeek) => week.number === data.length)[0];
     });
+    this.ds.subs().subscribe((data: IGolfer[]) => this.subs = data);
   }
 
 

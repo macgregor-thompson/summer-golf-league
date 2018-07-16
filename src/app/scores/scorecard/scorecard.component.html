@@ -38,7 +38,7 @@
       <tbody>
       <!-------------------------------------- TEAM A ---------------------------------------------------------------------->
       <!--<tr *ngIf="match.teamTwo.roundA.matchStrokes != match.teamTwo.roundA.strokesGetting">-->
-      <tr>
+      <tr *ngIf="individualScores">
         <td class="text-center display-name-no-wrap">
           <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
             <span class="display-name-no-wrap">
@@ -54,12 +54,7 @@
           <mat-chip-list class="stroke-chips">
             <mat-chip>
               {{match.teamOne.roundA.strokesGetting}}
-              <span *ngIf="matchStrokesDifferent">
-                |
-                <span class="text-red">
-                  {{match.teamOne.roundA.matchStrokes}}
-                </span>
-              </span>
+              <span *ngIf="matchStrokesDifferent">&nbsp;|&nbsp;<span class="text-red">{{match.teamOne.roundA.matchStrokes}}</span></span>
             </mat-chip>
           </mat-chip-list>
         </td>
@@ -81,7 +76,7 @@
           </span>
         </td>
       </tr>
-      <tr *ngIf="match.format === Format.TwoManBetterBall">
+      <tr *ngIf="match.format === Format.TwoManBetterBall && individualScores">
         <td class="text-center display-name-no-wrap">
           <span [ngStyle]="{'color': match.teamOne.team.colorScheme}" class="display-name-no-wrap">
             {{match.teamOne.roundB.playerA.displayName}}
@@ -89,12 +84,7 @@
           <mat-chip-list class="stroke-chips">
             <mat-chip>
               {{match.teamOne.roundB.strokesGetting}}
-              <span *ngIf="matchStrokesDifferent">
-                |
-                <span class="text-red">
-                  {{match.teamOne.roundB.matchStrokes}}
-                </span>
-              </span>
+              <span *ngIf="matchStrokesDifferent">&nbsp;|&nbsp;<span class="text-red">{{match.teamOne.roundB.matchStrokes}}</span></span>
             </mat-chip>
           </mat-chip-list>
         </td>
@@ -118,8 +108,8 @@
       </tr>
       <tr>
         <td>
-          <app-team-chip [short]="true" [team]="match.teamOne.team"></app-team-chip>
-          &nbsp;
+          <!--<app-team-chip [short]="true" [team]="match.teamOne.team"></app-team-chip>
+          &nbsp;-->
           <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
             <span class="display-name-no-wrap">
               {{match.teamOne.roundA.playerA.displayName}}
@@ -127,9 +117,14 @@
             &
             <span class="display-name-no-wrap">
               {{match.teamOne.roundA.playerB?.displayName}}
-              {{match.teamOne.roundB.playerA?.displayName}}
+              {{match.teamOne.roundB?.playerA.displayName}}
             </span>
           </span>
+          <mat-chip-list class="stroke-chips">
+            <mat-chip>
+              Net&nbsp;<span *ngIf="!matchStrokesDifferent">& Match</span>
+            </mat-chip>
+          </mat-chip-list>
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
           <div [ngClass]="scoreClass(match.teamOne.netScores[hole], i)">
@@ -144,11 +139,24 @@
       </tr>
       <tr *ngIf="matchStrokesDifferent">
         <td>
-          <app-team-chip [team]="match.teamOne.team"></app-team-chip>
+          <!--<app-team-chip [team]="match.teamOne.team"></app-team-chip>-->
+          <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
+            <span class="display-name-no-wrap">
+              {{match.teamOne.roundA.playerA.displayName}}
+            </span>
+            &
+            <span class="display-name-no-wrap">
+              {{match.teamOne.roundA.playerB?.displayName}}
+              {{match.teamOne.roundB?.playerA.displayName}}
+            </span>
+          </span>
+          <mat-chip-list class="stroke-chips">
+            <mat-chip>Match</mat-chip>
+          </mat-chip-list>
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
           <div [ngClass]="scoreClass(match.teamOne.matchScores[hole], i)">
-            {{match.teamOne.netScores[hole]}}
+            {{match.teamOne.matchScores[hole]}}
           </div>
         </td>
         <td class="total-score-td">
@@ -179,11 +187,24 @@
 
       <tr *ngIf="matchStrokesDifferent">
         <td>
-          <app-team-chip [team]="match.teamTwo.team"></app-team-chip>
+          <!--<app-team-chip [team]="match.teamTwo.team"></app-team-chip>-->
+          <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
+            <span class="display-name-no-wrap">
+              {{match.teamTwo.roundA.playerA.displayName}}
+            </span>
+            &
+            <span class="display-name-no-wrap">
+              {{match.teamTwo.roundA.playerB?.displayName}}
+              {{match.teamTwo.roundB?.playerA.displayName}}
+            </span>
+          </span>
+          <mat-chip-list class="stroke-chips">
+            <mat-chip>Match</mat-chip>
+          </mat-chip-list>
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
           <div [ngClass]="scoreClass(match.teamTwo.matchScores[hole], i)">
-            {{match.teamOne.netScores[hole]}}
+            {{match.teamTwo.matchScores[hole]}}
           </div>
         </td>
         <td class="total-score-td">
@@ -194,8 +215,8 @@
       </tr>
       <tr>
         <td>
-          <app-team-chip [short]="true" [team]="match.teamTwo.team"></app-team-chip>
-          &nbsp;
+         <!-- <app-team-chip [short]="true" [team]="match.teamTwo.team"></app-team-chip>
+          &nbsp;-->
           <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
             <span class="display-name-no-wrap">
               {{match.teamTwo.roundA.playerA.displayName}}
@@ -203,9 +224,15 @@
             &
             <span class="display-name-no-wrap">
               {{match.teamTwo.roundA.playerB?.displayName}}
-              {{match.teamTwo.roundB.playerA?.displayName}}
+              {{match.teamTwo.roundB?.playerA.displayName}}
             </span>
           </span>
+          <mat-chip-list class="stroke-chips">
+            <mat-chip>
+              Net&nbsp;<span *ngIf="!matchStrokesDifferent">& Match</span>
+
+            </mat-chip>
+          </mat-chip-list>
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;">
           <div [ngClass]="scoreClass(match.teamTwo.netScores[hole], i)">
@@ -218,7 +245,7 @@
           </span>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf="individualScores">
         <td class="text-center display-name-no-wrap">
           <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
             <span class="display-name-no-wrap">
@@ -234,12 +261,7 @@
           <mat-chip-list class="stroke-chips">
             <mat-chip>
               {{match.teamTwo.roundA.strokesGetting}}
-              <span *ngIf="matchStrokesDifferent">
-                |
-                <span class="text-red">
-                  {{match.teamTwo.roundA.matchStrokes}}
-                </span>
-              </span>
+              <span *ngIf="matchStrokesDifferent">&nbsp;|&nbsp;<span class="text-red">{{match.teamTwo.roundA.matchStrokes}}</span></span>
             </mat-chip>
           </mat-chip-list>
         </td>
@@ -261,7 +283,7 @@
           </span>
         </td>
       </tr>
-      <tr *ngIf="match.format === Format.TwoManBetterBall">
+      <tr *ngIf="match.format === Format.TwoManBetterBall && individualScores">
         <td class="text-center display-name-no-wrap">
           <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}" class="display-name-no-wrap">
             {{match.teamTwo.roundB.playerA.displayName}}
@@ -269,9 +291,7 @@
           <mat-chip-list class="stroke-chips">
             <mat-chip>
               {{match.teamTwo.roundB.strokesGetting}}
-            </mat-chip>
-            <mat-chip *ngIf="matchStrokesDifferent" color="warn" selected>
-                  {{match.teamTwo.roundB.matchStrokes}}
+              <span *ngIf="matchStrokesDifferent">&nbsp;|&nbsp;<span class="text-red">{{match.teamTwo.roundB.matchStrokes}}</span></span>
             </mat-chip>
           </mat-chip-list>
         </td>

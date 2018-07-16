@@ -24,6 +24,10 @@ mat-expansion-panel-header span.mat-expansion-indicator {
   position: absolute;
 }
 
+.mat-action-row {
+  justify-content: space-between;
+}
+
 div.alert h2{
   font-weight: 500;
 }

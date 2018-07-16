@@ -32,10 +32,11 @@
 </div>
 
 
+
 <mat-accordion class="table-headers-align" [multi]="false" dynamicHeight *ngIf="matches; else loading">
   <mat-expansion-panel *ngFor="let match of matches; let i = index; let first = first; let last = last"
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle="false">
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header *ngIf="match.teamOne">
       <!--<mat-panel-title>
        </mat-panel-title>-->
       <mat-panel-description>
@@ -45,7 +46,7 @@
             {{match.teamOne.roundA.playerA.displayName}}
             &
             {{match.teamOne.roundA.playerB?.displayName}}
-            {{match.teamOne.roundB.playerA?.displayName}}
+            {{match.teamOne.roundB?.playerA.displayName}}
           </span>
         </div>
         vs.
@@ -55,7 +56,7 @@
             {{match.teamTwo.roundA.playerA.displayName}}
             &
             {{match.teamTwo.roundA.playerB?.displayName}}
-            {{match.teamTwo.roundB.playerA?.displayName}}
+            {{match.teamTwo.roundB?.playerA.displayName}}
           </span>
         </div>
         <mat-chip-list>
@@ -64,11 +65,18 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <app-scorecard [match]="match"></app-scorecard>
+    <app-scorecard [match]="match" [individualScores]="individualScores"></app-scorecard>
 
     <mat-action-row>
-      <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
-      <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
+      <button mat-stroked-button color="primary" (click)="toggleIndividualScores()">
+        <span *ngIf="!individualScores">Show</span>
+        <span *ngIf="individualScores">Hide</span>
+        Individual Scores
+      </button>
+     <div>
+       <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
+       <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
+     </div>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

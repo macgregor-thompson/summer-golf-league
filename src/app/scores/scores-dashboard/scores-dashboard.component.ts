@@ -38,6 +38,8 @@ export class ScoresDashboardComponent implements OnInit {
     3: '#43a047' // GanMan's team
   };
 
+  individualScores = false;
+
 
   constructor(private afs: AngularFirestore,
               public playerService: PlayerService,
@@ -56,6 +58,9 @@ export class ScoresDashboardComponent implements OnInit {
     console.log('matches:', this.matches);
   }
 
+  toggleIndividualScores() {
+    this.individualScores = !this.individualScores;
+  }
 
   getWeeks() {
     this.afs.collection<IWeek>('weeks', ref => ref.orderBy('number')).valueChanges()
@@ -72,9 +77,11 @@ export class ScoresDashboardComponent implements OnInit {
   }
 
   getMatchesByWeek(week: IWeek) {
+    this.matches = null;
     this.afs.collection<IMatch>('matches', ref => ref.where('week', '==', week.number)).valueChanges()
       .subscribe((data: IMatch[]) => {
         this.matches = data;
+        console.log('matches:', this.matches);
       });
   }
 
