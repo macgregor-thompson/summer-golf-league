@@ -5,5 +5,7 @@ export interface Team {
   letter: string;
   color: string;
   points?: number;
+  netPoints?: number;
   colorScheme?: string;
+  rank?: number | string;
 }

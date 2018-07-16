@@ -16,6 +16,7 @@ export class RankingsDashboardComponent implements OnInit {
   spinner = false;
   points: NgxObject[] = [];
   teams: Team[];
+  teamData: MatTableDataSource<Team>;
   golfers: MatTableDataSource<IGolfer>;
   members: IGolfer[];
   ChartTypes = ChartTypes;
@@ -36,24 +37,41 @@ export class RankingsDashboardComponent implements OnInit {
       // '#2196f3', // GanMan's team
     ]
   };
-  displayedColumns = ['ranking', 'displayName', 'points', 'team'];
+  displayedColumns = ['ranking', 'displayName', 'netPoints', 'worstWeek', 'points', 'team'];
+  teamColumns = ['teamRanking', 'teamName', 'teamNetPoints', 'teamWorstWeek', 'teamPoints', ];
+
 
 
   constructor(private afs: AngularFirestore) { }
 
   ngOnInit() {
-    this.afs.collection<Team>('teams', ref => ref.orderBy('points', 'desc')).valueChanges()
+    this.afs.collection<Team>('teams', ref => ref.orderBy('netPoints', 'desc')).valueChanges()
       .subscribe((data: Team[]) => {
         this.teams = data;
-        data.forEach((team: Team) => {
+      /*  data.forEach((team: Team) => {
           if (team.id < 4) {
             this.colorScheme.domain.push(team.colorScheme);
             this.points.push({
               name: team.name,
-              value: team.points
+              value: team.netPoints
             });
           }
+        });*/
+        let rankedTeams = data.map((team, i) => {
+          if (i > 0) {
+            let prev = data[i - 1];
+            if (prev.netPoints === team.netPoints) {
+              team.rank = `T${prev.rank}`;
+              prev.rank = `T${prev.rank}`;
+            } else {
+              team.rank = i + 1;
+            }
+          } else {
+            team.rank = 1;
+          }
+          return team;
         });
+        this.teamData = new MatTableDataSource<Team>(rankedTeams);
       }, e => console.log('Error fetching teams:', e));
 
     /* this.afs.collection<Team>('teams', ref => ref.where('id', '<', 4)).valueChanges()
@@ -67,13 +85,13 @@ export class RankingsDashboardComponent implements OnInit {
          });
        }, e => console.log('Error fetching teams:', e));*/
 
-    this.afs.collection<IGolfer>('members', ref => ref.orderBy('points', 'desc')).valueChanges()
+    this.afs.collection<IGolfer>('members', ref => ref.orderBy('netPoints', 'desc')).valueChanges()
       .subscribe((data: IGolfer[]) => {
         this.members = data;
         let ranked = data.map((golfer, i) => {
           if (i > 0) {
             let prev = data[i - 1];
-            if (prev.points === golfer.points) {
+            if (prev.netPoints === golfer.netPoints) {
               golfer.rank = `T${prev.rank}`;
               prev.rank = `T${prev.rank}`;
             } else {
@@ -95,7 +113,7 @@ export class RankingsDashboardComponent implements OnInit {
     if (i === 0) {
       return 'gold-star';
     } else {
-      if (this.members[0].points === this.members[i].points) {
+      if (this.members[0].netPoints === this.members[i].netPoints) {
         return 'gold-star';
       } else {
         return 'silver-star';

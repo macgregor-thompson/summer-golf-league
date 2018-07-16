@@ -4,6 +4,8 @@ import { IScores } from './i-scores';
 export interface IRound {
   playerA: IGolfer;
   playerB?: IGolfer;
+  playerC?: IGolfer;
+  playerD?: IGolfer;
   week: number;
   total: number;
   netTotal: number;

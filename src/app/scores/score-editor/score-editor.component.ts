@@ -33,6 +33,7 @@ export class ScoreEditorComponent implements OnInit {
   teams: Team[];
   teamA: Team;
   teamB: Team;
+  teamC: Team;
   formatSelected: Format = Format.TwoManBetterBall;
   showScoreCard = false;
   showMatchScoreInputs = false;
@@ -45,6 +46,16 @@ export class ScoreEditorComponent implements OnInit {
   teamAPlayerBSub = false;
   teamBPlayerASub = false;
   teamBPlayerBSub = false;
+  ////For Team Scramble ////
+  teamAPlayerCSub = false;
+  teamAPlayerDSub = false;
+  teamBPlayerCSub = false;
+  teamBPlayerDSub = false;
+  teamCPlayerASub = false;
+  teamCPlayerBSub = false;
+  teamCPlayerCSub = false;
+  teamCPlayerDSub = false;
+
 
   // TODO: Remove this
   havePlayers = false;

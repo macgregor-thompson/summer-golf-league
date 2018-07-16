@@ -12,6 +12,7 @@ import { ICourse } from '../../models/interfaces/i-course';
 import { PlayerName } from '../../models/classes/player-name';
 import { FormatName } from '../../models/classes/format-name';
 import { Week } from '../../models/classes/week';
+import { Format } from '../../models/enums/format.enum';
 
 @Component({
   selector: 'app-scores-dashboard',
@@ -23,6 +24,7 @@ export class ScoresDashboardComponent implements OnInit {
   roundsCollection: AngularFirestoreCollection<IRound>;
   //playerName = PlayerName;
   formatName = FormatName;
+  Format = Format;
   course: ICourse;
   golfers: IGolfer[];
   matches: IMatch[];

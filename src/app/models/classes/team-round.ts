@@ -2,6 +2,7 @@ import { Round } from './round';
 import { Scores } from './scores';
 import { ITeamRound } from '../interfaces/i-team-round';
 import { Team } from '../interfaces/team';
+import { Format } from '../enums/format.enum';
 
 export class TeamRound implements ITeamRound {
   teamId = 0;
@@ -13,15 +14,14 @@ export class TeamRound implements ITeamRound {
   matchScores: Scores;
   team: Team;
 
-
-  constructor(TwoManBetterBall: boolean) {
+  constructor(format: Format) {
     this.netScores = new Scores();
     this.matchScores = new Scores();
-    if (TwoManBetterBall) {
-      this.roundA = new Round(true);
-      this.roundB = new Round(true);
+    if (format === Format.TwoManBetterBall) {
+      this.roundA = new Round(format);
+      this.roundB = new Round(format);
     } else {
-      this.roundA = new Round(false);
+      this.roundA = new Round(format);
     }
   }
 

@@ -17,8 +17,8 @@ import { Team } from '../../models/interfaces/team';
 export class PlayersDashboardComponent implements OnInit {
   teams: Team[];
   golfers: MatTableDataSource<IGolfer>;
-  adminColumns = ['firstName', 'lastName', 'displayName', 'handicap', 'team', 'points', 'edit'];
-  displayedColumns = ['firstName', 'lastName', 'displayName', 'handicap', 'team', 'points'];
+  adminColumns = ['displayName', 'handicap',  'points', 'team', 'edit'];
+  displayedColumns = ['displayName', 'handicap', 'points', 'team'];
 
   constructor(public playerService: PlayerService,
               private afs: AngularFirestore,

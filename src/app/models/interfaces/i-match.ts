@@ -9,4 +9,5 @@ export interface IMatch {
   course: ICourse;
   teamOne: ITeamRound;
   teamTwo: ITeamRound;
+  teamThree?: ITeamRound;
 }

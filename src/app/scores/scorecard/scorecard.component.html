@@ -1,4 +1,4 @@
-<div class="table-container mat-elevation-z8">
+<div class="table-container mat-elevation-z8" *ngIf="match.format !== Format.FourManScramble">
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
@@ -170,7 +170,7 @@
 
       <tr>
         <td>
-         Match
+          Match
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9];">
           <i class="material-icons" *ngIf="match.teamOne.matchScores[hole] < match.teamTwo.matchScores[hole]">
@@ -215,8 +215,8 @@
       </tr>
       <tr>
         <td>
-         <!-- <app-team-chip [short]="true" [team]="match.teamTwo.team"></app-team-chip>
-          &nbsp;-->
+          <!-- <app-team-chip [short]="true" [team]="match.teamTwo.team"></app-team-chip>
+           &nbsp;-->
           <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
             <span class="display-name-no-wrap">
               {{match.teamTwo.roundA.playerA.displayName}}
@@ -319,3 +319,87 @@
     </table>
   </div>
 </div>
+
+<div class="table-container mat-elevation-z8" *ngIf="match.format == Format.FourManScramble">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="text-muted">
+          <small>Hole</small>
+        </th>
+        <th class="text-muted" *ngFor="let hole of match.course.holes">
+          <small>{{hole.number}}</small>
+        </th>
+        <th class="text-muted">
+          <small>Total</small>
+        </th>
+      </tr>
+      <tr>
+        <th class="text-muted">
+          <small>Handicap</small>
+        </th>
+        <th class="text-muted" *ngFor="let hole of match.course.holes">
+          <small>{{hole.handicap}}</small>
+        </th>
+        <th class="text-muted">
+        </th>
+      </tr>
+      <tr>
+        <th class="text-muted">
+          <small>Par</small>
+        </th>
+        <th class="text-muted" *ngFor="let hole of match.course.holes">
+          <small>{{hole.par}}</small>
+        </th>
+        <th class="text-muted">
+          <small>{{match.course.par}}</small>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-------------------------------------- TEAM A ---------------------------------------------------------------------->
+      <tr>
+        <td class="text-center display-name-no-wrap">
+          <app-team-chip [team]="match.teamOne.team"></app-team-chip>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]" class="text-center">
+          {{match.teamOne.roundA.scores[hole]}}
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'background-color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.roundA.total}}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-center display-name-no-wrap">
+          <app-team-chip [team]="match.teamTwo.team"></app-team-chip>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]" class="text-center">
+          {{match.teamTwo.roundA.scores[hole]}}
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'background-color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.roundA.total}}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-center display-name-no-wrap">
+          <app-team-chip [team]="match.teamThree.team"></app-team-chip>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]" class="text-center">
+          {{match.teamThree.roundA.scores[hole]}}
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'background-color': match.teamThree.team.colorScheme}">
+            {{match.teamThree.roundA.total}}
+          </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

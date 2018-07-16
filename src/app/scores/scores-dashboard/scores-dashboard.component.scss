@@ -40,3 +40,18 @@ div.alert h2{
 .panel-description span{
   margin: auto 10px;
 }
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.total-score-div {
+  /*  border: 2px solid red;
+    background-color: red;*/
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5%;
+}

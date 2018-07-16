@@ -1,6 +1,7 @@
 <h1>Score Editor</h1>
+<button mat-raised-button color="primary" (click)="logStuff()">Log Stuff</button>
+
 <div class="text-right" style="margin-bottom: 15px;" *ngIf="showScoreCard">
-  <button mat-raised-button color="primary" (click)="logStuff()">Log Stuff</button>
   <button mat-raised-button color="warn" (click)="saveScores()">Save Scores</button>
 </div>
 
@@ -55,6 +56,7 @@
       <button mat-button color="primary" matStepperNext>Next</button>
     </div>
   </mat-step>
+  <!-- Team A -->
   <mat-step>
     <ng-template matStepLabel>Team A</ng-template>
     <mat-form-field *ngIf="match">
@@ -67,6 +69,7 @@
     </mat-form-field>
 
     <div *ngIf="teamA">
+      <!--=================== Team A Player A ==============================-->
       <div>
         <mat-checkbox [(ngModel)]="teamAPlayerASub">Player A Sub</mat-checkbox>
       </div>
@@ -98,6 +101,9 @@
                  (input)="setStrokes(false, 'teamOne', 'roundA', $event)">
         </mat-form-field>
       </div>
+      <!--=================== Team A Player A ==============================-->
+
+      <!--=================== Team A Player B ==============================-->
       <div>
         <mat-checkbox [(ngModel)]="teamAPlayerBSub">Player B Sub</mat-checkbox>
       </div>
@@ -149,13 +155,57 @@
           </mat-form-field>
         </div>
       </div>
+      <!--=================== Team A Player B ==============================-->
+
+      <div *ngIf="formatSelected === Format.FourManScramble">
+        <!--=================== Team A Player C ==============================-->
+        <mat-checkbox [(ngModel)]="teamAPlayerCSub">Player C Sub</mat-checkbox>
+        <mat-form-field *ngIf="!teamAPlayerCSub">
+          <mat-select [(ngModel)]="match.teamOne.roundA.playerC" placeholder="C Player">
+            <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamA.id)" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="teamAPlayerCSub">
+          <mat-select [(ngModel)]="match.teamOne.roundA.playerC" placeholder="C Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Sub</mat-hint>
+        </mat-form-field>
+        <!--=================== Team A Player C ==============================-->
+        <!--=================== Team A Player D ==============================-->
+        <mat-checkbox [(ngModel)]="teamAPlayerDSub">Player D Sub</mat-checkbox>
+        <mat-form-field *ngIf="!teamAPlayerDSub">
+          <mat-select [(ngModel)]="match.teamOne.roundA.playerD" placeholder="D Player">
+            <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamA.id)" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Team {{teamA.name}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="teamAPlayerDSub">
+          <mat-select [(ngModel)]="match.teamOne.roundA.playerD" placeholder="D Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamA.id]}">Sub</mat-hint>
+        </mat-form-field>
+        <!--=================== Team A Player D ==============================-->
+      </div>
     </div>
     <div class="stepper-buttons">
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button color="primary" matStepperNext>Next</button>
     </div>
   </mat-step>
+  <!-- Team A -->
 
+  <!-- Team B -->
   <mat-step>
     <ng-template matStepLabel>Team B</ng-template>
     <mat-form-field>
@@ -258,14 +308,182 @@
           </mat-form-field>
         </div>
       </div>
+
+
+      <div *ngIf="formatSelected === Format.FourManScramble">
+        <!--=================== Team B Player C ==============================-->
+        <mat-checkbox [(ngModel)]="teamBPlayerCSub">Player C Sub</mat-checkbox>
+        <mat-form-field *ngIf="!teamBPlayerCSub">
+          <mat-select [(ngModel)]="match.teamTwo.roundA.playerC" placeholder="C Player">
+            <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamB.id)" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="teamBPlayerCSub">
+          <mat-select [(ngModel)]="match.teamTwo.roundA.playerC" placeholder="C Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Sub</mat-hint>
+        </mat-form-field>
+        <!--=================== Team B Player C ==============================-->
+        <!--=================== Team B Player D ==============================-->
+        <mat-checkbox [(ngModel)]="teamBPlayerDSub">Player D Sub</mat-checkbox>
+        <mat-form-field *ngIf="!teamBPlayerDSub">
+          <mat-select [(ngModel)]="match.teamTwo.roundA.playerD" placeholder="D Player">
+            <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamB.id)" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Team {{teamB.name}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="teamBPlayerDSub">
+          <mat-select [(ngModel)]="match.teamTwo.roundA.playerD" placeholder="D Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamB.id]}">Sub</mat-hint>
+        </mat-form-field>
+        <!--=================== Team A Player D ==============================-->
+      </div>
     </div>
     <div class="stepper-buttons">
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-raised-button color="warn" (click)="goToScoreCard()">Add Scores</button>
+      <button mat-raised-button color="warn" (click)="goToScoreCard()"
+              *ngIf="formatSelected !== Format.FourManScramble">Add Scores
+      </button>
+      <button mat-button color="primary" matStepperNext *ngIf="formatSelected == Format.FourManScramble">Next</button>
     </div>
   </mat-step>
-</mat-horizontal-stepper>
+  <!-- Team B -->
 
+  <!-- Team C -->
+  <mat-step *ngIf="formatSelected == Format.FourManScramble">
+    <ng-template matStepLabel>Team C</ng-template>
+    <mat-form-field>
+      <mat-select [(ngModel)]="teamC" placeholder="Team C" (change)="match.teamThree.team = teamC">
+        <mat-option *ngFor="let team of teams" [value]="team">
+          <app-team-chip [short]="true" [team]="team"></app-team-chip>
+          {{ team.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="teamC">
+      <!--=================== Team C Player A ==============================-->
+      <div>
+        <mat-checkbox [(ngModel)]="teamCPlayerASub">Player A Sub</mat-checkbox>
+      </div>
+      <div class="flex-between form-padding">
+        <mat-form-field *ngIf="!teamCPlayerASub">
+          <mat-select [(ngModel)]="match.teamThree.roundA.playerA" placeholder="A Player">
+            <mat-option *ngFor="let player of (players | filterPlayersByTeam : match.teamThree.team.id)"
+                        [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamThree.team.id]}">Team
+            {{match.teamThree.team.name}}
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="teamCPlayerASub">
+          <mat-select [(ngModel)]="match.teamThree.roundA.playerA" placeholder="A Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamThree.team.id]}">Sub</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="num-input">
+          <input matInput type="number" min="0" placeholder="Stack Strokes"
+                 [value]="match.teamThree.roundA.strokesGetting"
+                 (input)="setStrokes(true, 'teamThree', 'roundA', $event)">
+        </mat-form-field>
+        <mat-form-field class="num-input">
+          <input matInput type="number" min="0" placeholder="Match Strokes"
+                 [value]="match.teamThree.roundA.matchStrokes"
+                 (input)="setStrokes(false, 'teamThree', 'roundA', $event)">
+        </mat-form-field>
+      </div>
+      <!--=================== Team C Player A ==============================-->
+      <!--=================== Team C Player B ==============================-->
+      <div>
+        <mat-checkbox [(ngModel)]="teamCPlayerBSub">Player B Sub</mat-checkbox>
+      </div>
+      <div class="form-padding">
+        <mat-form-field *ngIf="!teamCPlayerBSub">
+          <mat-select [(ngModel)]="match.teamThree.roundA.playerB" placeholder="B Player">
+            <mat-option *ngFor="let player of (players | filterPlayersByTeam : match.teamThree.team.id)"
+                        [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamC.id]}">Team {{teamC.name}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="teamCPlayerBSub">
+          <mat-select [(ngModel)]="match.teamThree.roundA.playerB" placeholder="B Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[match.teamThree.team.id]}">Sub</mat-hint>
+        </mat-form-field>
+        <!--=================== Team C Player B ==============================-->
+        <!--=================== Team C Player C ==============================-->
+        <mat-checkbox [(ngModel)]="teamCPlayerCSub">Player C Sub</mat-checkbox>
+        <mat-form-field *ngIf="!teamCPlayerCSub">
+          <mat-select [(ngModel)]="match.teamThree.roundA.playerC" placeholder="C Player">
+            <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamC.id)" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamC.id]}">Team {{teamC.name}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="teamCPlayerCSub">
+          <mat-select [(ngModel)]="match.teamThree.roundA.playerC" placeholder="C Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamC.id]}">Sub</mat-hint>
+        </mat-form-field>
+        <!--=================== Team C Player C ==============================-->
+        <!--=================== Team C Player D ==============================-->
+        <mat-checkbox [(ngModel)]="teamCPlayerDSub">Player D Sub</mat-checkbox>
+        <mat-form-field *ngIf="!teamCPlayerDSub">
+          <mat-select [(ngModel)]="match.teamThree.roundA.playerD" placeholder="D Player">
+            <mat-option *ngFor="let player of (players | filterPlayersByTeam : teamC.id)" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamC.id]}">Team {{teamC.name}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="teamCPlayerDSub">
+          <mat-select [(ngModel)]="match.teamThree.roundA.playerD" placeholder="D Player">
+            <mat-option *ngFor="let player of subs" [value]="player">
+              {{ player.displayName }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end" [ngStyle]="{'color': teamColor[teamC.id]}">Sub</mat-hint>
+        </mat-form-field>
+        <!--=================== Team C Player D ==============================-->
+      </div>
+    </div>
+    <div class="stepper-buttons">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-raised-button color="warn" (click)="goToScoreCard()" *ngIf="formatSelected == Format.FourManScramble">
+        Add Scores
+      </button>
+      <button mat-button color="primary" matStepperNext *ngIf="formatSelected !== Format.FourManScramble">Next</button>
+    </div>
+  </mat-step>
+  <!-- Team C -->
+</mat-horizontal-stepper>
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
@@ -273,7 +491,7 @@
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
 <div class="table-container mat-elevation-z8" *ngIf="showScoreCard">
-  <div class="table-responsive">
+  <div class="table-responsive" *ngIf="match.format !== Format.FourManScramble">
     <table class="table table-bordered">
       <thead>
       <tr>
@@ -602,6 +820,121 @@
         </td>
       </tr>
       <!-------------------------------------- TEAM B ---------------------------------------------------------------------->
+      </tbody>
+    </table>
+  </div>
+  <div class="table-responsive" *ngIf="match.format == Format.FourManScramble">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="text-muted" colspan="2">
+          <small>Handicap</small>
+        </th>
+        <th class="text-muted" *ngFor="let hole of match.course.holes">
+          <small>{{hole.handicap}}</small>
+        </th>
+        <th class="text-muted">
+        </th>
+      </tr>
+      <tr>
+        <th class="text-muted">
+          <small>Player</small>
+        </th>
+        <th class="text-muted">
+          <small>Blows</small>
+        </th>
+        <th class="text-muted" *ngFor="let hole of match.course.holes">
+          <small>{{hole.number}}</small>
+        </th>
+        <th class="text-muted">
+          <small>Total</small>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-------------------------------------- TEAM A ----------------------------------------------------------------->
+      <tr>
+        <td>
+          <app-team-chip [team]="match.teamOne.team"></app-team-chip>
+        </td>
+        <td class="text-center display-name-no-wrap">
+          {{match.teamOne.roundA.strokesGetting}}
+          <span *ngIf="match.teamOne.roundA.matchStrokes != match.teamOne.roundA.strokesGetting">
+            |
+            <span class="text-red">
+              {{match.teamOne.roundA.matchStrokes}}
+            </span>
+          </span>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+          <mat-form-field class="num-input">
+            <input matInput type="number" min="1" placeholder=""
+                   (input)="addScorePlayer('teamOne', 'roundA', hole, $event)">
+          </mat-form-field>
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.roundA.total}}
+          </span>
+        </td>
+      </tr>
+      <!-------------------------------------- TEAM A ----------------------------------------------------------------->
+
+      <!-------------------------------------- TEAM B ----------------------------------------------------------------->
+      <tr>
+        <td>
+          <app-team-chip [team]="match.teamTwo.team"></app-team-chip>
+        </td>
+        <td class="text-center display-name-no-wrap">
+          {{match.teamTwo.roundA.strokesGetting}}
+          <span *ngIf="match.teamTwo.roundA.matchStrokes != match.teamTwo.roundA.strokesGetting">
+            |
+            <span class="text-red">
+              {{match.teamTwo.roundA.matchStrokes}}
+            </span>
+          </span>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+          <mat-form-field class="num-input">
+            <input matInput type="number" min="1" placeholder=""
+                   (input)="addScorePlayer('teamTwo', 'roundA', hole, $event)">
+          </mat-form-field>
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.roundA.total}}
+          </span>
+        </td>
+      </tr>
+      <!-------------------------------------- TEAM B ----------------------------------------------------------------->
+
+      <!-------------------------------------- TEAM C ----------------------------------------------------------------->
+      <tr>
+        <td>
+          <app-team-chip [team]="match.teamThree.team"></app-team-chip>
+        </td>
+        <td class="text-center display-name-no-wrap">
+          {{match.teamThree.roundA.strokesGetting}}
+          <span *ngIf="match.teamThree.roundA.matchStrokes != match.teamThree.roundA.strokesGetting">
+            |
+            <span class="text-red">
+              {{match.teamThree.roundA.matchStrokes}}
+            </span>
+          </span>
+        </td>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
+          <mat-form-field class="num-input">
+            <input matInput type="number" min="1" placeholder=""
+                   (input)="addScorePlayer('teamThree', 'roundA', hole, $event)">
+          </mat-form-field>
+        </td>
+        <td class="total-score-td">
+          <span class="total-score-div" [ngStyle]="{'color': match.teamThree.team.colorScheme}">
+            {{match.teamThree.roundA.total}}
+          </span>
+        </td>
+      </tr>
+      <!-------------------------------------- TEAM C ----------------------------------------------------------------->
       </tbody>
     </table>
   </div>

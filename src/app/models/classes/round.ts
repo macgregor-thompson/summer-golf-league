@@ -7,6 +7,8 @@ import { Format } from '../enums/format.enum';
 export class Round {
   playerA: IGolfer;
   playerB?: IGolfer;
+  playerC?: IGolfer;
+  playerD?: IGolfer;
   week = 1;
   total = 0;
   netTotal = 0;
@@ -17,12 +19,16 @@ export class Round {
   scores: IScores;
   netScores: IScores;
 
-  constructor(TwoManBetterBall: boolean) {
+  constructor(format: Format) {
     this.scores = new Scores();
     this.netScores = new Scores();
     this.playerA = new Player();
-    if (!TwoManBetterBall) {
+    if (format === Format.TwoManBetterBall) {
       this.playerB = new Player();
+    } else if (format === Format.FourManScramble) {
+      this.playerB = new Player();
+      this.playerC = new Player();
+      this.playerD = new Player();
     }
   }
 }

@@ -8,6 +8,7 @@ export interface IGolfer {
   handicap: number;
   teamId: number;
   points?: number;
+  netPoints?: number;
   rank?: number | string; // this gets generated on he front end
 
   // Optional

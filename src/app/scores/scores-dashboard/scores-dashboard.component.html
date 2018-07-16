@@ -21,7 +21,7 @@
     <div class="text-right">
       <mat-form-field>
         <mat-select [value]="weekSelected" (change)="onWeekChange($event)">
-          <mat-option *ngFor="let week of weeks" [value]="week">
+          <mat-option *ngFor="let week of weeks" [value]="week" [disabled]="!week.completed">
             Week {{ week.number }} |
             <small>{{ week.date }}</small>
           </mat-option>
@@ -39,7 +39,7 @@
     <mat-expansion-panel-header *ngIf="match.teamOne">
       <!--<mat-panel-title>
        </mat-panel-title>-->
-      <mat-panel-description>
+      <mat-panel-description *ngIf="match.format !== Format.FourManScramble">
         <div>
           <app-team-chip [team]="match.teamOne.team" [short]="true"></app-team-chip>
           <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
@@ -47,6 +47,9 @@
             &
             {{match.teamOne.roundA.playerB?.displayName}}
             {{match.teamOne.roundB?.playerA.displayName}}
+          </span>
+          <span class="total-score-div" [ngStyle]="{'background-color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.netTotal}}
           </span>
         </div>
         vs.
@@ -58,7 +61,21 @@
             {{match.teamTwo.roundA.playerB?.displayName}}
             {{match.teamTwo.roundB?.playerA.displayName}}
           </span>
+          <span class="total-score-div" [ngStyle]="{'background-color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.netTotal}}
+          </span>
         </div>
+        <mat-chip-list>
+          <mat-chip>{{formatName[match.format]}}</mat-chip>
+        </mat-chip-list>
+      </mat-panel-description>
+
+      <mat-panel-description *ngIf="match.format === Format.FourManScramble">
+        <app-team-chip [team]="match.teamOne.team"></app-team-chip>
+        vs.
+        <app-team-chip [team]="match.teamTwo.team"></app-team-chip>
+        vs.
+        <app-team-chip [team]="match.teamThree.team"></app-team-chip>
         <mat-chip-list>
           <mat-chip>{{formatName[match.format]}}</mat-chip>
         </mat-chip-list>
@@ -68,7 +85,8 @@
     <app-scorecard [match]="match" [individualScores]="individualScores"></app-scorecard>
 
     <mat-action-row>
-      <button mat-stroked-button color="primary" (click)="toggleIndividualScores()">
+      <button mat-stroked-button color="primary" (click)="toggleIndividualScores()"
+              *ngIf="match.format !== Format.FourManScramble">
         <span *ngIf="!individualScores">Show</span>
         <span *ngIf="individualScores">Hide</span>
         Individual Scores
