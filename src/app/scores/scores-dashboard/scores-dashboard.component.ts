@@ -41,14 +41,13 @@ export class ScoresDashboardComponent implements OnInit {
   individualScores = false;
   matchData: MatTableDataSource<IMatch>;
   displayedColumns = ['players', 'netScore', 'stackPoints', 'matchPoints', 'totalPoints', 'team'];
+  fourPersonScrambleColumns = ['teamPlayers', 'teamScore', 'stackPoints', 'teamName'];
   weeklyMatches = [];
-
 
 
   constructor(private afs: AngularFirestore,
               public playerService: PlayerService,
               public dialog: MatDialog) {
-
   }
 
   ngOnInit() {
@@ -87,7 +86,7 @@ export class ScoresDashboardComponent implements OnInit {
     this.afs.collection<IMatch>('matches', ref => ref.where('week', '==', week.number)).valueChanges()
       .subscribe((data: IMatch[]) => {
         this.matches = data;
-        if (week.format !== Format.FourManScramble) {
+        if (this.matches[0].format !== Format.FourManScramble) {
           this.determineMatchPoints();
         } else {
           this.determineTeamScramble();
@@ -97,7 +96,62 @@ export class ScoresDashboardComponent implements OnInit {
 
 
 determineTeamScramble() {
-
+  let matchesArr = [];
+  this.matches.forEach((match) => {
+    let teamA = {
+      team: match.teamOne.team,
+      playerA: match.teamOne.roundA.playerA,
+      playerB: match.teamOne.roundA.playerB,
+      playerC: match.teamOne.roundA.playerC,
+      playerD: match.teamOne.roundA.playerD,
+      stackPoints: 0,
+      total: match.teamOne.roundA.total,
+    };
+    let teamB = {
+      team: match.teamTwo.team,
+      playerA: match.teamTwo.roundA.playerA,
+      playerB: match.teamTwo.roundA.playerB,
+      playerC: match.teamTwo.roundA.playerC,
+      playerD: match.teamTwo.roundA.playerD,
+      stackPoints: 0,
+      total: match.teamTwo.roundA.total,
+    };
+    let teamC = {
+      team: match.teamThree.team,
+      playerA: match.teamThree.roundA.playerA,
+      playerB: match.teamThree.roundA.playerB,
+      playerC: match.teamThree.roundA.playerC,
+      playerD: match.teamThree.roundA.playerD,
+      stackPoints: 0,
+      total: match.teamThree.roundA.total,
+    };
+    matchesArr.push(teamA);
+    matchesArr.push(teamB);
+    matchesArr.push(teamC);
+    matchesArr.sort((a, b) => {
+      if (a.total < b.total)
+        return -1;
+      if (a.total > b.total)
+        return 1;
+      return 0;
+    });
+    this.weeklyMatches = matchesArr.map((team, i) => {
+      if (i > 0) {
+        let prev = matchesArr[i - 1];
+        if (prev.total === team.total) {
+          let points = ((12 - ((i - 1) * 4)) + (12 - (i * 4)) / 2);
+          team.stackPoints = points;
+          prev.stackPoints = points;
+        } else {
+          team.stackPoints = 12 - (i * 4);
+        }
+      } else {
+        team.stackPoints = 12;
+      }
+      return team;
+    });
+    this.matchData = new MatTableDataSource<IMatch>(this.weeklyMatches);
+  });
 }
 
 
@@ -128,29 +182,11 @@ determineTeamScramble() {
         teamA.matchPoints = 0.5;
         teamB.matchPoints = 0.5;
       }
-
       matchesArr.push(teamA);
       matchesArr.push(teamB);
     });
-
     matchesArr.sort(this.sortByNetTotal);
-
-    this.weeklyMatches = matchesArr.map((team, i) => {
-      if (i > 0) {
-        let prev = matchesArr[i - 1];
-        if (prev.netTotal === team.netTotal) {
-          let points = ((6 - (i - 1)) + (6 - i)) / 2;
-          team.stackPoints = points;
-          prev.stackPoints = points;
-        } else {
-          team.stackPoints = 6 - i;
-        }
-      } else {
-        team.stackPoints = 6;
-      }
-      return team;
-    });
-
+    this.setStackPoints(matchesArr);
     this.matchData = new MatTableDataSource<IMatch>(this.weeklyMatches);
   }
 
@@ -163,7 +199,23 @@ determineTeamScramble() {
     return 0;
   }
 
-
+  setStackPoints(arr) {
+    this.weeklyMatches = arr.map((team, i) => {
+      if (i > 0) {
+        let prev = arr[i - 1];
+        if (prev.netTotal === team.netTotal) {
+          let points = ((6 - (i - 1)) + (6 - i)) / 2;
+          team.stackPoints = points;
+          prev.stackPoints = points;
+        } else {
+          team.stackPoints = 6 - i;
+        }
+      } else {
+        team.stackPoints = 6;
+      }
+      return team;
+    });
+  }
 
   getCourseByWeek(week: IWeek) {
     this.afs.collection<ICourse>('courses').doc<ICourse>(week.courseId).valueChanges()

@@ -372,8 +372,10 @@
         <td class="text-center display-name-no-wrap">
           <app-team-chip [team]="match.teamOne.team"></app-team-chip>
         </td>
-        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]" class="text-center">
-          {{match.teamOne.roundA.scores[hole]}}
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index" class="text-center">
+          <div [ngClass]="scoreClass(match.teamOne.roundA.scores[hole], i)">
+            {{match.teamOne.roundA.scores[hole]}}
+          </div>
         </td>
         <td class="total-score-td">
           <span class="total-score-div" [ngStyle]="{'background-color': match.teamOne.team.colorScheme}">
@@ -385,8 +387,10 @@
         <td class="text-center display-name-no-wrap">
           <app-team-chip [team]="match.teamTwo.team"></app-team-chip>
         </td>
-        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]" class="text-center">
-          {{match.teamTwo.roundA.scores[hole]}}
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index" class="text-center">
+          <div [ngClass]="scoreClass(match.teamTwo.roundA.scores[hole], i)">
+            {{match.teamTwo.roundA.scores[hole]}}
+          </div>
         </td>
         <td class="total-score-td">
           <span class="total-score-div" [ngStyle]="{'background-color': match.teamTwo.team.colorScheme}">
@@ -398,8 +402,10 @@
         <td class="text-center display-name-no-wrap">
           <app-team-chip [team]="match.teamThree.team"></app-team-chip>
         </td>
-        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]" class="text-center">
-          {{match.teamThree.roundA.scores[hole]}}
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index" class="text-center">
+          <div [ngClass]="scoreClass(match.teamThree.roundA.scores[hole], i)">
+            {{match.teamThree.roundA.scores[hole]}}
+          </div>
         </td>
         <td class="total-score-td">
           <span class="total-score-div" [ngStyle]="{'background-color': match.teamThree.team.colorScheme}">

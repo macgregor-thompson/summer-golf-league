@@ -31,12 +31,10 @@
   </div>
 </div>
 
-
 <h1 class="text-center" style="margin-bottom: 30px;">Weekly Points</h1>
 
-
-<div class="table-container mat-elevation-z8" *ngIf="matchData"  style="margin-bottom: 50px;">
-  <mat-table #table [dataSource]="matchData" matSort matSortActive="name">
+<div class="table-container mat-elevation-z8" *ngIf="matches && matchData"  style="margin-bottom: 50px;">
+  <mat-table #table [dataSource]="matchData" matSort matSortActive="name" *ngIf="matches[0].format != Format.FourManScramble">
     <ng-container matColumnDef="players">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Players</mat-header-cell>
       <mat-cell *matCellDef="let team" class="text-center">
@@ -48,10 +46,11 @@
     <ng-container matColumnDef="netScore">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Net Score</mat-header-cell>
       <mat-cell *matCellDef="let team; let first = first;" class="text-center">
-        {{team.netTotal}}
+        <span class="total-score-div" [ngStyle]="{'background-color': team.team.colorScheme}">
+          {{team.netTotal}}
+        </span>
       </mat-cell>
     </ng-container>
-
     <ng-container matColumnDef="stackPoints">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Stack Points</mat-header-cell>
       <mat-cell *matCellDef="let team" class="text-center">{{team.stackPoints}}</mat-cell>
@@ -73,6 +72,39 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row
       *matRowDef="let row; columns: displayedColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
+  </mat-table>
+
+  <mat-table #table [dataSource]="matchData" matSort matSortActive="name" *ngIf="matches[0]?.format === Format.FourManScramble">
+    <ng-container matColumnDef="teamPlayers">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Players</mat-header-cell>
+      <mat-cell *matCellDef="let t" class="text-center">
+        <span [ngStyle]="{color: t.team.colorScheme}">
+          {{t.playerA.displayName}}, {{t.playerB.displayName}},
+          {{t.playerC.displayName}}, & {{t.playerD.displayName}}
+        </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="teamScore">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Score</mat-header-cell>
+      <mat-cell *matCellDef="let t; let first = first;" class="text-center">
+        <span class="total-score-div" [ngStyle]="{'background-color': t.team.colorScheme}">
+          {{t.total}}
+        </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="stackPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Stack Points</mat-header-cell>
+      <mat-cell *matCellDef="let t" class="text-center">{{t.stackPoints}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="teamName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Team</mat-header-cell>
+      <mat-cell *matCellDef="let t" class="text-center">
+        <app-team-chip [team]="t.team"></app-team-chip>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="fourPersonScrambleColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: fourPersonScrambleColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
   </mat-table>
 </div>
 
