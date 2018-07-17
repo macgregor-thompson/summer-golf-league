@@ -13,6 +13,7 @@ import { PlayerName } from '../../models/classes/player-name';
 import { FormatName } from '../../models/classes/format-name';
 import { Week } from '../../models/classes/week';
 import { Format } from '../../models/enums/format.enum';
+import { ScorecardModalComponent } from '../scorecard-modal/scorecard-modal.component';
 
 @Component({
   selector: 'app-scores-dashboard',
@@ -247,6 +248,12 @@ determineTeamScramble() {
 
   openWeekModal() {
     this.dialog.open(WeekModalComponent);
+  }
+
+  launchPictureModal(match) {
+    this.dialog.open(ScorecardModalComponent, {
+      data: match
+    });
   }
 
 

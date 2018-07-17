@@ -33,8 +33,9 @@
 
 <h1 class="text-center" style="margin-bottom: 30px;">Weekly Points</h1>
 
-<div class="table-container mat-elevation-z8" *ngIf="matches && matchData"  style="margin-bottom: 50px;">
-  <mat-table #table [dataSource]="matchData" matSort matSortActive="name" *ngIf="matches[0].format != Format.FourManScramble">
+<div class="table-container mat-elevation-z8" *ngIf="matches && matchData" style="margin-bottom: 50px;">
+  <mat-table #table [dataSource]="matchData" matSort matSortActive="name"
+             *ngIf="matches[0].format != Format.FourManScramble">
     <ng-container matColumnDef="players">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Players</mat-header-cell>
       <mat-cell *matCellDef="let team" class="text-center">
@@ -44,7 +45,7 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="netScore">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Net Score</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Net Score</mat-header-cell>
       <mat-cell *matCellDef="let team; let first = first;" class="text-center">
         <span class="total-score-div" [ngStyle]="{'background-color': team.team.colorScheme}">
           {{team.netTotal}}
@@ -74,7 +75,8 @@
       *matRowDef="let row; columns: displayedColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
   </mat-table>
 
-  <mat-table #table [dataSource]="matchData" matSort matSortActive="name" *ngIf="matches[0]?.format === Format.FourManScramble">
+  <mat-table #table [dataSource]="matchData" matSort matSortActive="name"
+             *ngIf="matches[0]?.format === Format.FourManScramble">
     <ng-container matColumnDef="teamPlayers">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Players</mat-header-cell>
       <mat-cell *matCellDef="let t" class="text-center">
@@ -85,7 +87,7 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="teamScore">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Score</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Score</mat-header-cell>
       <mat-cell *matCellDef="let t; let first = first;" class="text-center">
         <span class="total-score-div" [ngStyle]="{'background-color': t.team.colorScheme}">
           {{t.total}}
@@ -147,7 +149,6 @@
           <mat-chip>{{formatName[match.format]}}</mat-chip>
         </mat-chip-list>
       </mat-panel-description>
-
       <mat-panel-description *ngIf="match.format === Format.FourManScramble">
         <app-team-chip [team]="match.teamOne.team"></app-team-chip>
         vs.
@@ -159,20 +160,23 @@
         </mat-chip-list>
       </mat-panel-description>
     </mat-expansion-panel-header>
-
     <app-scorecard [match]="match" [individualScores]="individualScores"></app-scorecard>
-
     <mat-action-row>
-      <button mat-stroked-button color="primary" (click)="toggleIndividualScores()"
-              *ngIf="match.format !== Format.FourManScramble">
-        <span *ngIf="!individualScores">Show</span>
-        <span *ngIf="individualScores">Hide</span>
-        Individual Scores
-      </button>
-     <div>
-       <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
-       <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
-     </div>
+      <div>
+        <button mat-stroked-button color="primary" (click)="toggleIndividualScores()"
+                *ngIf="match.format !== Format.FourManScramble">
+          <span *ngIf="!individualScores">Show</span>
+          <span *ngIf="individualScores">Hide</span>
+          Individual Scores
+        </button>
+        <button mat-stroked-button color="warn" (click)="launchPictureModal(match)" *ngIf="match.picture">
+          Scorecard Image
+        </button>
+      </div>
+      <div>
+        <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
+        <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
+      </div>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

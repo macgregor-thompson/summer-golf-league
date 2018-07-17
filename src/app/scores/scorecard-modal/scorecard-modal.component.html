@@ -1,8 +1,47 @@
-<h3 mat-dialog-title>New League Week</h3>
-<mat-dialog-content>
-  <div class="flex-between">
-    <!--<mat-card>Simple card</mat-card>-->
-    <img [src]=""
+<h3 *ngIf="match.format !== Format.FourManScramble" class="flex-between">
+  <div>
+    <app-team-chip [team]="match.teamOne.team" [short]="true"></app-team-chip>
+    <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
+      {{match.teamOne.roundA.playerA.displayName}}
+      &
+      {{match.teamOne.roundA.playerB?.displayName}}
+      {{match.teamOne.roundB?.playerA.displayName}}
+    </span>
+    <span class="total-score-div" [ngStyle]="{'background-color': match.teamOne.team.colorScheme}">
+      {{match.teamOne.netTotal}}
+    </span>
+  </div>
+  vs.
+  <div>
+    <app-team-chip [team]="match.teamTwo.team" [short]="true"></app-team-chip>
+    <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
+      {{match.teamTwo.roundA.playerA.displayName}}
+      &
+      {{match.teamTwo.roundA.playerB?.displayName}}
+      {{match.teamTwo.roundB?.playerA.displayName}}
+    </span>
+    <span class="total-score-div" [ngStyle]="{'background-color': match.teamTwo.team.colorScheme}">
+      {{match.teamTwo.netTotal}}
+    </span>
+  </div>
+  <mat-chip-list>
+    <mat-chip>{{formatName[match.format]}}</mat-chip>
+  </mat-chip-list>
+</h3>
+<div class="flex-between" *ngIf="match.format === Format.FourManScramble">
+  <app-team-chip [team]="match.teamOne.team"></app-team-chip>
+  vs.
+  <app-team-chip [team]="match.teamTwo.team"></app-team-chip>
+  vs.
+  <app-team-chip [team]="match.teamThree.team"></app-team-chip>
+  <mat-chip-list>
+    <mat-chip>{{formatName[match.format]}}</mat-chip>
+  </mat-chip-list>
+</div>
+
+<mat-dialog-content style="margin-top: 20px;">
+  <div>
+    <img [src]="imageUrl" class="img-responsive">
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
