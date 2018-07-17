@@ -12,6 +12,7 @@ import { WeekModalComponent } from './week-modal/week-modal.component';
 import { FormsModule } from '@angular/forms';
 import { ScorecardComponent } from './scorecard/scorecard.component';
 import { CoreModule } from '../core/core.module';
+import { ScorecardModalComponent } from './scorecard-modal/scorecard-modal.component';
 
 @NgModule({
   imports: [
@@ -36,8 +37,9 @@ import { CoreModule } from '../core/core.module';
     ScoreEditorComponent,
     ScorecardComponent,
     WeekModalComponent,
+    ScorecardModalComponent,
   ],
   exports: [],
-  entryComponents: [WeekModalComponent]
+  entryComponents: [WeekModalComponent, ScorecardModalComponent]
 })
 export class ScoresModule {}

@@ -11,4 +11,5 @@ export interface IMatch {
   teamOne: ITeamRound;
   teamTwo: ITeamRound;
   teamThree?: ITeamRound;
+  picture?: string;
 }

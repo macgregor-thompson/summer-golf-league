@@ -10,6 +10,7 @@ export class Match implements IMatch {
   teamOne: TeamRound;
   teamTwo: TeamRound;
   teamThree?: TeamRound;
+  picture?: string;
 
   constructor(week: number, format: Format, frontNine: boolean) {
     this.week = week;
@@ -20,5 +21,6 @@ export class Match implements IMatch {
     if (format === Format.FourManScramble) {
       this.teamThree = new TeamRound(format);
     }
+    this.picture = '';
   }
 }
