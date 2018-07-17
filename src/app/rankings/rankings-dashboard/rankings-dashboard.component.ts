@@ -48,15 +48,6 @@ export class RankingsDashboardComponent implements OnInit {
     this.afs.collection<Team>('teams', ref => ref.orderBy('netPoints', 'desc')).valueChanges()
       .subscribe((data: Team[]) => {
         this.teams = data;
-      /*  data.forEach((team: Team) => {
-          if (team.id < 4) {
-            this.colorScheme.domain.push(team.colorScheme);
-            this.points.push({
-              name: team.name,
-              value: team.netPoints
-            });
-          }
-        });*/
         let rankedTeams = data.map((team, i) => {
           if (i > 0) {
             let prev = data[i - 1];
@@ -74,6 +65,7 @@ export class RankingsDashboardComponent implements OnInit {
         this.teamData = new MatTableDataSource<Team>(rankedTeams);
       }, e => console.log('Error fetching teams:', e));
 
+    // This is for the ngx-charts
     /* this.afs.collection<Team>('teams', ref => ref.where('id', '<', 4)).valueChanges()
        .subscribe((data: Team[]) => {
          this.teams = data;

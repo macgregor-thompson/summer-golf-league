@@ -87,36 +87,83 @@ export class ScoresDashboardComponent implements OnInit {
     this.afs.collection<IMatch>('matches', ref => ref.where('week', '==', week.number)).valueChanges()
       .subscribe((data: IMatch[]) => {
         this.matches = data;
-        this.matches.forEach((match, i) => {
-          let teamA = {
-            team: match.teamOne.team,
-            stackPoints: 0,
-            matchPoints: match.winner === 1 ? 1 : 0,
-            playerA: match.teamOne.roundA.playerA,
-            playerB: match.teamOne.roundB ? match.teamOne.roundB.playerA : match.teamOne.roundA.playerB,
-            netTotal: match.teamOne.netTotal,
-          };
-          this.weeklyMatches.push(teamA);
-          let teamB = {
-            team: match.teamOne.team,
-            matchPoints: match.winner === 2 ? 1 : 0,
-            playerA: match.teamTwo.roundA.playerA,
-            playerB: match.teamTwo.roundB ? match.teamTwo.roundB.playerA : match.teamTwo.roundA.playerB,
-            netTotal: match.teamTwo.netTotal
-          };
-          this.weeklyMatches.push(teamB);
-        });
-        this.matchData = new MatTableDataSource<IMatch>(this.weeklyMatches);
+        if (week.format !== Format.FourManScramble) {
+          this.determineMatchPoints();
+        } else {
+          this.determineTeamScramble();
+        }
       });
   }
 
-  compare(a, b) {
-    if (a.attr < b.attr)
+
+determineTeamScramble() {
+
+}
+
+
+  determineMatchPoints() {
+    let matchesArr = [];
+    this.matches.forEach((match, i) => {
+      let teamA = {
+        team: match.teamOne.team,
+        stackPoints: 0,
+        matchPoints: 0,
+        playerA: match.teamOne.roundA.playerA,
+        playerB: match.teamOne.roundB ? match.teamOne.roundB.playerA : match.teamOne.roundA.playerB,
+        netTotal: match.teamOne.netTotal,
+      };
+      let teamB = {
+        team: match.teamTwo.team,
+        stackPoints: 0,
+        matchPoints: 0,
+        playerA: match.teamTwo.roundA.playerA,
+        playerB: match.teamTwo.roundB ? match.teamTwo.roundB.playerA : match.teamTwo.roundA.playerB,
+        netTotal: match.teamTwo.netTotal
+      };
+      if (match.winner === 1) {
+        teamA.matchPoints = 1;
+      } else if (match.winner === 2) {
+        teamB.matchPoints = 1;
+      } else {
+        teamA.matchPoints = 0.5;
+        teamB.matchPoints = 0.5;
+      }
+
+      matchesArr.push(teamA);
+      matchesArr.push(teamB);
+    });
+
+    matchesArr.sort(this.sortByNetTotal);
+
+    this.weeklyMatches = matchesArr.map((team, i) => {
+      if (i > 0) {
+        let prev = matchesArr[i - 1];
+        if (prev.netTotal === team.netTotal) {
+          let points = ((6 - (i - 1)) + (6 - i)) / 2;
+          team.stackPoints = points;
+          prev.stackPoints = points;
+        } else {
+          team.stackPoints = 6 - i;
+        }
+      } else {
+        team.stackPoints = 6;
+      }
+      return team;
+    });
+
+    this.matchData = new MatTableDataSource<IMatch>(this.weeklyMatches);
+  }
+
+
+  sortByNetTotal(a, b) {
+    if (a.netTotal < b.netTotal)
       return -1;
-    if (a.attr > b.attr)
+    if (a.netTotal > b.netTotal)
       return 1;
     return 0;
   }
+
+
 
   getCourseByWeek(week: IWeek) {
     this.afs.collection<ICourse>('courses').doc<ICourse>(week.courseId).valueChanges()
