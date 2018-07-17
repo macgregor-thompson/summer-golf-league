@@ -180,7 +180,16 @@
             arrow_downward
           </i>
         </td>
-        <td [innerHTML]="determineMatch()"></td>
+        <td>
+          <div *ngIf="outcome.tie; else result">Tie</div>
+          <ng-template #result>
+            <span [ngStyle]="{'color': outcome.team.colorScheme}">
+              {{outcome.playerA}} & {{outcome.playerB}}
+            </span>
+            <br>
+            {{outcome.score}}
+          </ng-template>
+        </td>
       </tr>
 
       <!-------------------------------------- TEAM B ---------------------------------------------------------------------->

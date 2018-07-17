@@ -4,7 +4,7 @@ import { IRound } from '../../models/interfaces/i-round';
 import { IWeek } from '../../models/interfaces/i-week';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { PlayerService } from '../../core/services/player.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { WeekModalComponent } from '../week-modal/week-modal.component';
 import { Team } from '../../models/interfaces/team';
 import { IMatch } from '../../models/interfaces/i-match';
@@ -22,7 +22,6 @@ import { Format } from '../../models/enums/format.enum';
 export class ScoresDashboardComponent implements OnInit {
 
   roundsCollection: AngularFirestoreCollection<IRound>;
-  //playerName = PlayerName;
   formatName = FormatName;
   Format = Format;
   course: ICourse;
@@ -39,8 +38,11 @@ export class ScoresDashboardComponent implements OnInit {
     2: '#2196f3', // Warbird's team
     3: '#43a047' // GanMan's team
   };
-
   individualScores = false;
+  matchData: MatTableDataSource<IMatch>;
+  displayedColumns = ['players', 'netScore', 'stackPoints', 'matchPoints', 'totalPoints', 'team'];
+  weeklyMatches = [];
+
 
 
   constructor(private afs: AngularFirestore,
@@ -50,7 +52,7 @@ export class ScoresDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getWeeks();
+    this.getWeeks(); //get's matches after setting week
     this.afs.collection<IGolfer>('members').valueChanges().subscribe((data: IGolfer[]) => this.golfers = data);
     this.roundsCollection = this.afs.collection<IRound>('rounds'); // This gets passed down to the scorecards to use
     this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => this.teams = data);
@@ -58,6 +60,7 @@ export class ScoresDashboardComponent implements OnInit {
 
   logStuff() {
     console.log('matches:', this.matches);
+    console.log('weeklyMatches:', this.weeklyMatches);
   }
 
   toggleIndividualScores() {
@@ -76,6 +79,7 @@ export class ScoresDashboardComponent implements OnInit {
     this.weekSelected = week;
     this.getCourseByWeek(week);
     this.getMatchesByWeek(week);
+    this.step = 0;
   }
 
   getMatchesByWeek(week: IWeek) {
@@ -83,8 +87,35 @@ export class ScoresDashboardComponent implements OnInit {
     this.afs.collection<IMatch>('matches', ref => ref.where('week', '==', week.number)).valueChanges()
       .subscribe((data: IMatch[]) => {
         this.matches = data;
-        console.log('matches:', this.matches);
+        this.matches.forEach((match, i) => {
+          let teamA = {
+            team: match.teamOne.team,
+            stackPoints: 0,
+            matchPoints: match.winner === 1 ? 1 : 0,
+            playerA: match.teamOne.roundA.playerA,
+            playerB: match.teamOne.roundB ? match.teamOne.roundB.playerA : match.teamOne.roundA.playerB,
+            netTotal: match.teamOne.netTotal,
+          };
+          this.weeklyMatches.push(teamA);
+          let teamB = {
+            team: match.teamOne.team,
+            matchPoints: match.winner === 2 ? 1 : 0,
+            playerA: match.teamTwo.roundA.playerA,
+            playerB: match.teamTwo.roundB ? match.teamTwo.roundB.playerA : match.teamTwo.roundA.playerB,
+            netTotal: match.teamTwo.netTotal
+          };
+          this.weeklyMatches.push(teamB);
+        });
+        this.matchData = new MatTableDataSource<IMatch>(this.weeklyMatches);
       });
+  }
+
+  compare(a, b) {
+    if (a.attr < b.attr)
+      return -1;
+    if (a.attr > b.attr)
+      return 1;
+    return 0;
   }
 
   getCourseByWeek(week: IWeek) {
@@ -106,9 +137,11 @@ export class ScoresDashboardComponent implements OnInit {
   setStep(index: number) {
     this.step = index;
   }
+
   nextStep() {
     this.step++;
   }
+
   prevStep() {
     this.step--;
   }

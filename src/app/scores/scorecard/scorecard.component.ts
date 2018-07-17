@@ -16,11 +16,19 @@ export class ScorecardComponent implements OnInit {
   matchStrokesDifferent = false;
   teamAIndividual = false;
   teamBIndividual = false;
+  outcome =  {
+    tie: false,
+    score: '',
+    team: {},
+    playerA: {},
+    playerB: {}
+  };
 
   constructor() {}
 
   ngOnInit() {
     this.matchStrokesDifferent = this.match.teamOne.roundA.matchStrokes !== this.match.teamOne.roundA.strokesGetting;
+    this.determineMatch();
   }
 
 
@@ -65,29 +73,41 @@ export class ScorecardComponent implements OnInit {
   }
 
   determineMatch() {
-    let a = 0, b = 0;
+    let a = 0, b = 0, holesLeft = 9;
     for (let i = 1; i <= 9; i++) {
       let scoreA = this.match.teamOne.matchScores[i];
       let scoreB = this.match.teamTwo.matchScores[i];
-      if (scoreA < scoreB) {
-        a++;
-      } else if (scoreA > scoreB) {
-        b++;
+      if (Math.abs(a - b) <= holesLeft) {
+        holesLeft--;
+        if (scoreA < scoreB) {
+          a++;
+        } else if (scoreA > scoreB) {
+          b++;
+        }
       }
     }
-
     if (a === b) {
-      return 'Tie';
+      this.outcome.tie = true;
     } else if (a > b) {
-      let playerA = this.match.teamOne.roundA.playerA.displayName;
-      let playerB = this.match.teamOne.roundB ? this.match.teamOne.roundB.playerA.displayName
+      this.outcome.team = this.match.teamOne.team;
+      this.outcome.playerA = this.match.teamOne.roundA.playerA.displayName;
+      this.outcome.playerB = this.match.teamOne.roundB ? this.match.teamOne.roundB.playerA.displayName
         : this.match.teamOne.roundA.playerB.displayName;
-      return `${playerA} & ${playerB} <br> win ${a - b} up`;
+      if (holesLeft === 0) {
+        this.outcome.score = `win ${a - b} up`;
+      } else {
+        this.outcome.score = `win ${a - b} & ${holesLeft}`;
+      }
     } else if (a < b) {
-      let playerA = this.match.teamTwo.roundA.playerA.displayName;
-      let playerB = this.match.teamTwo.roundB ? this.match.teamTwo.roundB.playerA.displayName
+      this.outcome.team = this.match.teamTwo.team;
+      this.outcome.playerA = this.match.teamTwo.roundA.playerA.displayName;
+      this.outcome.playerB = this.match.teamTwo.roundB ? this.match.teamTwo.roundB.playerA.displayName
         : this.match.teamTwo.roundA.playerB.displayName;
-      return `${playerA} & ${playerB} <br> win ${b - a} up`;
+      if (holesLeft === 0) {
+        this.outcome.score = `win ${b - a} up`;
+      } else {
+        this.outcome.score = `win ${b - a} & ${holesLeft}`;
+      }
     }
   }
 
