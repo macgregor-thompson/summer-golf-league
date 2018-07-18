@@ -39,7 +39,7 @@ export class ScoresDashboardComponent implements OnInit {
     2: '#2196f3', // Warbird's team
     3: '#43a047' // GanMan's team
   };
-  individualScores = false;
+  individualScores = true;
   matchData: MatTableDataSource<IMatch>;
   displayedColumns = ['players', 'netScore', 'stackPoints', 'matchPoints', 'totalPoints', 'team'];
   fourPersonScrambleColumns = ['teamPlayers', 'teamScore', 'stackPoints', 'teamName'];
@@ -63,7 +63,8 @@ export class ScoresDashboardComponent implements OnInit {
     console.log('weeklyMatches:', this.weeklyMatches);
   }
 
-  toggleIndividualScores() {
+  toggleIndividualScores(e) {
+    e.stopPropagation();
     this.individualScores = !this.individualScores;
   }
 
@@ -250,7 +251,8 @@ determineTeamScramble() {
     this.dialog.open(WeekModalComponent);
   }
 
-  launchPictureModal(match) {
+  launchPictureModal(match, e) {
+    e.stopPropagation();
     this.dialog.open(ScorecardModalComponent, {
       data: match
     });

@@ -1,3 +1,5 @@
+<h1 class="mat-display-1 text-center">League Members</h1>
+
 <div class="d-flex justify-content-between" *ngIf="playerService.afAuth.authState | async">
   <div class="button-row">
   </div>
@@ -6,49 +8,33 @@
       <mat-icon>edit</mat-icon>
       Update Handicaps
     </button>
-    <!-- <button mat-raised-button color="warn" (click)="showPlayerEditorModal(false)">
-       <mat-icon>add</mat-icon>
-       Add Player
-     </button>-->
   </div>
 </div>
 
 <div class="table-container mat-elevation-z8" *ngIf="golfers">
   <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName"
              *ngIf="playerService.afAuth.authState | async else showOtherTable">
-  <!--  <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> First Name</mat-header-cell>
-      <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.firstName}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Last Name</mat-header-cell>
-      <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.lastName}}</mat-cell>
-    </ng-container>-->
     <ng-container matColumnDef="displayName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Player</mat-header-cell>
-      <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.displayName}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Player</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.displayName}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="handicap">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Handicap</mat-header-cell>
-      <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.handicap}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Handicap</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.handicap}}</mat-cell>
     </ng-container>
-    <!--<ng-container matColumnDef="matches">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Matches</mat-header-cell>
-      <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.matches.length}}</mat-cell>
-    </ng-container>-->
     <ng-container matColumnDef="points">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> League Points</mat-header-cell>
-      <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.netPoints}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> League Points</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.netPoints}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="team">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Team</mat-header-cell>
-      <mat-cell *matCellDef="let golfer" class="flex-2">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Team</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="text-center">
         <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef class="flex-1"> Edit</mat-header-cell>
-      <mat-cell *matCellDef="let golfer" class="flex-1">
+      <mat-header-cell *matHeaderCellDef class="text-center"> Edit</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="text-center">
         <button mat-icon-button (click)="showPlayerEditorModal(golfer)">
           <mat-icon>edit</mat-icon>
         </button>
@@ -61,33 +47,21 @@
   <!-- Easier to do it this way than to check authorization a million times -->
   <ng-template #showOtherTable>
     <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName">
-     <!-- <ng-container matColumnDef="firstName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> First Name</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.firstName}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="lastName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Last Name</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.lastName}}</mat-cell>
-      </ng-container>-->
       <ng-container matColumnDef="displayName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Player</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.displayName}}</mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Player</mat-header-cell>
+        <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.displayName}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="handicap">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Handicap</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.handicap}}</mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Handicap</mat-header-cell>
+        <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.handicap}}</mat-cell>
       </ng-container>
-      <!--<ng-container matColumnDef="matches">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Matches</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.matches.length}}</mat-cell>
-      </ng-container>-->
       <ng-container matColumnDef="points">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> League Points</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="flex-2"> {{golfer.netPoints}}</mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> League Points</mat-header-cell>
+        <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.netPoints}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="team">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="flex-2"> Team</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="flex-2">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Team</mat-header-cell>
+        <mat-cell *matCellDef="let golfer" class="text-center">
           <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
         </mat-cell>
       </ng-container>

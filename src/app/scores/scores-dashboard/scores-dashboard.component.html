@@ -3,7 +3,7 @@
 </ng-template>
 
 <div *ngIf="weeks">
-  <h1 class="text-center">
+  <h1 class="mat-display-1 text-center" style="margin-bottom: 0;">
     Week {{weekSelected?.number}}
     <small class="text-muted">({{weekSelected?.date | date: 'longDate'}})</small>
   </h1>
@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<h1 class="text-center" style="margin-bottom: 30px;">Weekly Points</h1>
+<h1 class="mat-display-1 text-center" style="margin-bottom: 30px;">Weekly Points</h1>
 
 <div class="table-container mat-elevation-z8" *ngIf="matches && matchData" style="margin-bottom: 50px;">
   <mat-table #table [dataSource]="matchData" matSort matSortActive="name"
@@ -110,16 +110,25 @@
   </mat-table>
 </div>
 
+<h1 class="mat-display-1 text-center" style="margin-bottom: 30px;">Scorecards</h1>
 
-<h1 class="text-center" style="margin-bottom: 30px;">Scorecards</h1>
+<!--<div class="" style="margin-bottom: 30px;">
+  <button mat-raised-button color="primary" (click)="toggleIndividualScores($event)"
+          *ngIf="matches[0].format != Format.FourManScramble">
+    <span *ngIf="!individualScores">Show</span>
+    <span *ngIf="individualScores">Hide</span>
+    Individual Scores
+  </button>
+</div>-->
 
-<mat-accordion class="table-headers-align" [multi]="false" dynamicHeight *ngIf="matches; else loading">
-  <mat-expansion-panel *ngFor="let match of matches; let i = index; let first = first; let last = last"
-                       [expanded]="step === i" (opened)="setStep(i)" hideToggle="false">
+
+
+<mat-accordion class="table-headers-align" [multi]="true" dynamicHeight *ngIf="matches; else loading">
+  <mat-expansion-panel *ngFor="let match of matches" [expanded]="true" style="margin-bottom: 30px;">
     <mat-expansion-panel-header *ngIf="match.teamOne">
       <!--<mat-panel-title>
        </mat-panel-title>-->
-      <mat-panel-description *ngIf="match.format !== Format.FourManScramble">
+      <!--<mat-panel-description *ngIf="match.format !== Format.FourManScramble">
         <div>
           <app-team-chip [team]="match.teamOne.team" [short]="true"></app-team-chip>
           <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
@@ -128,9 +137,9 @@
             {{match.teamOne.roundA.playerB?.displayName}}
             {{match.teamOne.roundB?.playerA.displayName}}
           </span>
-          <span class="total-score-div" [ngStyle]="{'background-color': match.teamOne.team.colorScheme}">
+         &lt;!&ndash; <span class="total-score-div" [ngStyle]="{'background-color': match.teamOne.team.colorScheme}">
             {{match.teamOne.netTotal}}
-          </span>
+          </span>&ndash;&gt;
         </div>
         vs.
         <div>
@@ -141,9 +150,9 @@
             {{match.teamTwo.roundA.playerB?.displayName}}
             {{match.teamTwo.roundB?.playerA.displayName}}
           </span>
-          <span class="total-score-div" [ngStyle]="{'background-color': match.teamTwo.team.colorScheme}">
+         &lt;!&ndash; <span class="total-score-div" [ngStyle]="{'background-color': match.teamTwo.team.colorScheme}">
             {{match.teamTwo.netTotal}}
-          </span>
+          </span>&ndash;&gt;
         </div>
         <mat-chip-list>
           <mat-chip>{{formatName[match.format]}}</mat-chip>
@@ -158,25 +167,33 @@
         <mat-chip-list>
           <mat-chip>{{formatName[match.format]}}</mat-chip>
         </mat-chip-list>
+      </mat-panel-description>-->
+
+      <mat-panel-description class="flex-between">
+          <button mat-stroked-button color="warn" (click)="launchPictureModal(match, $event)" *ngIf="match.picture">
+            Scorecard Image
+          </button>
+        <mat-chip-list>
+          <mat-chip>{{formatName[match.format]}}</mat-chip>
+        </mat-chip-list>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <app-scorecard [match]="match" [individualScores]="individualScores"></app-scorecard>
-    <mat-action-row>
+
+   <!-- <mat-action-row style="padding-right:24px;">
       <div>
-        <button mat-stroked-button color="primary" (click)="toggleIndividualScores()"
+        <button mat-raised-button color="primary" (click)="toggleIndividualScores()"
                 *ngIf="match.format !== Format.FourManScramble">
           <span *ngIf="!individualScores">Show</span>
           <span *ngIf="individualScores">Hide</span>
           Individual Scores
         </button>
-        <button mat-stroked-button color="warn" (click)="launchPictureModal(match)" *ngIf="match.picture">
+      </div>
+      <div>
+        <button mat-raised-button color="warn" (click)="launchPictureModal(match)" *ngIf="match.picture">
           Scorecard Image
         </button>
       </div>
-      <div>
-        <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
-        <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
-      </div>
-    </mat-action-row>
+    </mat-action-row>-->
   </mat-expansion-panel>
 </mat-accordion>

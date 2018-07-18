@@ -4,7 +4,7 @@
 @include mat-core();
 @import 'assets/styles/utils';
 @import 'assets/styles/bootstrap';
-/*@import url('https://fonts.googleapis.com/css?family=Raleway:400');*/
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
 /*$custom-typography: mat-typography-config($font-family: 'Raleway');
 @include mat-core($custom-typography);*/
@@ -36,3 +36,7 @@ body {
 /*strong, .strong {
   font-weight: 900!important;
 }*/
+
+.mat-display-1 {
+  margin-bottom: 30px;
+}
