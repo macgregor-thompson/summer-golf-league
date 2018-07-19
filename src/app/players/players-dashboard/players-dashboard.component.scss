@@ -40,3 +40,16 @@
 .mat-sort-header-container {
   align-items: center;
 }
+
+.paid-chip {
+  color: #fff;
+  display: inline-block;
+}
+
+.has-paid {
+  background-color: green;
+}
+
+.has-not-paid {
+background-color: red;
+}

@@ -6,8 +6,9 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { PlayerDialogModalComponent } from '../player-dialog-modal/player-dialog-modal.component';
 import { HandicapModalComponent } from '../handicap-modal/handicap-modal.component';
 import { IGolfer } from '../../models/interfaces/i-golfer';
-import { PlayerService } from '../../core/services/player.service';
 import { Team } from '../../models/interfaces/team';
+import { DataService } from '../../core/services/data.service';
+import { PlayerService } from '../../core/services/player.service';
 
 @Component({
   selector: 'app-players-dashboard',
@@ -17,22 +18,21 @@ import { Team } from '../../models/interfaces/team';
 export class PlayersDashboardComponent implements OnInit {
   teams: Team[];
   golfers: MatTableDataSource<IGolfer>;
-  adminColumns = ['displayName', 'handicap',  'points', 'team', 'edit'];
-  displayedColumns = ['displayName', 'handicap', 'points', 'team'];
+  subs: MatTableDataSource<IGolfer>;
+  adminColumns = ['displayName', 'handicap',  'points', 'paid', 'team', 'edit'];
+  displayedColumns = ['displayName', 'handicap', 'points', 'paid', 'team'];
 
-  constructor(public playerService: PlayerService,
-              private afs: AngularFirestore,
+  subAdminColumns = ['subDisplayName', 'subHandicap', 'subTeam', 'edit'];
+  subDisplayedColumns = ['subDisplayName', 'subHandicap', 'subTeam'];
+
+  constructor(private ds: DataService,
+              public playerService: PlayerService,
               public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.afs.collection<Team>('teams').valueChanges()
-      .subscribe((data: Team[]) => this.teams = data);
-
-    this.afs.collection<IGolfer>('members', ref => ref.orderBy('displayName')).valueChanges()
-      .subscribe((data: IGolfer[]) => {
-      //data.sort((a: IGolfer, b: IGolfer) => Number(b.leagueMember) - Number(a.leagueMember));
-      this.golfers = new MatTableDataSource<IGolfer>(data);
-    });
+    this.ds.teams().subscribe((data: Team[]) => this.teams = data);
+    this.ds.members().subscribe((data: IGolfer[]) => this.golfers = new MatTableDataSource<IGolfer>(data));
+    this.ds.subs().subscribe((data: IGolfer[]) => this.subs = new MatTableDataSource<IGolfer>(data));
   }
 
   showHandicapModal() {

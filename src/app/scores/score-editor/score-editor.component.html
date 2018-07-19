@@ -32,8 +32,8 @@
     <mat-form-field>
       <mat-select #format [(ngModel)]="formatSelected" (selectionChange)="onFormatChange(format)">
         <mat-option [value]="Format.TwoManBetterBall">Two-Man Better Ball</mat-option>
-        <mat-option [value]="Format.TwoManAltShot">Two-Man Alt Shot</mat-option>
         <mat-option [value]="Format.TwoManScramble">Two-Man Scramble</mat-option>
+        <mat-option [value]="Format.Pinehurst">Pinehurst</mat-option>
         <mat-option [value]="Format.FourManScramble">Four-Man Scramble</mat-option>
       </mat-select>
     </mat-form-field>

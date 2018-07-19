@@ -20,11 +20,11 @@ export class DataService {
 
 
   members(): Observable<Player[]> {
-    return this.afs.collection<Player>('members').valueChanges();
+    return this.afs.collection<Player>('members', ref => ref.orderBy('displayName')).valueChanges();
   }
 
   subs(): Observable<Player[]> {
-    return this.afs.collection<Player>('subs').valueChanges();
+    return this.afs.collection<Player>('subs', ref => ref.orderBy('displayName')).valueChanges();
   }
 
   allPlayers(): Observable<Player[]> {
