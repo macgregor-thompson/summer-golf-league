@@ -68,7 +68,9 @@
             <span *ngFor="let s of numStrokes(match.teamOne.roundA.matchStrokes, i)"
                   class="m-stroke">*</span>
           </div>
-          {{match.teamOne.roundA.scores[hole]}}
+          <div [ngClass]="scoreClass(match.teamOne.roundA.scores[hole], i)">
+            {{match.teamOne.roundA.scores[hole]}}
+          </div>
         </td>
         <td class="total-score-td">
           <span class="total-score-div" [ngStyle]="{'color': match.teamOne.team.colorScheme}">
@@ -98,8 +100,9 @@
             <span *ngFor="let s of numStrokes(match.teamOne.roundB.matchStrokes, i)"
                   class="m-stroke">*</span>
           </div>
-          {{match.teamOne.roundB.scores[hole]}}
-        </td>
+          <div [ngClass]="scoreClass(match.teamOne.roundB.scores[hole], i)">
+            {{match.teamOne.roundB.scores[hole]}}
+          </div>        </td>
         <td class="total-score-td">
           <span class="total-score-div" [ngStyle]="{'color': match.teamOne.team.colorScheme}">
             {{match.teamOne.roundB.total}}
@@ -284,7 +287,9 @@
             <span *ngFor="let s of numStrokes(match.teamTwo.roundA.matchStrokes, i)"
                   class="m-stroke">*</span>
           </div>
-          {{match.teamTwo.roundA.scores[hole]}}
+          <div [ngClass]="scoreClass(match.teamTwo.roundA.scores[hole], i)">
+            {{match.teamTwo.roundA.scores[hole]}}
+          </div>
         </td>
         <td class="total-score-td">
           <span class="total-score-div" [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
@@ -315,7 +320,9 @@
             <span *ngFor="let s of numStrokes(match.teamTwo.roundB.matchStrokes, i)"
                   class="m-stroke">*</span>
           </div>
-          {{match.teamTwo.roundB.scores[hole]}}
+          <div [ngClass]="scoreClass(match.teamTwo.roundB.scores[hole], i)">
+            {{match.teamTwo.roundB.scores[hole]}}
+          </div>
         </td>
         <td class="total-score-td">
           <span class="total-score-div" [ngStyle]="{'color': match.teamTwo.team.colorScheme}">

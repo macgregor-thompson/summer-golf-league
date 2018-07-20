@@ -14,6 +14,7 @@ import { FormatName } from '../../models/classes/format-name';
 import { Week } from '../../models/classes/week';
 import { Format } from '../../models/enums/format.enum';
 import { ScorecardModalComponent } from '../scorecard-modal/scorecard-modal.component';
+import { DataService } from '../../core/services/data.service';
 
 @Component({
   selector: 'app-scores-dashboard',
@@ -46,16 +47,16 @@ export class ScoresDashboardComponent implements OnInit {
   weeklyMatches = [];
 
 
-  constructor(private afs: AngularFirestore,
+  constructor(private ds: DataService,
+              private afs: AngularFirestore,
               public playerService: PlayerService,
               public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.getWeeks(); //get's matches after setting week
-    this.afs.collection<IGolfer>('members').valueChanges().subscribe((data: IGolfer[]) => this.golfers = data);
-    this.roundsCollection = this.afs.collection<IRound>('rounds'); // This gets passed down to the scorecards to use
-    this.afs.collection<Team>('teams').valueChanges().subscribe((data: Team[]) => this.teams = data);
+    this.ds.members().subscribe((data: IGolfer[]) => this.golfers = data);
+    this.ds.teams().subscribe((data: Team[]) => this.teams = data);
   }
 
   logStuff() {
@@ -69,8 +70,7 @@ export class ScoresDashboardComponent implements OnInit {
   }
 
   getWeeks() {
-    this.afs.collection<IWeek>('weeks', ref => ref.orderBy('number')).valueChanges()
-      .subscribe((data: IWeek[]) => {
+    this.ds.weeks().subscribe((data: IWeek[]) => {
         this.weeks = data;
         this.setWeek(data.filter((week: IWeek) => week.number === data.length)[0]);
       });
@@ -152,6 +152,7 @@ determineTeamScramble() {
       }
       return team;
     });
+
     this.matchData = new MatTableDataSource<IMatch>(this.weeklyMatches);
   });
 }
@@ -189,7 +190,8 @@ determineTeamScramble() {
     });
     matchesArr.sort(this.sortByNetTotal);
     this.setStackPoints(matchesArr);
-    this.matchData = new MatTableDataSource<IMatch>(this.weeklyMatches);
+    matchesArr.sort(this.setOrder);
+    this.matchData = new MatTableDataSource<IMatch>(matchesArr);
   }
 
 
@@ -201,14 +203,40 @@ determineTeamScramble() {
     return 0;
   }
 
+  setOrder(a, b) {
+    if ((a.matchPoints + a.stackPoints) > (b.matchPoints + b.stackPoints))
+      return -1;
+    if ((a.matchPoints + a.stackPoints) < (b.matchPoints + b.stackPoints))
+      return 1;
+    return 0;
+  }
+
   setStackPoints(arr) {
     this.weeklyMatches = arr.map((team, i) => {
       if (i > 0) {
         let prev = arr[i - 1];
         if (prev.netTotal === team.netTotal) {
-          let points = ((6 - (i - 1)) + (6 - i)) / 2;
-          team.stackPoints = points;
-          prev.stackPoints = points;
+          if (i > 1) {
+            let twoBack = arr[i - 2];
+            if (twoBack.netTotal === team.netTotal) {
+              console.log('wtf');
+              let points = ((6 - (i - 2)) + (6 - (i - 1)) + (6 - i)) / 3;
+              team.stackPoints = points;
+              prev.stackPoints = points;
+              twoBack.stackPoints = points;
+            } else {
+              console.log('dtf');
+              let points = ((6 - (i - 1)) + (6 - i)) / 2;
+              team.stackPoints = points;
+              prev.stackPoints = points;
+            }
+
+          } else {
+            let points = ((6 - (i - 1)) + (6 - i)) / 2;
+            team.stackPoints = points;
+            prev.stackPoints = points;
+          }
+
         } else {
           team.stackPoints = 6 - i;
         }

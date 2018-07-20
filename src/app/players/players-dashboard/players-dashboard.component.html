@@ -1,4 +1,4 @@
-<h1 class="mat-display-1 text-center">League Members</h1>
+<h1 class="mat-display-1 text-center" style="margin-bottom: 30px;">League Members</h1>
 
 <div class="d-flex justify-content-between" *ngIf="playerService.afAuth.authState | async">
   <div class="button-row">
@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div class="table-container mat-elevation-z8" *ngIf="golfers">
+<div class="table-container mat-elevation-z8" *ngIf="golfers" style="margin-bottom: 50px;">
   <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName"
              *ngIf="(playerService.afAuth.authState | async); else showOtherTable">
     <ng-container matColumnDef="displayName">
@@ -29,14 +29,16 @@
     <ng-container matColumnDef="paid">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Paid</mat-header-cell>
       <mat-cell *matCellDef="let golfer" class="text-center">
-        <mat-chip-list class="team-colors">
-          <mat-chip selected="true" class="paid-chip has-paid" *ngIf="golfer.paid">
-            Yes
-          </mat-chip>
-          <mat-chip selected="true" class="paid-chip has-not-paid" *ngIf="!golfer.paid">
-            No
-          </mat-chip>
-        </mat-chip-list>
+        <div class="paid-chips">
+          <mat-chip-list class="team-colors">
+            <mat-chip selected="true" color="warn" *ngIf="golfer.paid">
+              Yes
+            </mat-chip>
+            <mat-chip selected="true" color="primary" *ngIf="!golfer.paid">
+              No
+            </mat-chip>
+          </mat-chip-list>
+        </div>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="team">
@@ -75,14 +77,16 @@
       <ng-container matColumnDef="paid">
         <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Paid</mat-header-cell>
         <mat-cell *matCellDef="let golfer" class="text-center">
-          <mat-chip-list class="team-colors">
-            <mat-chip selected="true" class="paid-chip has-paid" *ngIf="golfer.paid">
-              Yes
-            </mat-chip>
-            <mat-chip selected="true" class="paid-chip has-not-paid" *ngIf="!golfer.paid">
-              No
-            </mat-chip>
-          </mat-chip-list>
+         <div class="paid-chips">
+           <mat-chip-list class="team-colors">
+             <mat-chip selected="true" color="warn" *ngIf="golfer.paid">
+               Yes
+             </mat-chip>
+             <mat-chip selected="true" color="primary" *ngIf="!golfer.paid">
+               No
+             </mat-chip>
+           </mat-chip-list>
+         </div>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="team">
@@ -98,28 +102,26 @@
 </div>
 
 
-<h1 class="mat-display-1 text-center">Subs</h1>
+<h1 class="mat-display-1 text-center" style="margin-bottom: 30px;">Subs</h1>
 
 
 <div class="table-container mat-elevation-z8" *ngIf="subs">
-  <ng-template>
-    <mat-table #table [dataSource]="subs">
-      <ng-container matColumnDef="subDisplayName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Player</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.displayName}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="subHandicap">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Handicap</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.handicap}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="subTeam">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Team</mat-header-cell>
-        <mat-cell *matCellDef="let golfer" class="text-center">
-          <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="subDisplayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: subDisplayedColumns;"></mat-row>
-    </mat-table>
-  </ng-template>
+  <mat-table [dataSource]="subs">
+    <ng-container matColumnDef="subDisplayName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Player</mat-header-cell>
+      <mat-cell *matCellDef="let sub" class="text-center"> {{sub.displayName}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="subHandicap">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Handicap</mat-header-cell>
+      <mat-cell *matCellDef="let sub" class="text-center"> {{sub.handicap}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="subTeam">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Team</mat-header-cell>
+      <mat-cell *matCellDef="let sub" class="text-center">
+        <app-team-chip [team]="filterTeam(sub.teamId)"></app-team-chip>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="subDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: subDisplayedColumns;"></mat-row>
+  </mat-table>
 </div>

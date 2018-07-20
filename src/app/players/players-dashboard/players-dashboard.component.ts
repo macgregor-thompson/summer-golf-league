@@ -32,7 +32,10 @@ export class PlayersDashboardComponent implements OnInit {
   ngOnInit() {
     this.ds.teams().subscribe((data: Team[]) => this.teams = data);
     this.ds.members().subscribe((data: IGolfer[]) => this.golfers = new MatTableDataSource<IGolfer>(data));
-    this.ds.subs().subscribe((data: IGolfer[]) => this.subs = new MatTableDataSource<IGolfer>(data));
+    this.ds.subs().subscribe((data: IGolfer[]) => {
+      console.log('subs:', data);
+      this.subs = new MatTableDataSource<IGolfer>(data);
+    });
   }
 
   showHandicapModal() {

@@ -46,10 +46,7 @@
   display: inline-block;
 }
 
-.has-paid {
-  background-color: green;
-}
+::ng-deep .paid-chips .mat-chip-list-wrapper {
+  display: block;
 
-.has-not-paid {
-background-color: red;
 }
