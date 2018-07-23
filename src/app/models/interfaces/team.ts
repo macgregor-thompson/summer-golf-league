@@ -8,4 +8,6 @@ export interface Team {
   netPoints?: number;
   colorScheme?: string;
   rank?: number | string;
+  weeklyPoints?: object;
+  docId?: string;
 }

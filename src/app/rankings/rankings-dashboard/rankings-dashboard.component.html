@@ -32,9 +32,10 @@
     <ng-container matColumnDef="teamNetPoints">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
       <mat-cell *matCellDef="let team"  class="text-center">
-        <span class="total-score-div" [ngStyle]="{'background-color': team.colorScheme}">
+       <!-- <span class="total-score-div" [ngStyle]="{'background-color': team.colorScheme}">
           {{team.netPoints}}
-        </span>
+        </span>-->
+        {{team.netPoints}}
       </mat-cell>
     </ng-container>
     <!-- <ng-container matColumnDef="matches">

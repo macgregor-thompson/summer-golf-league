@@ -52,6 +52,10 @@ export class DataService {
     return this.afs.collection<Team>('teams', ref => ref.orderBy('id')).valueChanges();
   }
 
+  teamsCollection(): AngularFirestoreCollection<Team> {
+    return this.afs.collection<Team>('teams');
+  }
+
   weeks(): Observable<IWeek[]> {
     return this.afs.collection<IWeek>('weeks', ref => ref.orderBy('number')).valueChanges();
   }

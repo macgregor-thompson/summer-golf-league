@@ -47,7 +47,6 @@ export class ScoresDashboardComponent implements OnInit {
   displayedColumns = ['players', 'netScore', 'stackPoints', 'matchPoints', 'totalPoints', 'individualPoints', 'team'];
   fourPersonScrambleColumns = ['teamPlayers', 'teamScore', 'stackPoints', 'teamName'];
   weeklyMatches = [];
-  matchesSnapShot: Observable<IMatchId[]>;
 
 
   constructor(private ds: DataService,
@@ -59,7 +58,9 @@ export class ScoresDashboardComponent implements OnInit {
   ngOnInit() {
     this.getWeeks(); //get's matches after setting week
     this.ds.members().subscribe((data: IGolfer[]) => this.golfers = data);
-    this.ds.teams().subscribe((data: Team[]) => this.teams = data);
+    this.ds.teams().subscribe((data: Team[]) => {
+      this.teams = data.filter(team => team.id < 4);
+    });
   }
 
   logStuff() {
@@ -101,6 +102,41 @@ export class ScoresDashboardComponent implements OnInit {
           this.determineTeamScramble();
         }
       });
+  }
+
+  addPoints() {
+    this.addPlayerPoints();
+    this.addTeamPoints();
+  }
+
+  addTeamPoints() {
+    this.teams.forEach(team => {
+      team.weeklyPoints[this.weekSelected.number] = 0;
+    });
+
+    this.weeklyMatches.forEach((match, i) => {
+      let points = match.matchPoints ? match.matchPoints + match.stackPoints : match.stackPoints;
+      let team = this.teams.filter(t => t.id === match.team.id)[0];
+      team.weeklyPoints[this.weekSelected.number] += points;
+    });
+
+    this.teams.forEach(team => {
+      let totalPoints = Object.values(team.weeklyPoints).reduce((a, b) => a + b);
+      let pointsArr = Object.keys(team.weeklyPoints).map( key => team.weeklyPoints[key]);
+      let worstWeek = Math.min.apply(null, pointsArr);
+      let netPoints = totalPoints - worstWeek;
+      console.log(team.name, totalPoints, worstWeek, netPoints);
+      this.ds.teamsCollection().doc(team.docId).update(
+        {
+          weeklyPoints: team.weeklyPoints,
+          points: totalPoints,
+          netPoints: netPoints
+        })
+        .then(data => {
+          console.log('successfully added team weekly points:', data);
+        }).catch(error => console.log('error adding team weekly points:', error));
+    });
+
   }
 
 
@@ -163,7 +199,7 @@ export class ScoresDashboardComponent implements OnInit {
     let pointsArr = Object.keys( golfer.weeklyPoints ).map( key => golfer.weeklyPoints[key]);
     let worstWeek = Math.min.apply(null, pointsArr);
     let netPoints = totalPoints - worstWeek;
-    console.log(golfer.displayName, totalPoints, worstWeek, netPoints);
+    //console.log(golfer.displayName, totalPoints, worstWeek, netPoints);
     this.ds.membersCollection().doc(golfer.id).update(
       {
         weeklyPoints: golfer.weeklyPoints,
