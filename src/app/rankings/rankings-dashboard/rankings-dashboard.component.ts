@@ -37,8 +37,8 @@ export class RankingsDashboardComponent implements OnInit {
       // '#2196f3', // GanMan's team
     ]
   };
-  displayedColumns = ['ranking', 'displayName', 'netPoints', 'worstWeek', 'points', 'team'];
-  teamColumns = ['teamRanking', 'teamName', 'teamNetPoints', 'teamWorstWeek', 'teamPoints', ];
+  displayedColumns = ['ranking', 'displayName', 'points', /*'minus',*/ 'worstWeek', /*'equals',*/ 'netPoints', 'team'];
+  teamColumns = ['teamRanking', 'teamName', 'teamPoints', 'teamWorstWeek', 'teamNetPoints'];
 
 
 

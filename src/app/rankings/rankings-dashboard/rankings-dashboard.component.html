@@ -2,6 +2,120 @@
 
 <h1 class="mat-display-1 text-center">Team Rankings</h1>
 
+
+
+
+<div class="table-container mat-elevation-z8" *ngIf="teamData"  style="margin-bottom: 50px;">
+  <mat-table #table [dataSource]="teamData" matSort matSortActive="name">
+    <ng-container matColumnDef="teamRanking">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Ranking</mat-header-cell>
+      <mat-cell *matCellDef="let team; let first = first;" class="text-center">
+        {{team.rank}}
+        <i class="material-icons gold-star" *ngIf="first">star</i>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="teamName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Team</mat-header-cell>
+      <mat-cell *matCellDef="let team"  class="text-center">
+        <app-team-chip [team]="team"></app-team-chip>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="teamPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Total Points</mat-header-cell>
+      <mat-cell *matCellDef="let team"  class="text-center">{{team.points}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="teamWorstWeek">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Worst Week</mat-header-cell>
+      <mat-cell *matCellDef="let team"  class="text-center">{{team.points - team.netPoints}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="teamNetPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
+      <mat-cell *matCellDef="let team"  class="text-center">
+        <span class="total-score-div" [ngStyle]="{'background-color': team.colorScheme}">
+          {{team.netPoints}}
+        </span>
+      </mat-cell>
+    </ng-container>
+    <!-- <ng-container matColumnDef="matches">
+       <mat-header-cell *matHeaderCellDef mat-sort-header> Matches</mat-header-cell>
+       <mat-cell *matCellDef="let golfer"> {{golfer.matches.length}}</mat-cell>
+     </ng-container>-->
+    <ng-container matColumnDef="team">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">
+        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="teamColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: teamColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
+  </mat-table>
+</div>
+
+
+
+<h1 class="mat-display-1 text-center" style="margin-bottom: 30px;">Individual Rankings</h1>
+
+<div class="table-container mat-elevation-z8" *ngIf="golfers">
+  <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName">
+    <ng-container matColumnDef="ranking">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Ranking</mat-header-cell>
+      <mat-cell *matCellDef="let golfer; let i = index; let first = first;"  class="text-center">
+        {{golfer.rank}}
+        <i class="material-icons" *ngIf="i < 2"
+           [ngClass]="setStarColor(i)">
+          star
+        </i>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="displayName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Player</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.displayName}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="points">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Total Points</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.points}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="minus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"></mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">-</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="worstWeek">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Worst Week</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.points - golfer.netPoints}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="equals">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"></mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">=</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="netPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">
+        {{golfer.netPoints}}
+       <!-- <span class="total-score-div" [ngStyle]="{'background-color': filterTeam(golfer.teamId).colorScheme}">
+          {{golfer.netPoints}}
+        </span>-->
+      </mat-cell>
+    </ng-container>
+    <!-- <ng-container matColumnDef="matches">
+       <mat-header-cell *matHeaderCellDef mat-sort-header> Matches</mat-header-cell>
+       <mat-cell *matCellDef="let golfer"> {{golfer.matches.length}}</mat-cell>
+     </ng-container>-->
+    <ng-container matColumnDef="team">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">
+        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
+  </mat-table>
+</div>
+
+
+
 <!--
 <div class="button-row text-right">
   <mat-form-field>
@@ -62,95 +176,3 @@
   </ngx-charts-pie-grid>
 
 </div>-->
-
-
-<div class="table-container mat-elevation-z8" *ngIf="teamData"  style="margin-bottom: 50px;">
-  <mat-table #table [dataSource]="teamData" matSort matSortActive="name">
-    <ng-container matColumnDef="teamRanking">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Ranking</mat-header-cell>
-      <mat-cell *matCellDef="let team; let first = first;" class="text-center">
-        {{team.rank}}
-        <i class="material-icons gold-star" *ngIf="first">star</i>
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="teamName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
-      <mat-cell *matCellDef="let team"  class="text-center">
-        <app-team-chip [team]="team"></app-team-chip>
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="teamNetPoints">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> League Points</mat-header-cell>
-      <mat-cell *matCellDef="let team"  class="text-center">{{team.netPoints}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="teamWorstWeek">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Worst Week</mat-header-cell>
-      <mat-cell *matCellDef="let team"  class="text-center">{{team.points - team.netPoints}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="teamPoints">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Total Points</mat-header-cell>
-      <mat-cell *matCellDef="let team"  class="text-center">{{team.points}}</mat-cell>
-    </ng-container>
-    <!-- <ng-container matColumnDef="matches">
-       <mat-header-cell *matHeaderCellDef mat-sort-header> Matches</mat-header-cell>
-       <mat-cell *matCellDef="let golfer"> {{golfer.matches.length}}</mat-cell>
-     </ng-container>-->
-    <ng-container matColumnDef="team">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"  class="text-center">
-        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="teamColumns"></mat-header-row>
-    <mat-row
-      *matRowDef="let row; columns: teamColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
-  </mat-table>
-</div>
-
-
-
-<h1 class="mat-display-1 text-center" style="margin-bottom: 30px;">Individual Rankings</h1>
-
-<div class="table-container mat-elevation-z8" *ngIf="golfers">
-  <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName">
-    <ng-container matColumnDef="ranking">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Ranking</mat-header-cell>
-      <mat-cell *matCellDef="let golfer; let i = index; let first = first;"  class="text-center">
-        {{golfer.rank}}
-        <i class="material-icons" *ngIf="i < 2"
-           [ngClass]="setStarColor(i)">
-          star
-        </i>
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="displayName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Player</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.displayName}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="netPoints">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> League Points</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.netPoints}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="worstWeek">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Worst Week</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.points - golfer.netPoints}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="points">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Total Points</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.points}}</mat-cell>
-    </ng-container>
-    <!-- <ng-container matColumnDef="matches">
-       <mat-header-cell *matHeaderCellDef mat-sort-header> Matches</mat-header-cell>
-       <mat-cell *matCellDef="let golfer"> {{golfer.matches.length}}</mat-cell>
-     </ng-container>-->
-    <ng-container matColumnDef="team">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"  class="text-center">
-        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row
-      *matRowDef="let row; columns: displayedColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
-  </mat-table>
-</div>

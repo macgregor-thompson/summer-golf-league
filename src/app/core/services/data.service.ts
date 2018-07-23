@@ -23,6 +23,12 @@ export class DataService {
     return this.afs.collection<Player>('members', ref => ref.orderBy('displayName')).valueChanges();
   }
 
+  membersCollection(): AngularFirestoreCollection<IGolfer> {
+    return this.afs.collection<IGolfer>('members');
+  }
+
+  //addWeeklyPoints(golferId: string) {}
+
   subs(): Observable<Player[]> {
     return this.afs.collection<Player>('subs', ref => ref.orderBy('displayName')).valueChanges();
   }
@@ -65,6 +71,5 @@ export class DataService {
   matchesCollection(): AngularFirestoreCollection<IMatch> {
     return this.afs.collection<IMatch>('matches');
   }
-
 
 }

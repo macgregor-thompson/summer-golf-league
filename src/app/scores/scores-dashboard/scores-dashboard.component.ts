@@ -15,6 +15,8 @@ import { Week } from '../../models/classes/week';
 import { Format } from '../../models/enums/format.enum';
 import { ScorecardModalComponent } from '../scorecard-modal/scorecard-modal.component';
 import { DataService } from '../../core/services/data.service';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scores-dashboard',
@@ -42,9 +44,10 @@ export class ScoresDashboardComponent implements OnInit {
   };
   individualScores = true;
   matchData: MatTableDataSource<IMatch>;
-  displayedColumns = ['players', 'netScore', 'stackPoints', 'matchPoints', 'totalPoints', 'team'];
+  displayedColumns = ['players', 'netScore', 'stackPoints', 'matchPoints', 'totalPoints', 'individualPoints', 'team'];
   fourPersonScrambleColumns = ['teamPlayers', 'teamScore', 'stackPoints', 'teamName'];
   weeklyMatches = [];
+  matchesSnapShot: Observable<IMatchId[]>;
 
 
   constructor(private ds: DataService,
@@ -62,6 +65,8 @@ export class ScoresDashboardComponent implements OnInit {
   logStuff() {
     console.log('matches:', this.matches);
     console.log('weeklyMatches:', this.weeklyMatches);
+    //let newDoc = this.afs.createId();
+    //console.log(newDoc);
   }
 
   toggleIndividualScores(e) {
@@ -71,9 +76,9 @@ export class ScoresDashboardComponent implements OnInit {
 
   getWeeks() {
     this.ds.weeks().subscribe((data: IWeek[]) => {
-        this.weeks = data;
-        this.setWeek(data.filter((week: IWeek) => week.number === data.length)[0]);
-      });
+      this.weeks = data;
+      this.setWeek(data.filter((week: IWeek) => week.number === data.length)[0]);
+    });
   }
 
   setWeek(week: IWeek) {
@@ -83,8 +88,10 @@ export class ScoresDashboardComponent implements OnInit {
     this.step = 0;
   }
 
+
   getMatchesByWeek(week: IWeek) {
     this.matches = null;
+    // this won't work from ds.matchesByWeek() for some reason...
     this.afs.collection<IMatch>('matches', ref => ref.where('week', '==', week.number)).valueChanges()
       .subscribe((data: IMatch[]) => {
         this.matches = data;
@@ -97,65 +104,137 @@ export class ScoresDashboardComponent implements OnInit {
   }
 
 
-determineTeamScramble() {
-  let matchesArr = [];
-  this.matches.forEach((match) => {
-    let teamA = {
-      team: match.teamOne.team,
-      playerA: match.teamOne.roundA.playerA,
-      playerB: match.teamOne.roundA.playerB,
-      playerC: match.teamOne.roundA.playerC,
-      playerD: match.teamOne.roundA.playerD,
-      stackPoints: 0,
-      total: match.teamOne.roundA.total,
-    };
-    let teamB = {
-      team: match.teamTwo.team,
-      playerA: match.teamTwo.roundA.playerA,
-      playerB: match.teamTwo.roundA.playerB,
-      playerC: match.teamTwo.roundA.playerC,
-      playerD: match.teamTwo.roundA.playerD,
-      stackPoints: 0,
-      total: match.teamTwo.roundA.total,
-    };
-    let teamC = {
-      team: match.teamThree.team,
-      playerA: match.teamThree.roundA.playerA,
-      playerB: match.teamThree.roundA.playerB,
-      playerC: match.teamThree.roundA.playerC,
-      playerD: match.teamThree.roundA.playerD,
-      stackPoints: 0,
-      total: match.teamThree.roundA.total,
-    };
-    matchesArr.push(teamA);
-    matchesArr.push(teamB);
-    matchesArr.push(teamC);
-    matchesArr.sort((a, b) => {
-      if (a.total < b.total)
-        return -1;
-      if (a.total > b.total)
-        return 1;
-      return 0;
-    });
-    this.weeklyMatches = matchesArr.map((team, i) => {
-      if (i > 0) {
-        let prev = matchesArr[i - 1];
-        if (prev.total === team.total) {
-          let points = ((12 - ((i - 1) * 4)) + (12 - (i * 4)) / 2);
-          team.stackPoints = points;
-          prev.stackPoints = points;
-        } else {
-          team.stackPoints = 12 - (i * 4);
-        }
+  addPlayerPoints() {
+    let didNotShow = this.golfers.slice();
+    let showedUp = [];
+    this.weeklyMatches.forEach((match, i) => {
+      let points;
+      if (this.matches[0].format !== Format.FourManScramble) {
+        points = (match.stackPoints + match.matchPoints) / 2;
       } else {
-        team.stackPoints = 12;
+        points = match.stackPoints / 4;
       }
-      return team;
+      if (match.playerA.teamId < 4) {
+        showedUp.push(match.playerA);
+        this._addPlayerPointsToAFS(this.golfers.filter(golfer => golfer.id === match.playerA.id)[0], points);
+      } else {
+        console.log(`${match.playerA.displayName} is not a member.`);
+      }
+      if (match.playerB.teamId < 4) {
+        showedUp.push(match.playerB);
+        this._addPlayerPointsToAFS(this.golfers.filter(golfer => golfer.id === match.playerB.id)[0], points);
+      } else {
+        console.log(`${match.playerB.displayName} is not a member.`);
+      }
+      if (match.playerC) {
+        if (match.playerC.teamId < 4) {
+          showedUp.push(match.playerC);
+          this._addPlayerPointsToAFS(this.golfers.filter(golfer => golfer.id === match.playerC.id)[0], points);
+        } else {
+          console.log(`${match.playerC.displayName} is not a member.`);
+        }
+      }
+      if (match.playerD) {
+        if (match.playerD.teamId < 4) {
+          showedUp.push(match.playerD);
+          this._addPlayerPointsToAFS(this.golfers.filter(golfer => golfer.id === match.playerD.id)[0], points);
+        } else {
+          console.log(`${match.playerD.displayName} is not a member.`);
+        }
+      }
     });
+    showedUp.forEach(player => {
+      let index = didNotShow.findIndex(el => player.id === el.id);
+      if (index > -1) {
+        didNotShow.splice(index, 1);
+      }
+    });
+    console.log('showed up:', showedUp);
+    console.log('did not show up:', didNotShow);
+    didNotShow.forEach(fuckBag => {
+      this._addPlayerPointsToAFS(fuckBag, 0);
+    });
+    console.log('finished adding points.', this.golfers);
+  }
 
-    this.matchData = new MatTableDataSource<IMatch>(this.weeklyMatches);
-  });
-}
+  _addPlayerPointsToAFS(golfer: IGolfer, points: number) {
+    golfer.weeklyPoints[this.weekSelected.number] = points;
+    let totalPoints = Object.values(golfer.weeklyPoints).reduce((a, b) => a + b);
+    let pointsArr = Object.keys( golfer.weeklyPoints ).map( key => golfer.weeklyPoints[key]);
+    let worstWeek = Math.min.apply(null, pointsArr);
+    let netPoints = totalPoints - worstWeek;
+    console.log(golfer.displayName, totalPoints, worstWeek, netPoints);
+    this.ds.membersCollection().doc(golfer.id).update(
+      {
+        weeklyPoints: golfer.weeklyPoints,
+        points: totalPoints,
+        netPoints: netPoints
+      })
+      .then(data => {
+        console.log('successfully added player weekly points:', data);
+      }).catch(error => console.log('error adding player weekly points:', error));
+  }
+
+
+  determineTeamScramble() {
+    let matchesArr = [];
+    this.matches.forEach((match) => {
+      let teamA = {
+        team: match.teamOne.team,
+        playerA: match.teamOne.roundA.playerA,
+        playerB: match.teamOne.roundA.playerB,
+        playerC: match.teamOne.roundA.playerC,
+        playerD: match.teamOne.roundA.playerD,
+        stackPoints: 0,
+        total: match.teamOne.roundA.total,
+      };
+      let teamB = {
+        team: match.teamTwo.team,
+        playerA: match.teamTwo.roundA.playerA,
+        playerB: match.teamTwo.roundA.playerB,
+        playerC: match.teamTwo.roundA.playerC,
+        playerD: match.teamTwo.roundA.playerD,
+        stackPoints: 0,
+        total: match.teamTwo.roundA.total,
+      };
+      let teamC = {
+        team: match.teamThree.team,
+        playerA: match.teamThree.roundA.playerA,
+        playerB: match.teamThree.roundA.playerB,
+        playerC: match.teamThree.roundA.playerC,
+        playerD: match.teamThree.roundA.playerD,
+        stackPoints: 0,
+        total: match.teamThree.roundA.total,
+      };
+      matchesArr.push(teamA);
+      matchesArr.push(teamB);
+      matchesArr.push(teamC);
+      matchesArr.sort((a, b) => {
+        if (a.total < b.total)
+          return -1;
+        if (a.total > b.total)
+          return 1;
+        return 0;
+      });
+      this.weeklyMatches = matchesArr.map((team, i) => {
+        if (i > 0) {
+          let prev = matchesArr[i - 1];
+          if (prev.total === team.total) {
+            let points = ((12 - ((i - 1) * 4)) + (12 - (i * 4)) / 2);
+            team.stackPoints = points;
+            prev.stackPoints = points;
+          } else {
+            team.stackPoints = 12 - (i * 4);
+          }
+        } else {
+          team.stackPoints = 12;
+        }
+        return team;
+      });
+
+      this.matchData = new MatTableDataSource<IMatch>(this.weeklyMatches);
+    });
+  }
 
 
   determineMatchPoints() {
@@ -219,18 +298,15 @@ determineTeamScramble() {
           if (i > 1) {
             let twoBack = arr[i - 2];
             if (twoBack.netTotal === team.netTotal) {
-              console.log('wtf');
               let points = ((6 - (i - 2)) + (6 - (i - 1)) + (6 - i)) / 3;
               team.stackPoints = points;
               prev.stackPoints = points;
               twoBack.stackPoints = points;
             } else {
-              console.log('dtf');
               let points = ((6 - (i - 1)) + (6 - i)) / 2;
               team.stackPoints = points;
               prev.stackPoints = points;
             }
-
           } else {
             let points = ((6 - (i - 1)) + (6 - i)) / 2;
             team.stackPoints = points;
@@ -288,3 +364,6 @@ determineTeamScramble() {
 
 
 }
+
+export interface IMatchId extends IMatch { id: string; }
+

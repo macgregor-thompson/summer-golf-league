@@ -13,7 +13,9 @@ import { WeekModalComponent } from '../week-modal/week-modal.component';
 import { MatDialog } from '@angular/material';
 import { PlayerId } from '../../models/classes/player-id';
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IMatch } from '../../models/interfaces/i-match';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-score-editor',
@@ -21,8 +23,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./score-editor.component.scss']
 })
 export class ScoreEditorComponent implements OnInit {
-  @Input() matchId?: string;
-  match: Match;
+  match: IMatch;
   players: IGolfer[];
   subs: IGolfer[];
   Format = Format;
@@ -66,9 +67,27 @@ export class ScoreEditorComponent implements OnInit {
   constructor(private afs: AngularFirestore,
               private router: Router,
               private ds: DataService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params.matchId) {
+        console.log('getting match with id:', params.matchId);
+        this.ds.getMatch(params.matchId).subscribe((data: IMatch) => {
+          this.match = data;
+          this.teamA = data.teamOne.team;
+          this.teamB = data.teamTwo.team;
+          if (data.teamThree) {
+            this.teamC = data.teamThree.team;
+          }
+          this.goToScoreCard();
+          console.log('match:', this.match);
+        });
+      }
+    });
+
+
     this.ds.members().subscribe((data: IGolfer[]) => {
       this.players = data;
       // TODO: Remove this
@@ -96,7 +115,9 @@ export class ScoreEditorComponent implements OnInit {
 
   saveScores() {
     let fuckedUpStepBecauseYouCantAddAClassToFireStore = JSON.parse(JSON.stringify(this.match));
-    this.ds.matchesCollection().add(fuckedUpStepBecauseYouCantAddAClassToFireStore).then(data => {
+    //this.ds.matchesCollection().add(fuckedUpStepBecauseYouCantAddAClassToFireStore)
+    this.ds.matchesCollection().doc(this.match.id).set(fuckedUpStepBecauseYouCantAddAClassToFireStore)
+    .then(data => {
       console.log('added new match:', data);
       this.router.navigate(['']);
     }, e => {
@@ -110,9 +131,10 @@ export class ScoreEditorComponent implements OnInit {
     console.log('ridiculousness:', fuckedUpStepBecauseYouCantAddAClassToFireStore);
   }
 
+
   mockMatch() {
     if (this.havePlayers && this.haveTeams) {
-      this.match = new Match(5, 1, false);
+      this.match = new Match(5, 1, false, this.afs.createId());
 
       this.match.teamOne.roundA.playerA = this.players.filter(p => p.id === PlayerId.GanMan)[0];
       this.match.teamOne.roundA.strokesGetting = 3;
@@ -140,7 +162,7 @@ export class ScoreEditorComponent implements OnInit {
   ///////////////// Stepper ////////////////////////
   newMatch() {
     if (this.weekSelected && this.formatSelected && this.courseSelected) {
-      this.match = new Match(this.weekSelected.number, this.formatSelected, this.courseSelected.frontNine);
+      this.match = new Match(this.weekSelected.number, this.formatSelected, this.courseSelected.frontNine, this.afs.createId());
     } else {
       console.log('cannot create new match)');
     }

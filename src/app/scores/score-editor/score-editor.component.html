@@ -2,6 +2,7 @@
 <button mat-raised-button color="primary" (click)="logStuff()">Log Stuff</button>
 
 <div class="text-right" style="margin-bottom: 15px;" *ngIf="showScoreCard">
+  <button mat-raised-button routerLink="/">Cancel</button>
   <button mat-raised-button color="warn" (click)="saveScores()">Save Scores</button>
 </div>
 
@@ -496,26 +497,23 @@
       <thead>
       <tr>
         <th class="text-muted" colspan="2">
-          <small>Handicap</small>
-        </th>
-        <th class="text-muted" *ngFor="let hole of match.course.holes">
-          <small>{{hole.handicap}}</small>
-        </th>
-        <th class="text-muted">
-        </th>
-      </tr>
-      <tr>
-        <th class="text-muted">
-          <small>Player</small>
-        </th>
-        <th class="text-muted">
-          <small>Blows</small>
+          <small>Hole</small>
         </th>
         <th class="text-muted" *ngFor="let hole of match.course.holes">
           <small>{{hole.number}}</small>
         </th>
         <th class="text-muted">
           <small>Total</small>
+        </th>
+      </tr>
+      <tr>
+        <th class="text-muted" colspan="2">
+          <small>Handicap</small>
+        </th>
+        <th class="text-muted" *ngFor="let hole of match.course.holes">
+          <small>{{hole.handicap}}</small>
+        </th>
+        <th class="text-muted">
         </th>
       </tr>
       </thead>
@@ -561,7 +559,7 @@
                   class="m-stroke">*</span>
           </div>
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamOne.roundA.scores[hole]"
                    (input)="addScorePlayer('teamOne', 'roundA', hole, $event)">
           </mat-form-field>
         </td>
@@ -602,7 +600,7 @@
                   class="m-stroke">*</span>
           </div>
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamOne.roundB.scores[hole]"
                    (input)="addScorePlayer('teamOne', 'roundB', hole, $event)">
           </mat-form-field>
         </td>
@@ -633,7 +631,7 @@
              {{match.teamOne.netScores[hole]}}
            </div>-->
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamOne.netScores[hole]"
                    (input)="addNetScore('teamOne', hole, $event)">
           </mat-form-field>
         </td>
@@ -650,7 +648,7 @@
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamOne.matchScores[hole]"
                    (input)="addMatchScore('teamOne', hole, $event)">
           </mat-form-field>
         </td>
@@ -687,7 +685,7 @@
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamTwo.matchScores[hole]"
                    (input)="addMatchScore('teamTwo', hole, $event)">
           </mat-form-field>
         </td>
@@ -719,7 +717,7 @@
             {{match.teamTwo.netScores[hole]}}
           </div>-->
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamTwo.netScores[hole]"
                    (input)="addNetScore('teamTwo', hole, $event)">
           </mat-form-field>
         </td>
@@ -768,7 +766,7 @@
                   class="m-stroke">*</span>
           </div>
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamTwo.roundA.scores[hole]"
                    (input)="addScorePlayer('teamTwo', 'roundA', hole, $event)">
           </mat-form-field>
         </td>
@@ -809,7 +807,7 @@
                   class="m-stroke">*</span>
           </div>
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamTwo.roundB.scores[hole]"
                    (input)="addScorePlayer('teamTwo', 'roundB', hole, $event)">
           </mat-form-field>
         </td>
@@ -868,7 +866,7 @@
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamOne.roundA.scores[hole]"
                    (input)="addScorePlayer('teamOne', 'roundA', hole, $event)">
           </mat-form-field>
         </td>
@@ -896,7 +894,7 @@
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamTwo.roundA.scores[hole]"
                    (input)="addScorePlayer('teamTwo', 'roundA', hole, $event)">
           </mat-form-field>
         </td>
@@ -924,7 +922,7 @@
         </td>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]; let i = index;" class="text-center">
           <mat-form-field class="num-input">
-            <input matInput type="number" min="1" placeholder=""
+            <input matInput type="number" min="1" placeholder="" [value]="match.teamThree.roundA.scores[hole]"
                    (input)="addScorePlayer('teamThree', 'roundA', hole, $event)">
           </mat-form-field>
         </td>

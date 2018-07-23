@@ -10,10 +10,11 @@
 
   <div class="d-flex justify-content-between">
     <div class="button-row" *ngIf="playerService.afAuth.authState | async">
-      <button mat-raised-button color="warn" routerLink="/score-editor">
+      <button mat-raised-button color="warn" routerLink="/score-editor" [queryParams]="">
         <mat-icon>add</mat-icon>
         <span>Add Match</span>
       </button>
+      <button mat-raised-button color="accent" (click)="addPlayerPoints()">Add Points</button>
       <button mat-raised-button color="primary" (click)="logStuff()">Log Stuff</button>
 
     </div>
@@ -61,8 +62,12 @@
       <mat-cell *matCellDef="let team" class="text-center">{{team.matchPoints}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="totalPoints">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Total Points</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Team Points</mat-header-cell>
       <mat-cell *matCellDef="let team" class="text-center">{{team.matchPoints + team.stackPoints}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="individualPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Individual Points</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="text-center">{{(team.matchPoints + team.stackPoints) / 2}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="team">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Team</mat-header-cell>
@@ -170,10 +175,16 @@
       </mat-panel-description>-->
 
       <mat-panel-description class="flex-between">
+        <div>
           <button mat-stroked-button color="warn" (click)="launchPictureModal(match, $event)" *ngIf="match.picture">
             Scorecard Image
           </button>
-        <div></div>
+          <button *ngIf="playerService.afAuth.authState | async"
+                  mat-raised-button color="primary" routerLink="/score-editor" [queryParams]="{matchId: match.id}">
+            <mat-icon>edit</mat-icon>
+            Edit Scores
+          </button>
+        </div>
         <mat-chip-list>
           <mat-chip>{{formatName[match.format]}}</mat-chip>
         </mat-chip-list>

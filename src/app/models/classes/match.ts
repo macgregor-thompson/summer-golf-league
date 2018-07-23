@@ -4,6 +4,7 @@ import { TeamRound } from './team-round';
 import { IMatch } from '../interfaces/i-match';
 
 export class Match implements IMatch {
+  id: string;
   week: number;
   format: Format;
   course: Course;
@@ -12,7 +13,8 @@ export class Match implements IMatch {
   teamThree?: TeamRound;
   picture?: string;
 
-  constructor(week: number, format: Format, frontNine: boolean) {
+  constructor(week: number, format: Format, frontNine: boolean, id) {
+    this.id = id;
     this.week = week;
     this.format = format;
     this.course = new Course(frontNine);
