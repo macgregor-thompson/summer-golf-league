@@ -29,18 +29,12 @@ export class TopNavComponent implements OnInit {
       exact: true,
       icon: 'format_list_numbered'
     },
-    /*{
-      path: '/scores',
-      name: 'Scores',
-      exact: true,
-      icon: 'golf_course'
-    },
     {
       path: '/stats',
       name: 'Stats',
       exact: true,
       icon: 'insert_chart'
-    },*/
+    },
     {
       path: '/players',
       name: 'Players',

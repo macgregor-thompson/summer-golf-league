@@ -3,11 +3,11 @@ import {MatDialog} from '@angular/material';
 
 import {AngularFirestore} from 'angularfire2/firestore';
 
-import {MockDataService} from '../../core/services/mock-data.service';
 import {IGolfer} from '../../models/interfaces/i-golfer';
 import {IRound} from '../../models/interfaces/i-round';
-import {UserService} from '../../core/services/user.service';
 import { Team } from '../../models/interfaces/team';
+import { IMatch } from '../../models/interfaces/i-match';
+import { DataService } from '../../core/services/data.service';
 
 
 @Component({
@@ -17,40 +17,18 @@ import { Team } from '../../models/interfaces/team';
 })
 export class StatsDashboardComponent implements OnInit {
   golfers: IGolfer[];
-  currentGolfer: IGolfer;
+  matches: IMatch[];
   teams: Team[];
-  rounds: IRound[];
-  spinner = false;
   step = -1;
 
-  constructor(private afs: AngularFirestore,
-              private userService: UserService,
-              private mockDataService: MockDataService,
+  constructor(private ds: DataService,
               public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.afs.collection<IGolfer>('members').valueChanges()
-      .subscribe((data: IGolfer[]) => this.golfers = data);
-    this.afs.collection<Team>('teams').valueChanges()
-      .subscribe((data: Team[]) => this.teams = data);
-
-    this.getAllScores();
+    this.ds.members().subscribe((data: IGolfer[]) => this.golfers = data);
+    this.ds.teams().subscribe((data: Team[]) => this.teams = data);
+    this.ds.matches().subscribe( (data: IMatch[]) => this.matches = data);
   }
-
-  getAllScores() {
-    this.spinner = true;
-    this.mockDataService.getAllScores()
-      .subscribe((data: IRound[]) => {
-        this.rounds = data;
-        this.spinner = false;
-      }, () => this.spinner = false);
-  }
-/*
-
-  filterRounds(golferId: number) {
-    return this.rounds.filter((round: IRound) => round.golferId === golferId);
-  }
-*/
 
   filterTeam(teamId: number) {
     if (teamId) {

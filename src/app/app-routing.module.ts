@@ -6,12 +6,10 @@ import { PlayersDashboardComponent } from './players/players-dashboard/players-d
 
 import { ScoreEditorComponent } from './scores/score-editor/score-editor.component';
 import { LoginComponent } from './core/login/login.component';
-import { HomeDashboardComponent } from './home/home-dashboard/home-dashboard.component';
 import { ScoresDashboardComponent } from './scores/scores-dashboard/scores-dashboard.component';
 import { RankingsDashboardComponent } from './rankings/rankings-dashboard/rankings-dashboard.component';
 import { ScorecardComponent } from './scores/scorecard/scorecard.component';
 import { LeagueInfoComponent } from './info/league-info/league-info.component';
-import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   { path: '', component: ScoresDashboardComponent },
@@ -23,7 +21,6 @@ const routes: Routes = [
   { path: 'players', component: PlayersDashboardComponent  },
  /* { path: 'player/:id', component: , pathMatch: 'full' },*/
   { path: 'league-info', component: LeagueInfoComponent },
-  { path: 'admin', component: AdminDashboardComponent},
   { path: 'login', component: LoginComponent },
   { path: '**', component: NotFoundComponent }
 ];

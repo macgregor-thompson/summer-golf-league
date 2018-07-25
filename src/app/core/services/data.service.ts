@@ -68,6 +68,10 @@ export class DataService {
     return this.afs.collection<Course>('courses').valueChanges();
   }
 
+  matches(): Observable<IMatch[]> {
+    return this.afs.collection<IMatch>('matches').valueChanges();
+  }
+
   getMatch(id: string): Observable<IMatch> {
     return this.afs.collection<IMatch>('matches').doc<IMatch>(id).valueChanges();
   }

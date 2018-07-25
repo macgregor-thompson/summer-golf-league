@@ -1,36 +1,38 @@
-<!--
-<ngx-loading [show]="spinner"></ngx-loading>
+<ng-template #loading>
+  <ngx-loading [show]="true"></ngx-loading>
+</ng-template>
 
-<mat-accordion class="table-headers-align">
-  <mat-expansion-panel *ngFor="let golfer of golfers; let i = index; let first = first; let last = last;"
-                       [expanded]="step === i" (opened)="setStep(i)" hideToggle="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{golfer.displayName}}
-      </mat-panel-title>
-      <mat-panel-description>
-        <div>
-          <small>Handicap:</small>
-          {{golfer.handicap}}
-          |
-          <small>Average:</small>
-          <span *ngIf="rounds">{{calculateAverage(golfer.id)}}</span>
-        </div>
-        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+<h1 class="mat-display-1 text-center" style="margin-bottom: 30px;">Stats</h1>
 
-    <mat-divider></mat-divider>
-    <ng-template matExpansionPanelContent>
-      <app-player-stats *ngIf="golfers && rounds" [player]="golfer"
-                        [rounds]="filterRounds(golfer.id)"></app-player-stats>
-    </ng-template>
 
-    <mat-action-row>
-      <button mat-button (click)="prevStep()" *ngIf="!first">Previous</button>
-      <button mat-button color="warn" (click)="nextStep()" *ngIf="!last">Next</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
+<!-- Need to use regular table because you need to use your own repeats! -->
 
--->
+<div class="card" *ngIf="golfers; else loading">
+  <h1 class="card-header">Weekly Points</h1>
+  <div class="card-body">
+    <div class="table-container mat-elevation-z8">
+      <mat-table [dataSource]="golfers">
+        <ng-container matColumnDef="subDisplayName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Player</mat-header-cell>
+          <mat-cell *matCellDef="let golfer" class="text-center"> {{sub.displayName}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="subHandicap">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Handicap</mat-header-cell>
+          <mat-cell *matCellDef="let golfer" class="text-center"> {{sub.handicap | number : '1.1'}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="subTeam">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Team</mat-header-cell>
+          <mat-cell *matCellDef="let golfer" class="text-center">
+            <app-team-chip [team]="filterTeam(sub.teamId)"></app-team-chip>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="subDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: subDisplayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>
+
+
+
+

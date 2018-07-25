@@ -8,9 +8,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
-import { MockDataService } from './services/mock-data.service';
-import { UserService } from './services/user.service';
-import { GolfersService } from './services/golfers.service';
 import { PlayerService } from './services/player.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { DataService } from './services/data.service';
@@ -27,6 +24,6 @@ import { DataService } from './services/data.service';
   entryComponents: [
     LoginModalComponent
   ],
-  providers: [DataService, MockDataService, UserService, GolfersService, PlayerService, AngularFireAuth],
+  providers: [DataService, PlayerService, AngularFireAuth],
 })
 export class CoreModule { }

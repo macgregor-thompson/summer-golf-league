@@ -22,13 +22,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     SharedModule,
     AppMaterialModule,
     LoadingModule.forRoot({
-      // ANIMATION_TYPES:
-      // chasingDots, circle, circleSwish, cubeGrid
-      // doubleBounce, pulse, rectangleBounce
-      // rotatingPlane, threeBounce, wanderingCubes
       animationType: ANIMATION_TYPES.threeBounce,
-      backdropBackgroundColour: 'rgba(0,0,0,0.3)', // make the backdrop invisible
-      //backdropBorderRadius: '100px',
+      backdropBackgroundColour: 'rgba(0,0,0,0.3)',
       primaryColour: '#ff4227',
       secondaryColour: '#ffffff',
       tertiaryColour: '#007bff'

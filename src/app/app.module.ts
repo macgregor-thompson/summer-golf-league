@@ -20,18 +20,13 @@ import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 // Custom
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MockDataService } from './core/services/mock-data.service';
-import {UserService} from './core/services/user.service';
-import { HomeModule } from './home/home.module';
 import { ScoresModule } from './scores/scores.module';
 import { RankingsModule } from './rankings/rankings.module';
 import { SharedModule } from './shared/shared.module';
 import { StatsModule } from './stats/stats.module';
 import { PlayersModule } from './players/players.module';
-import { GolfersService } from './core/services/golfers.service';
 import { CoreModule } from './core/core.module';
 import { InfoModule } from './info/info.module';
-import { AdminModule } from './admin/admin.module';
 
 
 @NgModule({
@@ -52,13 +47,11 @@ import { AdminModule } from './admin/admin.module';
     CoreModule,
     SharedModule,
    // AppRoutingModule,
-    HomeModule,
     RankingsModule,
     ScoresModule,
     StatsModule,
     PlayersModule,
-    InfoModule,
-    AdminModule
+    InfoModule
   ],
   // These providers (injectables) are application scoped and all sub components/modules will share the same instance
   bootstrap: [AppComponent]
