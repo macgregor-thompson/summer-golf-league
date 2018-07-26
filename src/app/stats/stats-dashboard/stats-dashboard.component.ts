@@ -8,6 +8,7 @@ import {IRound} from '../../models/interfaces/i-round';
 import { Team } from '../../models/interfaces/team';
 import { IMatch } from '../../models/interfaces/i-match';
 import { DataService } from '../../core/services/data.service';
+import { IWeek } from '../../models/interfaces/i-week';
 
 
 @Component({
@@ -17,7 +18,10 @@ import { DataService } from '../../core/services/data.service';
 })
 export class StatsDashboardComponent implements OnInit {
   golfers: IGolfer[];
+  membersByPoints: IGolfer[];
   matches: IMatch[];
+  weeks: IWeek[];
+  completedWeeks: IWeek[];
   teams: Team[];
   step = -1;
 
@@ -26,16 +30,25 @@ export class StatsDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.ds.members().subscribe((data: IGolfer[]) => this.golfers = data);
+    this.ds.membersOrderedBy('points', 'desc').subscribe((data: IGolfer[]) => this.membersByPoints = data);
     this.ds.teams().subscribe((data: Team[]) => this.teams = data);
     this.ds.matches().subscribe( (data: IMatch[]) => this.matches = data);
+    this.ds.weeks().subscribe((data: IWeek[]) => {
+      this.weeks = data;
+      this.completedWeeks = data.filter(w => w.completed);
+    });
   }
 
   filterTeam(teamId: number) {
-    if (teamId) {
-      return this.teams.filter((team: Team) => team.id === teamId)[0];
-    } else {
-      return null;
-    }
+    return this.teams.filter((team: Team) => team.id === teamId)[0];
+  }
+
+  weeklyPointsKeys(weeklyPoints) {
+    return Object.keys(weeklyPoints);
+  }
+
+  weeksCompleted(weeks) {
+    return
   }
 
 /*  calculateAverage(golferId: number) {

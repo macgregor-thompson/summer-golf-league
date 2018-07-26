@@ -23,6 +23,12 @@ export class DataService {
     return this.afs.collection<Player>('members', ref => ref.orderBy('displayName')).valueChanges();
   }
 
+  membersOrderedBy(prop?, direction?): Observable<Player[]> {
+    return this.afs.collection<Player>('members',
+        ref => ref.orderBy(prop ? prop : 'displayName',
+          direction ? direction : 'asc')).valueChanges();
+  }
+
   membersCollection(): AngularFirestoreCollection<IGolfer> {
     return this.afs.collection<IGolfer>('members');
   }
