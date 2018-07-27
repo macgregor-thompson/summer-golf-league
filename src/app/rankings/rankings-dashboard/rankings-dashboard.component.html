@@ -31,7 +31,7 @@
     <ng-container matColumnDef="teamBonusPoints">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Bonus</mat-header-cell>
       <mat-cell *matCellDef="let team"  class="text-center">
-        <mat-icon *ngIf="!team.bonusPoints">sentiment_very_dissatisfied</mat-icon>
+        <mat-icon *ngIf="!team.bonusPoints" class="sad-face">sentiment_very_dissatisfied</mat-icon>
         <span *ngIf="team.bonusPoints">{{team.bonusPoints}}</span>
       </mat-cell>
     </ng-container>

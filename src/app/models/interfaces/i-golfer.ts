@@ -13,6 +13,7 @@ export interface IGolfer {
   rank?: number | string; // this gets generated on he front end
   paid?: boolean;
   weeklyPoints?: object;
+  worstWeek?: number; // week number that was the worst week
 
   // Optional
   ghinNumber?: number;

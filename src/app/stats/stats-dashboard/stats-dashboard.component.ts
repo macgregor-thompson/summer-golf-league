@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
-import { AngularFirestore } from 'angularfire2/firestore';
-
 import { IGolfer } from '../../models/interfaces/i-golfer';
-import { IRound } from '../../models/interfaces/i-round';
 import { Team } from '../../models/interfaces/team';
 import { IMatch } from '../../models/interfaces/i-match';
 import { DataService } from '../../core/services/data.service';
@@ -18,8 +15,8 @@ import { IWeek } from '../../models/interfaces/i-week';
 })
 export class StatsDashboardComponent implements OnInit {
   golfers: IGolfer[];
-  membersByPoints: IGolfer[];
-  teamsByPoints: Team[];
+  membersByLeaguePoints: IGolfer[];
+  teamsByLeaguePoints: Team[];
   matches: IMatch[];
   weeks: IWeek[];
   completedWeeks: IWeek[];
@@ -31,14 +28,20 @@ export class StatsDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.ds.members().subscribe((data: IGolfer[]) => this.golfers = data);
-    this.ds.membersOrderedBy('points', 'desc').subscribe((data: IGolfer[]) => this.membersByPoints = data);
+    this.ds.membersOrderedBy('netPoints', 'desc').subscribe((data: IGolfer[]) => this.membersByLeaguePoints = data);
     this.ds.teams().subscribe((data: Team[]) => this.teams = data);
-    this.ds.teamsOrderedBy('points', 'desc').subscribe((data: Team[]) => this.teamsByPoints = data);
+    this.ds.teamsOrderedBy('netPoints', 'desc').subscribe((data: Team[]) => this.teamsByLeaguePoints = data);
     this.ds.matches().subscribe((data: IMatch[]) => this.matches = data);
     this.ds.weeks().subscribe((data: IWeek[]) => {
       this.weeks = data;
       this.completedWeeks = data.filter(w => w.completed);
     });
+  }
+
+
+  worstWeek(weeklyPoints) {
+    let pointsArr = Object.keys(weeklyPoints).map( key => weeklyPoints[key]);
+    let worstWeek = Math.min.apply(null, pointsArr);
   }
 
   filterTeam(teamId: number) {

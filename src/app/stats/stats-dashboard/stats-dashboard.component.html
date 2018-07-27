@@ -36,16 +36,19 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let team of teamsByPoints">
+          <tr *ngFor="let team of teamsByLeaguePoints">
             <td class="display-name-no-wrap">
               <app-team-chip [team]="team"></app-team-chip>
             </td>
             <td *ngFor="let week of completedWeeks">
+              <span *ngIf="week.number == team.worstWeek">
+                <mat-icon class="sad-face">sentiment_very_dissatisfied</mat-icon>
+                &nbsp;
+              </span>
               {{team.weeklyPoints[week.number]}}
             </td>
             <td>
-              <mat-icon *ngIf="!team.bonusPoints">sentiment_very_dissatisfied</mat-icon>
-              <span *ngIf="team.bonusPoints">{{team.bonusPoints}}</span>
+              {{team.bonusPoints}}
             </td>
             <td>
               {{team.points}}
@@ -84,13 +87,17 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let golfer of membersByPoints">
+          <tr *ngFor="let golfer of membersByLeaguePoints">
             <td class="display-name-no-wrap">
               <app-team-chip [team]="filterTeam(golfer.teamId)" [short]="true"></app-team-chip>
               &nbsp;
               {{golfer.displayName}}
             </td>
             <td *ngFor="let week of completedWeeks">
+              <span *ngIf="week.number == golfer.worstWeek">
+                <mat-icon class="sad-face">sentiment_very_dissatisfied</mat-icon>
+                &nbsp;
+              </span>
               {{golfer.weeklyPoints[week.number]}}
             </td>
             <td>

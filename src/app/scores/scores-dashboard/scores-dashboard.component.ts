@@ -66,8 +66,6 @@ export class ScoresDashboardComponent implements OnInit {
   logStuff() {
     console.log('matches:', this.matches);
     console.log('weeklyMatches:', this.weeklyMatches);
-    //let newDoc = this.afs.createId();
-    //console.log(newDoc);
   }
 
   toggleIndividualScores(e) {
@@ -107,7 +105,7 @@ export class ScoresDashboardComponent implements OnInit {
   }
 
   addPoints() {
-    //this.addPlayerPoints();
+    this.addPlayerPoints();
     this.addTeamPoints();
   }
 
@@ -125,8 +123,10 @@ export class ScoresDashboardComponent implements OnInit {
     this.teams.forEach(team => {
       let bonusPoints = team.bonusPoints;
       let totalPoints = Object.values(team.weeklyPoints).reduce((a, b) => a + b) + bonusPoints;
-      let pointsArr = Object.keys(team.weeklyPoints).map( key => team.weeklyPoints[key]);
+      let keys = Object.keys( team.weeklyPoints );
+      let pointsArr = keys.map( key => team.weeklyPoints[key]);
       let worstWeek = Math.min.apply(null, pointsArr);
+      let worstWeekNum = keys.find(key => team.weeklyPoints[key] === worstWeek);
       let netPoints = totalPoints - worstWeek;
       console.log(team.name, totalPoints, worstWeek, netPoints, bonusPoints);
 
@@ -134,7 +134,8 @@ export class ScoresDashboardComponent implements OnInit {
         {
           weeklyPoints: team.weeklyPoints,
           points: totalPoints,
-          netPoints: netPoints
+          netPoints: netPoints,
+          worstWeek: parseInt(worstWeekNum, 10)
         })
         .then(data => {
           console.log('successfully added team weekly points:', data);
@@ -200,15 +201,19 @@ export class ScoresDashboardComponent implements OnInit {
   _addPlayerPointsToAFS(golfer: IGolfer, points: number) {
     golfer.weeklyPoints[this.weekSelected.number] = points;
     let totalPoints = Object.values(golfer.weeklyPoints).reduce((a, b) => a + b);
-    let pointsArr = Object.keys( golfer.weeklyPoints ).map( key => golfer.weeklyPoints[key]);
+    let keys = Object.keys( golfer.weeklyPoints );
+    let pointsArr = keys.map( key => golfer.weeklyPoints[key]);
     let worstWeek = Math.min.apply(null, pointsArr);
+    let worstWeekNum = keys.find(key => golfer.weeklyPoints[key] === worstWeek);
+    console.log('worst week for golfer:', golfer.displayName, worstWeekNum, worstWeek);
     let netPoints = totalPoints - worstWeek;
     //console.log(golfer.displayName, totalPoints, worstWeek, netPoints);
     this.ds.membersCollection().doc(golfer.id).update(
       {
         weeklyPoints: golfer.weeklyPoints,
         points: totalPoints,
-        netPoints: netPoints
+        netPoints: netPoints,
+        worstWeek: parseInt(worstWeekNum, 10)
       })
       .then(data => {
         console.log('successfully added player weekly points:', data);

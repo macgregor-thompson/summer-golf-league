@@ -12,4 +12,5 @@ export interface Team {
   bonusPoints?: number;
   docId?: string;
   icon?: string;
+  worstWeek?: number;
 }
