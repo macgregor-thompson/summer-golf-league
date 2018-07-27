@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
-import {AngularFirestore} from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 
-import {IGolfer} from '../../models/interfaces/i-golfer';
-import {IRound} from '../../models/interfaces/i-round';
+import { IGolfer } from '../../models/interfaces/i-golfer';
+import { IRound } from '../../models/interfaces/i-round';
 import { Team } from '../../models/interfaces/team';
 import { IMatch } from '../../models/interfaces/i-match';
 import { DataService } from '../../core/services/data.service';
@@ -19,6 +19,7 @@ import { IWeek } from '../../models/interfaces/i-week';
 export class StatsDashboardComponent implements OnInit {
   golfers: IGolfer[];
   membersByPoints: IGolfer[];
+  teamsByPoints: Team[];
   matches: IMatch[];
   weeks: IWeek[];
   completedWeeks: IWeek[];
@@ -32,7 +33,8 @@ export class StatsDashboardComponent implements OnInit {
     this.ds.members().subscribe((data: IGolfer[]) => this.golfers = data);
     this.ds.membersOrderedBy('points', 'desc').subscribe((data: IGolfer[]) => this.membersByPoints = data);
     this.ds.teams().subscribe((data: Team[]) => this.teams = data);
-    this.ds.matches().subscribe( (data: IMatch[]) => this.matches = data);
+    this.ds.teamsOrderedBy('points', 'desc').subscribe((data: Team[]) => this.teamsByPoints = data);
+    this.ds.matches().subscribe((data: IMatch[]) => this.matches = data);
     this.ds.weeks().subscribe((data: IWeek[]) => {
       this.weeks = data;
       this.completedWeeks = data.filter(w => w.completed);
@@ -40,7 +42,8 @@ export class StatsDashboardComponent implements OnInit {
   }
 
   filterTeam(teamId: number) {
-    return this.teams.filter((team: Team) => team.id === teamId)[0];
+    if (teamId && this.teams)
+      return this.teams.filter((team: Team) => team.id === teamId)[0];
   }
 
   weeklyPointsKeys(weeklyPoints) {
@@ -48,17 +51,17 @@ export class StatsDashboardComponent implements OnInit {
   }
 
   weeksCompleted(weeks) {
-    return
+    return;
   }
 
-/*  calculateAverage(golferId: number) {
-    let totals = 0;
-    const rounds = this.filterRounds(golferId);
-    rounds.forEach((round: IRound) => {
-      totals = totals + round.total;
-    });
-    return totals / rounds.length;
-  }*/
+  /*  calculateAverage(golferId: number) {
+      let totals = 0;
+      const rounds = this.filterRounds(golferId);
+      rounds.forEach((round: IRound) => {
+        totals = totals + round.total;
+      });
+      return totals / rounds.length;
+    }*/
 
 
   setStep(index: number) {

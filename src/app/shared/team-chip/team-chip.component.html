@@ -1,5 +1,16 @@
 <mat-chip-list class="team-colors" *ngIf="team">
-  <mat-chip selected="true" [ngStyle]="{'padding': short ? '3px 7px' : '7px 12px'}"
-            [color]="team.color">{{short ? team.letter : team.name}}</mat-chip>
+  <mat-chip class="big-daddy" selected="true" [ngStyle]="{'padding': short ? '3px 7px' : '7px 12px'}"
+            [color]="team.color">
+    <span *ngIf="short">
+      {{team.letter}}
+    </span>
+    <span *ngIf="!short">
+      <span *ngIf="team.icon">
+        <mat-icon>{{team.icon}}</mat-icon>
+        &nbsp;
+      </span>
+      {{team.name}}
+    </span>
+  </mat-chip>
 </mat-chip-list>
 

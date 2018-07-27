@@ -54,6 +54,12 @@ export class DataService {
     return this.afs.collection<Team>('teams', ref => ref.orderBy('id')).valueChanges();
   }
 
+  teamsOrderedBy(prop?, direction?): Observable<Team[]> {
+    return this.afs.collection<Team>('teams',
+        ref => ref.orderBy(prop ? prop : 'id',
+          direction ? direction : 'asc')).valueChanges();
+  }
+
   allTeams(): Observable<Team[]> {
     return this.afs.collection<Team>('teams', ref => ref.orderBy('id')).valueChanges();
   }

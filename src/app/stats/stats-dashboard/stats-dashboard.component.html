@@ -9,8 +9,60 @@
 </div>
 <!-- Need to use regular table because you need to use your own repeats! -->
 
+
+<div class="card" *ngIf="teams; else loading">
+  <h1 class="card-header">Team Weekly Points</h1>
+  <div class="card-body">
+    <div class="table-container mat-elevation-z8">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th class="text-muted">
+              <small>Team</small>
+            </th>
+            <th class="text-muted" *ngFor="let week of completedWeeks">
+              <small>Week {{week.number}}</small>
+            </th>
+            <th class="text-muted">
+              <small>Bonus</small>
+            </th>
+            <th class="text-muted">
+              <small>Total</small>
+            </th>
+            <th class="text-muted">
+              <small>League Points</small>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let team of teamsByPoints">
+            <td class="display-name-no-wrap">
+              <app-team-chip [team]="team"></app-team-chip>
+            </td>
+            <td *ngFor="let week of completedWeeks">
+              {{team.weeklyPoints[week.number]}}
+            </td>
+            <td>
+              <mat-icon *ngIf="!team.bonusPoints">sentiment_very_dissatisfied</mat-icon>
+              <span *ngIf="team.bonusPoints">{{team.bonusPoints}}</span>
+            </td>
+            <td>
+              {{team.points}}
+            </td>
+            <td>
+              {{team.netPoints}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="card" *ngIf="golfers; else loading">
-  <h1 class="card-header">Weekly Points</h1>
+  <h1 class="card-header">Individual Weekly Points</h1>
   <div class="card-body">
     <div class="table-container mat-elevation-z8">
       <div class="table-responsive">
@@ -25,6 +77,9 @@
             </th>
             <th class="text-muted">
               <small>Total</small>
+            </th>
+            <th class="text-muted">
+              <small>League Points</small>
             </th>
           </tr>
           </thead>
@@ -41,6 +96,9 @@
             <td>
               {{golfer.points}}
             </td>
+            <td>
+              {{golfer.netPoints}}
+            </td>
           </tr>
           </tbody>
         </table>
@@ -48,6 +106,9 @@
     </div>
   </div>
 </div>
+
+
+
 
 
 

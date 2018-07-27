@@ -15,19 +15,19 @@
   <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName"
              *ngIf="(playerService.afAuth.authState | async); else showOtherTable">
     <ng-container matColumnDef="displayName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Player</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Player</mat-header-cell>
       <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.displayName}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="handicap">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Handicap</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Handicap</mat-header-cell>
       <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.handicap | number : '1.1'}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="points">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> League Points</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">League Points</mat-header-cell>
       <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.netPoints}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="paid">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Paid</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Paid</mat-header-cell>
       <mat-cell *matCellDef="let golfer" class="text-center">
         <div class="paid-chips">
           <mat-chip-list class="team-colors">
@@ -63,19 +63,19 @@
   <ng-template #showOtherTable>
     <mat-table #table [dataSource]="golfers" matSort matSortActive="displayName">
       <ng-container matColumnDef="displayName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Player</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Player</mat-header-cell>
         <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.displayName}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="handicap">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Handicap</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Handicap</mat-header-cell>
         <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.handicap | number : '1.1'}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="points">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> League Points</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">League Points</mat-header-cell>
         <mat-cell *matCellDef="let golfer" class="text-center"> {{golfer.netPoints}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="paid">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Paid</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Paid</mat-header-cell>
         <mat-cell *matCellDef="let golfer" class="text-center">
          <div class="paid-chips">
            <mat-chip-list class="team-colors">

@@ -28,20 +28,19 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Worst Week</mat-header-cell>
       <mat-cell *matCellDef="let team"  class="text-center">{{team.points - team.netPoints}}</mat-cell>
     </ng-container>
-
+    <ng-container matColumnDef="teamBonusPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Bonus</mat-header-cell>
+      <mat-cell *matCellDef="let team"  class="text-center">
+        <mat-icon *ngIf="!team.bonusPoints">sentiment_very_dissatisfied</mat-icon>
+        <span *ngIf="team.bonusPoints">{{team.bonusPoints}}</span>
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="teamNetPoints">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
       <mat-cell *matCellDef="let team"  class="text-center">
-       <!-- <span class="total-score-div" [ngStyle]="{'background-color': team.colorScheme}">
-          {{team.netPoints}}
-        </span>-->
         {{team.netPoints}}
       </mat-cell>
     </ng-container>
-    <!-- <ng-container matColumnDef="matches">
-       <mat-header-cell *matHeaderCellDef mat-sort-header> Matches</mat-header-cell>
-       <mat-cell *matCellDef="let golfer"> {{golfer.matches.length}}</mat-cell>
-     </ng-container>-->
     <ng-container matColumnDef="team">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">
@@ -94,15 +93,8 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">
         {{golfer.netPoints}}
-       <!-- <span class="total-score-div" [ngStyle]="{'background-color': filterTeam(golfer.teamId).colorScheme}">
-          {{golfer.netPoints}}
-        </span>-->
       </mat-cell>
     </ng-container>
-    <!-- <ng-container matColumnDef="matches">
-       <mat-header-cell *matHeaderCellDef mat-sort-header> Matches</mat-header-cell>
-       <mat-cell *matCellDef="let golfer"> {{golfer.matches.length}}</mat-cell>
-     </ng-container>-->
     <ng-container matColumnDef="team">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">

@@ -78,7 +78,9 @@ export class ScoresDashboardComponent implements OnInit {
   getWeeks() {
     this.ds.weeks().subscribe((data: IWeek[]) => {
       this.weeks = data;
-      this.setWeek(data.filter((week: IWeek) => week.number === data.length)[0]);
+      let weekToShow = data[data.length - 1].completed ? data.length : data.length - 1;
+      console.log('showing week:', weekToShow);
+      this.setWeek(data.filter((week: IWeek) => week.number === weekToShow)[0]);
     });
   }
 
@@ -105,7 +107,7 @@ export class ScoresDashboardComponent implements OnInit {
   }
 
   addPoints() {
-    this.addPlayerPoints();
+    //this.addPlayerPoints();
     this.addTeamPoints();
   }
 
@@ -121,12 +123,14 @@ export class ScoresDashboardComponent implements OnInit {
     });
 
     this.teams.forEach(team => {
-      let totalPoints = Object.values(team.weeklyPoints).reduce((a, b) => a + b);
+      let bonusPoints = team.bonusPoints;
+      let totalPoints = Object.values(team.weeklyPoints).reduce((a, b) => a + b) + bonusPoints;
       let pointsArr = Object.keys(team.weeklyPoints).map( key => team.weeklyPoints[key]);
       let worstWeek = Math.min.apply(null, pointsArr);
       let netPoints = totalPoints - worstWeek;
-      console.log(team.name, totalPoints, worstWeek, netPoints);
-      this.ds.teamsCollection().doc(team.docId).update(
+      console.log(team.name, totalPoints, worstWeek, netPoints, bonusPoints);
+
+     this.ds.teamsCollection().doc(team.docId).update(
         {
           weeklyPoints: team.weeklyPoints,
           points: totalPoints,
