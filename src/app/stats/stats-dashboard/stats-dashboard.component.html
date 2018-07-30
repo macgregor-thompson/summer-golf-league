@@ -31,14 +31,14 @@
               <small>Total</small>
             </th>
             <th class="text-muted">
-              <small>League Points</small>
+              <small>**League Points**</small>
             </th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let team of teamsByLeaguePoints">
             <td class="display-name-no-wrap">
-              <app-team-chip [team]="team"></app-team-chip>
+              <app-team-chip [team]="team" [icon]="true"></app-team-chip>
             </td>
             <td *ngFor="let week of completedWeeks">
               <span *ngIf="week.number == team.worstWeek">
@@ -82,7 +82,7 @@
               <small>Total</small>
             </th>
             <th class="text-muted">
-              <small>League Points</small>
+              <small>**League Points**</small>
             </th>
           </tr>
           </thead>

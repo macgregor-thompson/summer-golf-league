@@ -9,6 +9,7 @@ import { Team } from '../../models/interfaces/team';
 export class TeamChipComponent implements OnInit {
   @Input() team: Team;
   @Input() short?: false;
+  @Input() icon?: false;
 
 
   constructor() { }

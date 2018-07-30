@@ -17,7 +17,7 @@
     <ng-container matColumnDef="teamName">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Team</mat-header-cell>
       <mat-cell *matCellDef="let team"  class="text-center">
-        <app-team-chip [team]="team"></app-team-chip>
+        <app-team-chip [team]="team" [icon]="true"></app-team-chip>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="teamPoints">
@@ -44,7 +44,7 @@
     <ng-container matColumnDef="team">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">
-        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
+        <app-team-chip [team]="filterTeam(golfer.teamId)" [icon]="true"></app-team-chip>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="teamColumns"></mat-header-row>
@@ -98,7 +98,7 @@
     <ng-container matColumnDef="team">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">
-        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
+        <app-team-chip [team]="filterTeam(golfer.teamId)" [icon]="true"></app-team-chip>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
