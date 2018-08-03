@@ -12,6 +12,7 @@ export class Match implements IMatch {
   teamTwo: TeamRound;
   teamThree?: TeamRound;
   picture?: string;
+  winner: number;
 
   constructor(week: number, format: Format, frontNine: boolean, id) {
     this.id = id;
@@ -24,5 +25,6 @@ export class Match implements IMatch {
       this.teamThree = new TeamRound(format);
     }
     this.picture = '';
+    this.winner = 0;
   }
 }

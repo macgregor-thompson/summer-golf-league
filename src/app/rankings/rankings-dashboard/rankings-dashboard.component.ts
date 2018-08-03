@@ -37,8 +37,10 @@ export class RankingsDashboardComponent implements OnInit {
       // '#2196f3', // GanMan's team
     ]
   };
-  displayedColumns = ['ranking', 'displayName', 'points', 'worstWeek', 'netPoints', 'team'];
-  teamColumns = ['teamRanking', 'teamName', 'teamPoints', 'teamWorstWeek', 'teamBonusPoints', 'teamNetPoints'];
+  teamColumns = ['teamRanking', 'teamName', 'teamNetPoints', 'teamPoints', 'teamWorstWeek', 'teamBonusPoints', 'teamPointsBehind'];
+  playerColumns = ['ranking', 'displayName', 'netPoints', 'points', 'worstWeek', 'pointsBehind', 'team'];
+  playerFirstPoints = 0;
+  teamFirstPoints = 0;
 
 
 
@@ -48,6 +50,7 @@ export class RankingsDashboardComponent implements OnInit {
     this.afs.collection<Team>('teams', ref => ref.orderBy('netPoints', 'desc')).valueChanges()
       .subscribe((data: Team[]) => {
         this.teams = data;
+        this.teamFirstPoints = data[0].netPoints;
         let rankedTeams = data.map((team, i) => {
           if (i > 0) {
             let prev = data[i - 1];
@@ -80,6 +83,7 @@ export class RankingsDashboardComponent implements OnInit {
     this.afs.collection<IGolfer>('members', ref => ref.orderBy('netPoints', 'desc')).valueChanges()
       .subscribe((data: IGolfer[]) => {
         this.members = data;
+        this.playerFirstPoints = data[0].netPoints;
         let ranked = data.map((golfer, i) => {
           if (i > 0) {
             let prev = data[i - 1];

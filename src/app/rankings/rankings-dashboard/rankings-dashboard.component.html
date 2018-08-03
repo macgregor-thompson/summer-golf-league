@@ -20,6 +20,12 @@
         <app-team-chip [team]="team" [icon]="true"></app-team-chip>
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="teamNetPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
+      <mat-cell *matCellDef="let team"  class="text-center">
+        {{team.netPoints}}
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="teamPoints">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Total Points</mat-header-cell>
       <mat-cell *matCellDef="let team"  class="text-center">{{team.points}}</mat-cell>
@@ -35,10 +41,16 @@
         <span *ngIf="team.bonusPoints">{{team.bonusPoints}}</span>
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="teamNetPoints">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
+    <ng-container matColumnDef="teamPointsBehind">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Points Behind</mat-header-cell>
       <mat-cell *matCellDef="let team"  class="text-center">
-        {{team.netPoints}}
+        <!--<mat-icon *ngIf="teamFirstPoints == team.netPoints" class="sad-face">sentiment_very_satisfied</mat-icon>-->
+        <span *ngIf="teamFirstPoints == team.netPoints">
+          Suck It!
+        </span>
+        <span *ngIf="teamFirstPoints != team.netPoints">
+          {{teamFirstPoints - team.netPoints}}
+        </span>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="team">
@@ -73,6 +85,12 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Player</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.displayName}}</mat-cell>
     </ng-container>
+    <ng-container matColumnDef="netPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">
+        {{golfer.netPoints}}
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="points">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Total Points</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.points}}</mat-cell>
@@ -89,10 +107,16 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"></mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">=</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="netPoints">
-      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
+    <ng-container matColumnDef="pointsBehind">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Points Behind</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">
-        {{golfer.netPoints}}
+        <!--<mat-icon *ngIf="playerFirstPoints == golfer.netPoints" class="sad-face">sentiment_very_satisfied</mat-icon>-->
+        <span *ngIf="playerFirstPoints == golfer.netPoints">
+          Suck It!
+        </span>
+        <span *ngIf="playerFirstPoints != golfer.netPoints">
+          {{playerFirstPoints - golfer.netPoints}}
+        </span>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="team">
@@ -101,9 +125,9 @@
         <app-team-chip [team]="filterTeam(golfer.teamId)" [icon]="true"></app-team-chip>
       </mat-cell>
     </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="playerColumns"></mat-header-row>
     <mat-row
-      *matRowDef="let row; columns: displayedColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
+      *matRowDef="let row; columns: playerColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
   </mat-table>
 </div>
 

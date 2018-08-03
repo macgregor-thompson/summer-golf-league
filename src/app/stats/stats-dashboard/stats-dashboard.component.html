@@ -10,7 +10,7 @@
 <!-- Need to use regular table because you need to use your own repeats! -->
 
 
-<div class="card" *ngIf="teams; else loading">
+<div class="card" *ngIf="teams && completedWeeks; else loading">
   <h1 class="card-header">Team Weekly Points</h1>
   <div class="card-body">
     <div class="table-container mat-elevation-z8">
@@ -32,6 +32,9 @@
             </th>
             <th class="text-muted">
               <small>**League Points**</small>
+            </th>
+            <th class="text-muted">
+              <small>Average</small>
             </th>
           </tr>
           </thead>
@@ -56,6 +59,9 @@
             <td>
               {{team.netPoints}}
             </td>
+            <td>
+              {{team.netPoints / completedWeeks.length | number : '1.0-2'}}
+            </td>
           </tr>
           </tbody>
         </table>
@@ -64,7 +70,7 @@
   </div>
 </div>
 
-<div class="card" *ngIf="golfers; else loading">
+<div class="card" *ngIf="golfers && completedWeeks; else loading">
   <h1 class="card-header">Individual Weekly Points</h1>
   <div class="card-body">
     <div class="table-container mat-elevation-z8">
@@ -84,6 +90,9 @@
             <th class="text-muted">
               <small>**League Points**</small>
             </th>
+            <th class="text-muted">
+            <small>Average</small>
+          </th>
           </tr>
           </thead>
           <tbody>
@@ -105,6 +114,9 @@
             </td>
             <td>
               {{golfer.netPoints}}
+            </td>
+            <td>
+              {{golfer.netPoints / completedWeeks.length | number : '1.0-2'}}
             </td>
           </tr>
           </tbody>

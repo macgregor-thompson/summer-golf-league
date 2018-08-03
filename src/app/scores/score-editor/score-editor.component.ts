@@ -307,16 +307,19 @@ export class ScoreEditorComponent implements OnInit {
     }
 
     if (a === b) {
+      this.match.winner = 0;
       return 'Tie';
     } else if (a > b) {
       let playerA = this.match.teamOne.roundA.playerA.displayName;
       let playerB = this.match.teamOne.roundB ? this.match.teamOne.roundB.playerA.displayName
         : this.match.teamOne.roundA.playerB.displayName;
+      this.match.winner = 1;
       return `${playerA} & ${playerB} <br> win ${a - b} up`;
     } else if (a < b) {
       let playerA = this.match.teamTwo.roundA.playerA.displayName;
       let playerB = this.match.teamTwo.roundB ? this.match.teamTwo.roundB.playerA.displayName
         : this.match.teamTwo.roundA.playerB.displayName;
+      this.match.winner = 2;
       return `${playerA} & ${playerB} <br> win ${b - a} up`;
     }
   }
