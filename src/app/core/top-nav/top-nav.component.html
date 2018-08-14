@@ -15,7 +15,8 @@
       <span> {{link.name}}</span>
     </a>
     <button mat-icon-button="" [matMenuTriggerFor]="loginMenu">
-      <mat-icon>person</mat-icon>
+      <mat-icon *ngIf="!profileUrl">person</mat-icon>
+      <img *ngIf="profileUrl" [src]="profileUrl" class="img-responsive player-img">
     </button>
     <mat-menu #loginMenu="matMenu" yPosition="below" [overlapTrigger]="false">
       <div *ngIf="playerService.afAuth.authState | async as player; else showLogin">
@@ -50,9 +51,15 @@
         </button>
       </div>
       <ng-template #showLogin>
+        <h2 class="text-center" style="margin-bottom:5px;">Admins Only</h2>
+        <mat-divider></mat-divider>
         <button mat-menu-item (click)="gitHubLogin()">
-          <mat-icon>person</mat-icon>
-          <span>MacGregor Only</span>
+          <mat-icon class="fab fa-github"></mat-icon>
+          <span>GitHub Login</span>
+        </button>
+        <button mat-menu-item (click)="openLoginModal()">
+          <mat-icon>email</mat-icon>
+          <span>Email Login</span>
         </button>
       </ng-template>
     </mat-menu>

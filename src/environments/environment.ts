@@ -10,7 +10,7 @@ export const environment = {
     authDomain: 'summer-golf-league.firebaseapp.com',
     databaseURL: 'https://summer-golf-league.firebaseio.com',
     projectId: 'summer-golf-league',
-    storageBucket: '',
+    storageBucket: 'gs://summer-golf-league.appspot.com',
     messagingSenderId: '1026158852457'
   }
 };

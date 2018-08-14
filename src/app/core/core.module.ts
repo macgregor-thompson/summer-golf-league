@@ -10,20 +10,27 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { PlayerService } from './services/player.service';
 import { AngularFireAuth } from 'angularfire2/auth';
+
 import { DataService } from './services/data.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
 
-    AppMaterialModule
+    ReactiveFormsModule,
+    FormsModule,
+    AppMaterialModule,
+    AngularFireStorageModule
   ],
   declarations: [TopNavComponent, NotFoundComponent, LoginModalComponent, LoginComponent],
   exports: [TopNavComponent],
   entryComponents: [
     LoginModalComponent
   ],
-  providers: [DataService, PlayerService, AngularFireAuth],
+  providers: [DataService, PlayerService, AngularFireAuth
+  ],
 })
 export class CoreModule { }

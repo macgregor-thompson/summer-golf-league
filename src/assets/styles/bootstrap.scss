@@ -197,6 +197,12 @@
   border-color: #b8daff;
 }
 
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
 .mb-1, .my-1 {
   margin-bottom: .25rem!important;
 }
@@ -225,6 +231,9 @@
   max-width: 100%;
   height: auto;
   display: block;
+}
+.rounded {
+  border-radius: .25rem!important;
 }
 
 .img-responsive-max {}

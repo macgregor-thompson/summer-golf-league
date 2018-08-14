@@ -2,11 +2,19 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { Observable } from 'rxjs/Observable';
+
 
 @Injectable()
 export class PlayerService {
 
+
   constructor(public afAuth: AngularFireAuth) { }
+
+  player(): Observable<any> {
+    return this.afAuth.authState;
+  }
 
   loginWithGitHub() {
     let provider = new firebase.auth.GithubAuthProvider();
@@ -17,13 +25,12 @@ export class PlayerService {
     });
   }
 
+  loginWithEmail(email: string, password: string) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
+  }
 
   logout() {
-    this.afAuth.auth.signOut().then(data => {
-      console.log('signed out:', data);
-    }).catch(e => {
-      console.log('error logging out:', e);
-    });
+    return this.afAuth.auth.signOut();
   }
 
 }

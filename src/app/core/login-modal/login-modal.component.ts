@@ -1,15 +1,27 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {IGolfer} from '../../models/interfaces/i-golfer';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { PlayerService } from '../services/player.service';
+import { FormControl, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
   styleUrls: ['./login-modal.component.scss']
 })
+
 export class LoginModalComponent implements OnInit {
-  currentGolfer: IGolfer;
+  //currentGolfer: IGolfer;
+  error = null;
+
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  passwordFormControl = new FormControl('', [
+    Validators.required
+  ]);
 
   constructor(public playerService: PlayerService,
               public dialogRef: MatDialogRef<LoginModalComponent>,
@@ -17,19 +29,27 @@ export class LoginModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentGolfer = Object.assign({}, this.data.currentGolfer);
+    //this.currentGolfer = Object.assign({}, this.data.currentGolfer);
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  gitHubLogin() {
-    this.playerService.loginWithGitHub();
+  emailLogin() {
+    //console.log(this.emailFormControl, this.passwordFormControl);
+    this.playerService.loginWithEmail(this.emailFormControl.value, this.passwordFormControl.value).then(data => {
+      console.log('signed in with email:', data);
+      this.error = null;
+      this.dialogRef.close();
+    }).catch(e => {
+      console.log('error logging in via email', e);
+      this.error = e;
+    });
   }
 
   logout() {
     this.playerService.logout();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

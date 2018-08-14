@@ -1,7 +1,36 @@
+<h2 mat-dialog-title class="text-center">
+  Admins Only
+</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <form class="login-form">
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Email" [formControl]="emailFormControl">
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Password" type="password" [formControl]="passwordFormControl">
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <div *ngIf="error" class="alert alert-danger">{{error?.message}}</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="emailLogin()">Login</button>
+</mat-dialog-actions>
+
+<!--
 <div *ngIf="playerService.afAuth.authState | async as player; else showLogin">
   <button mat-raised-button (click)="logout()">Logout</button>
 </div>
 <ng-template #showLogin>
-  <p>If you are MacGregor Thompson....</p>
-  <button mat-raised-button color="warn" (click)="gitHubLogin()">Login with GitHub</button>
 </ng-template>
+-->

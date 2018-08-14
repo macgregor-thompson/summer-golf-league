@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Nav} from '../../models/interfaces/nav';
-import {MatDialog} from '@angular/material';
-import {LoginModalComponent} from '../login-modal/login-modal.component';
-import {IGolfer} from '../../models/interfaces/i-golfer';
-import {AngularFirestore} from 'angularfire2/firestore';
-import {Observable} from 'rxjs/Observable';
+import { Component, OnInit } from '@angular/core';
+import { Nav } from '../../models/interfaces/nav';
+import { MatDialog } from '@angular/material';
+import { LoginModalComponent } from '../login-modal/login-modal.component';
+
 import { PlayerService } from '../services/player.service';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 
 @Component({
@@ -14,8 +13,8 @@ import { PlayerService } from '../services/player.service';
   styleUrls: ['./top-nav.component.scss']
 })
 export class TopNavComponent implements OnInit {
-  golfers: Observable<IGolfer[]>;
-  currentGolfer: IGolfer;
+  profileUrl = null;
+  currentPlayer = null;
   routes: Nav[] = [
     {
       path: '/',
@@ -49,13 +48,39 @@ export class TopNavComponent implements OnInit {
     }
   ];
 
-
-  constructor(private afs: AngularFirestore,
-              public playerService: PlayerService) {
+  constructor(public dialog: MatDialog,
+              public playerService: PlayerService,
+              private storage: AngularFireStorage) {
   }
 
   ngOnInit() {
-    this.golfers = this.afs.collection<IGolfer>('members').valueChanges();
+    this.playerService.player().subscribe(data => {
+      console.log('authState:', data);
+      this.currentPlayer = data;
+      if (data) {
+        if (data.photoURL) {
+          this.profileUrl = data.photoURL;
+        } else {
+          const ref = this.storage.ref(`${data.uid}.png`);
+          ref.getDownloadURL().subscribe(url => {
+            console.log('download url:', url);
+            this.profileUrl = url;
+          });
+        }
+      } else {
+        console.log('no authState data');
+        this.profileUrl = null;
+      }
+
+    });
+  }
+
+  openLoginModal(): void {
+    const dialogRef = this.dialog.open(LoginModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('login modal closed:', result);
+    });
   }
 
   gitHubLogin() {
@@ -63,7 +88,12 @@ export class TopNavComponent implements OnInit {
   }
 
   logout() {
-    this.playerService.logout();
+    this.playerService.logout().then(data => {
+      console.log('signed out:', data);
+    }).catch(e => {
+      this.currentPlayer = null;
+      console.log('error logging out:', e);
+    });
   }
 
 }

@@ -4,8 +4,16 @@
 
 mat-dialog-actions {
   display: block;
+  text-align: right;
 }
 
 mat-form-field {
   display: block;
+}
+
+
+.login-form {
+  min-width: 250px;
+  max-width: 500px;
+  width: 100%;
 }
