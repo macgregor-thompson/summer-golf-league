@@ -1,3 +1,14 @@
+::ng-deep {
+  .mat-tab-label {
+    flex: 1;
+    font-size: 2em;
+  }
+
+  .mat-tab-header {
+    margin-bottom: 15px;
+  }
+}
+
 td {
   text-align: center;
 }
@@ -5,7 +16,6 @@ td {
 .card {
   margin-bottom: 30px;
 }
-
 
 .card-header {
   margin-bottom: 0;
@@ -22,3 +32,4 @@ td {
 .sad-face {
   color: orange;
 }
+
