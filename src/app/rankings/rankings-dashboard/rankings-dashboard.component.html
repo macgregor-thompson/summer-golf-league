@@ -17,13 +17,15 @@
     <ng-container matColumnDef="teamName">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Team</mat-header-cell>
       <mat-cell *matCellDef="let team"  class="text-center">
-        <app-team-chip [team]="team" [icon]="true"></app-team-chip>
+        <app-team-chip [team]="team"></app-team-chip>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="teamNetPoints">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
       <mat-cell *matCellDef="let team"  class="text-center">
-        {{team.netPoints}}
+        <span class="total-score-div" [ngStyle]="{'background-color': team.colorScheme}">
+          {{team.netPoints}}
+        </span>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="teamPoints">
@@ -32,7 +34,15 @@
     </ng-container>
     <ng-container matColumnDef="teamWorstWeek">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Worst Week</mat-header-cell>
-      <mat-cell *matCellDef="let team"  class="text-center">{{team.points - team.netPoints}}</mat-cell>
+      <mat-cell *matCellDef="let team"  class="text-center">
+        {{team.worstWeekPoints}} <small class="text-muted">(Week {{team.worstWeek}})</small>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="teamSecondWorstWeek">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Second Worst Week</mat-header-cell>
+      <mat-cell *matCellDef="let team"  class="text-center">
+        {{team.secondWorstWeekPoints}} <small class="text-muted">(Week {{team.secondWorstWeek}})</small>
+      </mat-cell>
     </ng-container>
     <ng-container matColumnDef="teamBonusPoints">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Bonus</mat-header-cell>
@@ -88,7 +98,9 @@
     <ng-container matColumnDef="netPoints">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">**League Points**</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">
-        {{golfer.netPoints}}
+        <span class="total-score-div" [ngStyle]="{'background-color': golfer.team.colorScheme}">
+          {{golfer.netPoints}}
+        </span>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="points">
@@ -101,7 +113,15 @@
     </ng-container>
     <ng-container matColumnDef="worstWeek">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Worst Week</mat-header-cell>
-      <mat-cell *matCellDef="let golfer"  class="text-center">{{golfer.points - golfer.netPoints}}</mat-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">
+        {{golfer.worstWeekPoints}} <small class="text-muted">(Week {{golfer.worstWeek}})</small>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="secondWorstWeek">
+      <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center">Second Worst Week</mat-header-cell>
+      <mat-cell *matCellDef="let golfer"  class="text-center">
+        {{golfer.secondWorstWeekPoints}} <small class="text-muted">(Week {{golfer.secondWorstWeek}})</small>
+      </mat-cell>
     </ng-container>
     <ng-container matColumnDef="equals">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"></mat-header-cell>
@@ -122,7 +142,7 @@
     <ng-container matColumnDef="team">
       <mat-header-cell *matHeaderCellDef mat-sort-header  class="text-center"> Team</mat-header-cell>
       <mat-cell *matCellDef="let golfer"  class="text-center">
-        <app-team-chip [team]="filterTeam(golfer.teamId)" [icon]="true"></app-team-chip>
+        <app-team-chip [team]="filterTeam(golfer.teamId)"></app-team-chip>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="playerColumns"></mat-header-row>

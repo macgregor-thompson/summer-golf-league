@@ -8,6 +8,6 @@
   <div class="button-row text-right">
     <button mat-raised-button (click)="onNoClick()">Cancel</button>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-    <button mat-raised-button color="primary" [mat-dialog-close]="">Save</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data.golfer">Save</button>
   </div>
 </mat-dialog-actions>

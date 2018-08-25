@@ -41,6 +41,12 @@
         </div>
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="winnings">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Winnings</mat-header-cell>
+      <mat-cell *matCellDef="let golfer" class="text-center" [ngClass]="{'text-green': golfer.winnings > 0}">
+        ${{golfer.winnings}}
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="team">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Team</mat-header-cell>
       <mat-cell *matCellDef="let golfer" class="text-center">
@@ -89,6 +95,11 @@
          </div>
         </mat-cell>
       </ng-container>
+      <ng-container matColumnDef="winnings">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Winnings</mat-header-cell>
+        <mat-cell *matCellDef="let golfer" class="text-center" [ngClass]="{'text-green': golfer.winnings > 0}">
+          ${{golfer.winnings}}
+        </mat-cell>      </ng-container>
       <ng-container matColumnDef="team">
         <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Team</mat-header-cell>
         <mat-cell *matCellDef="let golfer" class="text-center">

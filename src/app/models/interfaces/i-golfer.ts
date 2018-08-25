@@ -1,5 +1,6 @@
 import {Handicap} from './handicap';
 import { IPoints } from './i-points';
+import { Team } from './team';
 
 export interface IGolfer {
   id: string;
@@ -14,7 +15,11 @@ export interface IGolfer {
   paid?: boolean;
   weeklyPoints?: object;
   worstWeek?: number; // week number that was the worst week
-
+  worstWeekPoints?: number;
+  secondWorstWeek?: number;
+  secondWorstWeekPoints?: number;
+  team?: Team;
+  winnings?: number;
   // Optional
   ghinNumber?: number;
   email?: string;

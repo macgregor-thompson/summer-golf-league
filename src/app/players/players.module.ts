@@ -14,6 +14,7 @@ import { PlayerEditorComponent } from './player-editor/player-editor.component';
 import { HeckleSnackComponent } from './heckle-snack/heckle-snack.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GhinLookupWidgetComponent } from './ghin-lookup-widget/ghin-lookup-widget.component';
+import { MatInputModule } from '@angular/material';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { GhinLookupWidgetComponent } from './ghin-lookup-widget/ghin-lookup-widg
     CommonModule,
     PlayersRoutingModule,
     AsyncLocalStorageModule,
-    FormsModule, ReactiveFormsModule,
+    FormsModule, ReactiveFormsModule, MatInputModule,
 
     //Common Modules
     SharedModule,

@@ -24,7 +24,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./scores-dashboard.component.scss']
 })
 export class ScoresDashboardComponent implements OnInit {
-
   roundsCollection: AngularFirestoreCollection<IRound>;
   formatName = FormatName;
   Format = Format;
@@ -77,7 +76,6 @@ export class ScoresDashboardComponent implements OnInit {
     this.ds.weeks().subscribe((data: IWeek[]) => {
       this.weeks = data;
       let weekToShow = data[data.length - 1].completed ? data.length : data.length - 1;
-      console.log('showing week:', weekToShow);
       this.setWeek(data.filter((week: IWeek) => week.number === weekToShow)[0]);
     });
   }
@@ -123,25 +121,34 @@ export class ScoresDashboardComponent implements OnInit {
     this.teams.forEach(team => {
       let bonusPoints = team.bonusPoints;
       let totalPoints = Object.values(team.weeklyPoints).reduce((a, b) => a + b) + bonusPoints;
-      let keys = Object.keys( team.weeklyPoints );
-      let pointsArr = keys.map( key => team.weeklyPoints[key]);
+      let keys = Object.keys(team.weeklyPoints);
+      let pointsArr = keys.map(key => team.weeklyPoints[key]);
       let worstWeek = Math.min.apply(null, pointsArr);
       let worstWeekNum = keys.find(key => team.weeklyPoints[key] === worstWeek);
-      let netPoints = totalPoints - worstWeek;
-      console.log(team.name, totalPoints, worstWeek, netPoints, bonusPoints);
+      keys.splice(keys.indexOf(worstWeekNum), 1);
+      pointsArr.splice(pointsArr.indexOf(worstWeek), 1);
+      let secondWorstWeek = Math.min.apply(null, pointsArr);
+      let secondWorstWeekNum = keys.find(key => team.weeklyPoints[key] === secondWorstWeek);
+      //console.log('worstWeek:', worstWeekNum, worstWeek, 'secondWorstWeek:', secondWorstWeekNum, secondWorstWeek);
+      let netPoints = totalPoints - worstWeek - secondWorstWeek;
+      //console.log(team.name, totalPoints, '-', worstWeek, '-', secondWorstWeek, '=', netPoints, 'bonus =', bonusPoints);
 
-     this.ds.teamsCollection().doc(team.docId).update(
+      this.ds.teamsCollection().doc(team.docId).update(
         {
           weeklyPoints: team.weeklyPoints,
           points: totalPoints,
           netPoints: netPoints,
-          worstWeek: parseInt(worstWeekNum, 10)
+          worstWeek: parseInt(worstWeekNum, 10),
+          worstWeekPoints: worstWeek,
+          secondWorstWeek: parseInt(secondWorstWeekNum, 10),
+          secondWorstWeekPoints: secondWorstWeek
+
         })
         .then(data => {
-          console.log('successfully added team weekly points:', data);
+          console.log('successfully added weekly points for team:', team.name, data);
         }).catch(error => console.log('error adding team weekly points:', error));
-    });
 
+    });
   }
 
 
@@ -201,22 +208,35 @@ export class ScoresDashboardComponent implements OnInit {
   _addPlayerPointsToAFS(golfer: IGolfer, points: number) {
     golfer.weeklyPoints[this.weekSelected.number] = points;
     let totalPoints = Object.values(golfer.weeklyPoints).reduce((a, b) => a + b);
-    let keys = Object.keys( golfer.weeklyPoints );
-    let pointsArr = keys.map( key => golfer.weeklyPoints[key]);
+    let keys = Object.keys(golfer.weeklyPoints);
+    //console.log('keys:', keys);
+    let pointsArr = keys.map(key => golfer.weeklyPoints[key]);
+    //console.log('pointsArr:', pointsArr);
     let worstWeek = Math.min.apply(null, pointsArr);
     let worstWeekNum = keys.find(key => golfer.weeklyPoints[key] === worstWeek);
-    console.log('worst week for golfer:', golfer.displayName, worstWeekNum, worstWeek);
-    let netPoints = totalPoints - worstWeek;
-    //console.log(golfer.displayName, totalPoints, worstWeek, netPoints);
+    keys.splice(keys.indexOf(worstWeekNum), 1);
+    //console.log('keys after splice:', keys);
+    pointsArr.splice(pointsArr.indexOf(worstWeek), 1);
+    //console.log('pointsArr after splice:', pointsArr);
+    let secondWorstWeek = Math.min.apply(null, pointsArr);
+    //console.log('secondWorstWeek:', secondWorstWeek);
+    let secondWorstWeekNum = keys.find(key => golfer.weeklyPoints[key] === secondWorstWeek);
+    //console.log('worst week for golfer:', golfer.displayName, worstWeekNum, worstWeek, secondWorstWeekNum, secondWorstWeek);
+    let netPoints = totalPoints - worstWeek - secondWorstWeek;
+    //console.log(golfer.displayName, totalPoints, '-', worstWeek, '-', secondWorstWeek, '=', netPoints);
     this.ds.membersCollection().doc(golfer.id).update(
       {
         weeklyPoints: golfer.weeklyPoints,
         points: totalPoints,
         netPoints: netPoints,
-        worstWeek: parseInt(worstWeekNum, 10)
+        worstWeek: parseInt(worstWeekNum, 10),
+        worstWeekPoints: worstWeek,
+        secondWorstWeek: parseInt(secondWorstWeekNum, 10),
+        secondWorstWeekPoints: secondWorstWeek,
+        team: this.filterTeam(golfer.teamId)
       })
       .then(data => {
-        console.log('successfully added player weekly points:', data);
+        console.log('successfully added weekly points for player:', golfer.displayName, data);
       }).catch(error => console.log('error adding player weekly points:', error));
   }
 
@@ -410,5 +430,5 @@ export class ScoresDashboardComponent implements OnInit {
 
 }
 
-export interface IMatchId extends IMatch { id: string; }
+export interface IMatchId extends IMatch {id: string;}
 

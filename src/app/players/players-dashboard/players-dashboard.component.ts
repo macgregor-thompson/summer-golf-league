@@ -19,8 +19,8 @@ export class PlayersDashboardComponent implements OnInit {
   teams: Team[];
   golfers: MatTableDataSource<IGolfer>;
   subs: MatTableDataSource<IGolfer>;
-  adminColumns = ['displayName', 'handicap',  'points', 'paid', 'team', 'edit'];
-  displayedColumns = ['displayName', 'handicap', 'points', 'paid', 'team'];
+  adminColumns = ['displayName', 'handicap', 'points', 'paid', 'winnings', 'team', 'edit'];
+  displayedColumns = ['displayName', 'handicap', 'points', 'paid', 'winnings', 'team'];
 
   subAdminColumns = ['subDisplayName', 'subHandicap', 'subTeam', 'edit'];
   subDisplayedColumns = ['subDisplayName', 'subHandicap', 'subTeam'];
@@ -46,9 +46,16 @@ export class PlayersDashboardComponent implements OnInit {
     let playerEditorDialogRef = this.dialog.open(PlayerDialogModalComponent, {
       data: { golfer: golfer ? Object.assign({}, golfer) : undefined }
     });
-    playerEditorDialogRef.afterClosed().subscribe(result => {
+    playerEditorDialogRef.afterClosed().subscribe((result: IGolfer | undefined) => {
       console.log('result:', result);
-      //add player to firestore here
+      if (result) {
+        this.ds.membersCollection().doc(golfer.id).update(result)
+          .then(data => {
+            console.log('updated player:', result.displayName, data);
+          }).catch(error => console.log('error updating player:', result.displayName, error));
+      } else {
+        console.log('nothing to update...');
+      }
     });
   }
 

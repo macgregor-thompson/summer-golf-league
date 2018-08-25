@@ -12,7 +12,8 @@
       <input matInput placeholder="Nickname" class="full-width" [(ngModel)]="golfer.displayName">
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Team" class="full-width" [(ngModel)]="golfer.teamId" [compareWith]="compareFn">
+      <mat-select #teamSelect placeholder="Team" class="full-width" [(ngModel)]="golfer.teamId"
+                  (selectionChange)="setTeam(teamSelect)">
         <mat-option *ngFor="let team of teams" [value]="team.id">
           {{team.name}}
         </mat-option>
@@ -26,5 +27,11 @@
     <mat-form-field>
       <input matInput placeholder="Handicap" class="full-width" [(ngModel)]="golfer.handicap" type="number">
     </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="Winnings" class="full-width" [(ngModel)]="golfer.winnings" type="number">
+    </mat-form-field>
+    <mat-checkbox class="full-width" [(ngModel)]="golfer.paid">Paid</mat-checkbox>
   </div>
 </div>

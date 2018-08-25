@@ -13,4 +13,7 @@ export interface Team {
   docId?: string;
   icon?: string;
   worstWeek?: number;
+  worstWeekPoints?: number;
+  secondWorstWeek?: number;
+  secondWorstWeekPoints?: number;
 }
