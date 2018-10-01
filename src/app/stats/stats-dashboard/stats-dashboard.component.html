@@ -9,137 +9,187 @@
 </div>-->
 <!-- Need to use regular table because you need to use your own repeats! -->
 
-
-<div class="card" *ngIf="teams && completedWeeks; else loading">
-  <h1 class="card-header">Team Weekly Points</h1>
-  <div class="card-body">
-    <div class="table-container mat-elevation-z8">
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-          <tr>
-            <th class="text-muted">
-              <small>Team</small>
-            </th>
-            <th class="text-muted" *ngFor="let week of completedWeeks">
-              <small>W&nbsp;{{week.number}}</small>
-            </th>
-            <th class="text-muted">
-              <small>Bonus</small>
-            </th>
-            <th class="text-muted">
-              <small>Total</small>
-            </th>
-            <th class="text-muted">
-              <small>**League Points**</small>
-            </th>
-            <th class="text-muted">
-              <small>Average</small>
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let team of teamsByLeaguePoints">
-            <td class="display-name-no-wrap">
-              <app-team-chip [team]="team"></app-team-chip>
-            </td>
-            <td *ngFor="let week of completedWeeks" [ngClass]="{'text-red': week.number == team.worstWeek || week.number == team.secondWorstWeek}">
-              <!--<span *ngIf="week.number == team.worstWeek || week.number == team.secondWorstWeek">
-                <mat-icon class="sad-face">sentiment_very_dissatisfied</mat-icon>
-              </span>-->
-              {{team.weeklyPoints[week.number]}}
-            </td>
-            <td>
-              {{team.bonusPoints}}
-            </td>
-            <td>
-              {{team.points}}
-            </td>
-            <td>
-              <span class="total-score-div" [ngStyle]="{'background-color': team.colorScheme}">
-                {{team.netPoints}}
-              </span>
-            </td>
-            <td>
-              {{team.netPoints / completedWeeks.length | number : '1.0-2'}}
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="card" *ngIf="golfers && completedWeeks; else loading">
-  <h1 class="card-header">Individual Weekly Points</h1>
-  <div class="card-body">
-    <div class="table-container mat-elevation-z8">
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-          <tr>
-            <th class="text-muted">
-              <small>Player</small>
-            </th>
-            <th class="text-muted" *ngFor="let week of completedWeeks">
-              <small>W&nbsp;{{week.number}}</small>
-            </th>
-            <th class="text-muted">
-              <small>Total</small>
-            </th>
-            <th class="text-muted">
-              <small>**League Points**</small>
-            </th>
-            <th class="text-muted">
-              <small>Average</small>
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let golfer of membersByLeaguePoints">
-            <td class="display-name-no-wrap">
-              <!--<app-team-chip [team]="filterTeam(golfer.teamId)" [short]="true"></app-team-chip>-->
-              {{golfer.displayName}}
-            </td>
-            <td *ngFor="let week of completedWeeks" [ngClass]="{'text-red': week.number == golfer.worstWeek || week.number == golfer.secondWorstWeek}">
-              <!--<span *ngIf="week.number == golfer.worstWeek || week.number == golfer.secondWorstWeek">
-                <mat-icon class="sad-face">sentiment_very_dissatisfied</mat-icon>
-              </span>-->
-              {{golfer.weeklyPoints[week.number]}}
-            </td>
-            <td>
-              {{golfer.points}}
-            </td>
-            <td>
-              <span class="total-score-div" [ngStyle]="{'background-color': golfer.team.colorScheme}">
-                {{golfer.netPoints}}
-              </span>
-            </td>
-            <td>
-              {{golfer.netPoints / completedWeeks.length | number : '1.0-2'}}
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<!--
 <mat-tab-group>
   <mat-tab label="Team Stats">
+    <div class="card" *ngIf="teams && completedWeeks; else loading">
+      <h1 class="card-header">Team Weekly Points</h1>
+      <div class="card-body">
+        <div class="table-container mat-elevation-z8">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th class="text-muted">
+                  <small>Team</small>
+                </th>
+                <th class="text-muted" *ngFor="let week of completedWeeks">
+                  <small>W&nbsp;{{week.number}}</small>
+                </th>
+                <th class="text-muted">
+                  <small>Bonus</small>
+                </th>
+                <th class="text-muted">
+                  <small>Total</small>
+                </th>
+                <th class="text-muted">
+                  <small>**League Points**</small>
+                </th>
+                <th class="text-muted">
+                  <small>Average</small>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let team of teamsByLeaguePoints">
+                <td class="display-name-no-wrap">
+                  <app-team-chip [team]="team"></app-team-chip>
+                </td>
+                <td *ngFor="let week of completedWeeks" [ngClass]="{'text-red': week.number == team.worstWeek || week.number == team.secondWorstWeek}">
+                  <!--<span *ngIf="week.number == team.worstWeek || week.number == team.secondWorstWeek">
+                    <mat-icon class="sad-face">sentiment_very_dissatisfied</mat-icon>
+                  </span>-->
+                  {{team.weeklyPoints[week.number]}}
+                </td>
+                <td>
+                  {{team.bonusPoints}}
+                </td>
+                <td>
+                  {{team.points}}
+                </td>
+                <td>
+                  <span class="total-score-div" [ngStyle]="{'background-color': team.colorScheme}">
+                    {{team.netPoints}}
+                  </span>
+                </td>
+                <td>
+                  {{team.netPoints / completedWeeks.length | number : '1.0-2'}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div class="button-row text-right chart-selector">
+      <mat-form-field>
+        <mat-select [(value)]="chartType">
+          <mat-option [value]="ChartTypes.NumberCard">Number Card Chart</mat-option>
+          <mat-option [value]="ChartTypes.Bar">Bar Chart</mat-option>
+          <mat-option [value]="ChartTypes.Pie">Pie Chart</mat-option>
+          <mat-option [value]="ChartTypes.AdvancedPie">Advanced Pie Chart</mat-option>
+          <mat-option [value]="ChartTypes.PieGrid">Pie Grid Chart</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="chart-div" *ngIf="points.length">
+      <ngx-charts-number-card
+        *ngIf="chartType === ChartTypes.NumberCard"
+        [scheme]="colorScheme"
+        [results]="points"
+        (select)="onSelect($event)">
+      </ngx-charts-number-card>
+
+      <ngx-charts-bar-vertical
+        *ngIf="chartType === ChartTypes.Bar"
+        [scheme]="colorScheme"
+        [results]="points"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)">
+      </ngx-charts-bar-vertical>
+
+      <ngx-charts-pie-chart
+        *ngIf="chartType === ChartTypes.Pie"
+        [scheme]="colorScheme"
+        [results]="points"
+        [legend]="true"
+        [labels]="true"
+        (select)="onSelect($event)">
+      </ngx-charts-pie-chart>
+
+      <ngx-charts-advanced-pie-chart
+        *ngIf="chartType === ChartTypes.AdvancedPie"
+        [scheme]="colorScheme"
+        [results]="points"
+        (select)="onSelect($event)">
+      </ngx-charts-advanced-pie-chart>
+
+      <ngx-charts-pie-grid
+        *ngIf="chartType === ChartTypes.PieGrid"
+        [scheme]="colorScheme"
+        [results]="points"
+        (select)="onSelect($event)">
+      </ngx-charts-pie-grid>
+    </div>
   </mat-tab>
+
   <mat-tab label="Individual Stats">
+    <div class="card" *ngIf="golfers && completedWeeks; else loading">
+      <h1 class="card-header">Individual Weekly Points</h1>
+      <div class="card-body">
+        <div class="table-container mat-elevation-z8">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th class="text-muted">
+                  <small>Player</small>
+                </th>
+                <th class="text-muted" *ngFor="let week of completedWeeks">
+                  <small>W&nbsp;{{week.number}}</small>
+                </th>
+                <th class="text-muted">
+                  <small>Total</small>
+                </th>
+                <th class="text-muted">
+                  <small>**League Points**</small>
+                </th>
+                <th class="text-muted">
+                  <small>Average</small>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let golfer of membersByLeaguePoints">
+                <td class="display-name-no-wrap">
+                  <!--<app-team-chip [team]="filterTeam(golfer.teamId)" [short]="true"></app-team-chip>-->
+                  {{golfer.displayName}}
+                </td>
+                <td *ngFor="let week of completedWeeks" [ngClass]="{'text-red': week.number == golfer.worstWeek || week.number == golfer.secondWorstWeek}">
+                  <!--<span *ngIf="week.number == golfer.worstWeek || week.number == golfer.secondWorstWeek">
+                    <mat-icon class="sad-face">sentiment_very_dissatisfied</mat-icon>
+                  </span>-->
+                  {{golfer.weeklyPoints[week.number]}}
+                </td>
+                <td>
+                  {{golfer.points}}
+                </td>
+                <td>
+                  <span class="total-score-div" [ngStyle]="{'background-color': golfer.team.colorScheme}">
+                    {{golfer.netPoints}}
+                  </span>
+                </td>
+                <td>
+                  {{golfer.netPoints / completedWeeks.length | number : '1.0-2'}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </mat-tab>
 </mat-tab-group>
--->
-
-
 
 
 
